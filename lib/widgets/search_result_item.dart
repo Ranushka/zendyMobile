@@ -18,7 +18,7 @@ class SearchResultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final RxBool _isFullDetail = false.obs;
     final _abstract = _item.bibjsonAbstract?.trim();
-    var _titleLink = Goto.title + _id;
+    var _zendyLink = Goto.title + _id;
 
     return Card(
       color: Colors.transparent,
@@ -29,13 +29,13 @@ class SearchResultItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24),
-            _buildTitle(_item.title, _item.year, _titleLink),
+            _buildTitle(_item.title, _item.year, _zendyLink, _item.link[0].url),
             if (_abstract != null)
               if (_isFullDetail.value)
                 _buildFullContent(_abstract)
               else
                 _buildShortContent(_abstract, _isFullDetail),
-            _actionsBar(_isFullDetail, _titleLink, _item.title, _id),
+            _actionsBar(_isFullDetail, _zendyLink, _item.title, _id),
           ],
         );
       }),
@@ -44,7 +44,7 @@ class SearchResultItem extends StatelessWidget {
 
   Widget _actionsBar(
     _isFullDetail,
-    String _titleLink,
+    String _zendyLink,
     String _title,
     String _id,
   ) {
@@ -58,7 +58,7 @@ class SearchResultItem extends StatelessWidget {
               icon: Icon(CusIcons.share_outline),
               onPressed: () {
                 Share.share(
-                  'Zendy Reserch link ${Goto.baseUrl}$_titleLink',
+                  'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
                   subject: 'Reserch title',
                 );
               },
@@ -67,7 +67,7 @@ class SearchResultItem extends StatelessWidget {
               splashRadius: 24,
               icon: Icon(CusIcons.cite_outline),
               onPressed: () {
-                SavedCitationsController().saveData(_title, _titleLink, _id);
+                SavedCitationsController().saveData(_title, _zendyLink, _id);
               },
             ),
             IconButton(
@@ -98,13 +98,21 @@ class SearchResultItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(String _title, String _year, String _titleLink) {
+  Widget _buildTitle(
+    String _title,
+    String _year,
+    String _zendyLink,
+    String _sourceLink,
+  ) {
     return InkWell(
       focusColor: c.transparent,
       highlightColor: c.transparent,
       splashColor: c.transparent,
       onTap: () {
-        Get.toNamed(_titleLink);
+        Get.toNamed(
+          Goto.webPage,
+          arguments: _sourceLink,
+        );
       },
       child: Flex(
         crossAxisAlignment: CrossAxisAlignment.start,

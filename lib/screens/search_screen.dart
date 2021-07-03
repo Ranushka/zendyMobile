@@ -132,6 +132,7 @@ class SearchScreen extends StatelessWidget {
 
 Widget _resentSearchHistory() {
   final SearchResultController srCtrl = Get.find();
+  final SearchController scCtrl = Get.find();
 
   return Expanded(
     child: StreamBuilder(
@@ -172,7 +173,9 @@ Widget _resentSearchHistory() {
               },
               trailing: IconButton(
                 icon: Icon(Icons.upgrade_rounded),
-                onPressed: () => {},
+                onPressed: () {
+                  scCtrl.searchField.text = contactItem.query;
+                },
               ),
             );
           },

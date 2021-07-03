@@ -42,6 +42,7 @@ class SearchResultScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
+              SizedBox(height: 8),
               SmallMute('Showing 203k results for'),
               Title2(_keyword),
               SizedBox(height: 16),

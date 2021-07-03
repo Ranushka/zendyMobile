@@ -23,7 +23,7 @@ final customTheme = {
     primaryColor: Colors.orange,
     primaryColorLight: Colors.orange[50],
     backgroundColor: Colors.white,
-    accentColor: Colors.orange[200],
+    accentColor: Colors.black38,
     textTheme: TextTheme(
       headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
       headline2: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

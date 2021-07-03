@@ -12,12 +12,11 @@ Widget bottomNavigation() {
   Widget iconDat(String name, IconData icon, onClick) {
     final isActive = Get.currentRoute == name;
     final pc = Theme.of(Get.context).primaryColor;
-    final sc = Colors.black38;
+    final sc = Theme.of(Get.context).accentColor.withOpacity(0.3);
 
     return Expanded(
       flex: 1,
       child: Material(
-        // color: Theme.of(Get.context).backgroundColor,
         color: Theme.of(Get.context).primaryColorLight,
         child: IconButton(
           highlightColor: c.primaryLight,
@@ -31,17 +30,13 @@ Widget bottomNavigation() {
   }
 
   return Container(
-    // color: Theme.of(Get.context).primaryColorLight,
-    // color: Colors.black54,
     decoration: BoxDecoration(
       color: Theme.of(Get.context).primaryColorLight,
       boxShadow: [
         BoxShadow(
-          color: Theme.of(Get.context).accentColor,
-          // color: Colors.grey.withOpacity(0.5),
-          // spreadRadius: 1,
-          spreadRadius: 0,
-          // blurRadius: 4,
+          color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+          spreadRadius: 2,
+          blurRadius: 3,
           offset: Offset(0, 0), // changes position of shadow
         ),
       ],
@@ -49,7 +44,7 @@ Widget bottomNavigation() {
     child: SafeArea(
       bottom: true,
       child: SizedBox(
-        height: 42,
+        height: 48,
         child: Row(
           children: [
             iconDat(
