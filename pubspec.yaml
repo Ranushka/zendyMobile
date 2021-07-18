@@ -37,6 +37,7 @@ dependencies:
   cloud_firestore: ^2.2.0
   smart_select: ^4.3.2
   pdf_viewer_jk: ^2.1.0
+  g_captcha: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/images/
 
   fonts:
     - family: SourceSansPro

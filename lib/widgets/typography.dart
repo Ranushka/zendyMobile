@@ -131,6 +131,23 @@ class LinkText extends StatelessWidget {
   }
 }
 
+class BtnText extends StatelessWidget {
+  final String _text;
+  // final bool _dark = false;
+  const BtnText(this._text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _text,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+}
+
 class Gutter extends StatelessWidget {
   final Widget _content;
   const Gutter(this._content);

@@ -44,6 +44,11 @@ void main() async {
     permanent: true,
   );
 
+  Get.put<AuthController>(
+    AuthController(),
+    permanent: true,
+  );
+
   runApp(MyApp());
 }
 

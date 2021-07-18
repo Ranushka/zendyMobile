@@ -9,7 +9,7 @@ import 'package:zendy_app/helpers/helpers.dart';
 Widget bottomNavigation() {
   final RxInt _curIn = 0.obs;
 
-  Widget iconDat(String name, IconData icon, onClick) {
+  Widget btnReguler(String name, IconData icon, onClick) {
     final isActive = Get.currentRoute == name;
     final pc = Theme.of(Get.context).primaryColor;
     final sc = Theme.of(Get.context).accentColor.withOpacity(0.3);
@@ -29,6 +29,48 @@ Widget bottomNavigation() {
     );
   }
 
+  Widget btnSearch(String name, IconData icon, onClick) {
+    // final isActive = Get.currentRoute == name;
+    // final pc = Theme.of(Get.context).primaryColor;
+    // final sc = Theme.of(Get.context).accentColor.withOpacity(0.3);
+
+    return Expanded(
+      flex: 1,
+      child: Transform.translate(
+        offset: const Offset(0, -16),
+        child: Container(
+          // margin: const EdgeInsets.symmetric(horizontal: 4),
+          // padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+                spreadRadius: 2,
+                blurRadius: 3,
+              ),
+            ],
+            // color: Theme.of(Get.context).primaryColor,
+            // color: Colors.orange,
+            color: Theme.of(Get.context).primaryColor,
+            borderRadius: BorderRadius.circular(200),
+            // border: Border.all(color: Colors.blueAccent),
+          ),
+          child: Material(
+            // clipBehavior: Clip.none,
+            // color: Theme.of(Get.context).accentColor,
+            color: Colors.transparent,
+            child: IconButton(
+              highlightColor: Colors.transparent,
+              color: Colors.white,
+              icon: Icon(icon),
+              onPressed: onClick,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   return Container(
     decoration: BoxDecoration(
       color: Theme.of(Get.context).primaryColorLight,
@@ -37,7 +79,7 @@ Widget bottomNavigation() {
           color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
           spreadRadius: 2,
           blurRadius: 3,
-          offset: Offset(0, 0), // changes position of shadow
+          // offset: Offset(0, 0), // changes position of shadow
         ),
       ],
     ),
@@ -47,7 +89,7 @@ Widget bottomNavigation() {
         height: 48,
         child: Row(
           children: [
-            iconDat(
+            btnReguler(
               Goto.home,
               CusIcons.home,
               () {
@@ -55,7 +97,7 @@ Widget bottomNavigation() {
                 Get.toNamed(Goto.home);
               },
             ),
-            iconDat(
+            btnReguler(
               Goto.searches,
               CusIcons.searches,
               () {
@@ -63,7 +105,7 @@ Widget bottomNavigation() {
                 Get.toNamed(Goto.searches);
               },
             ),
-            iconDat(
+            btnSearch(
               Goto.search,
               CusIcons.search,
               () {
@@ -71,7 +113,7 @@ Widget bottomNavigation() {
                 Get.toNamed(Goto.search);
               },
             ),
-            iconDat(
+            btnReguler(
               Goto.citations,
               CusIcons.cite,
               () {
@@ -79,7 +121,7 @@ Widget bottomNavigation() {
                 Get.toNamed(Goto.citations);
               },
             ),
-            iconDat(
+            btnReguler(
               Goto.profile,
               CusIcons.user,
               () {

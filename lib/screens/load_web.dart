@@ -7,9 +7,8 @@ Widget _buildPdfView(url) {
   return FutureBuilder(
     future: PDFDocument.fromURL(url),
     builder: (_, pdfData) {
-      print(pdfData);
       if (pdfData.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       } else if (pdfData.data == null) {
         return Text('No PDF data');
       } else {
@@ -62,7 +61,6 @@ class LoadWebScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: Colors.white,
       brightness: Brightness.light,
-      iconTheme: IconThemeData(color: Colors.blue),
       leading: _buildBackButton(),
       actions: [
         IconButton(
@@ -70,10 +68,13 @@ class LoadWebScreen extends StatelessWidget {
           icon: Icon(Icons.save_alt_rounded),
           onPressed: () {},
         ),
-        IconButton(
-          splashRadius: 24,
-          icon: Icon(Icons.ios_share),
-          onPressed: () {},
+        Padding(
+          padding: EdgeInsets.only(right: 4),
+          child: IconButton(
+            splashRadius: 24,
+            icon: Icon(Icons.ios_share),
+            onPressed: () {},
+          ),
         )
       ],
     );
@@ -81,8 +82,7 @@ class LoadWebScreen extends StatelessWidget {
 
   Widget _buildBackButton() {
     return IconButton(
-      splashRadius: 28,
-      padding: EdgeInsets.fromLTRB(16, 4, 24, 8),
+      splashRadius: 24,
       icon: Icon(Icons.arrow_back_rounded),
       onPressed: () => Get.back(),
     );

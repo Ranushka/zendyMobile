@@ -3,3 +3,5 @@ export 'search_result_controller.dart';
 export 'search_controller.dart';
 export 'saved_citations_c.dart';
 export 'saved_searchers_c.dart';
+export 'auth_controller.dart';
+export 'product_controller.dart';

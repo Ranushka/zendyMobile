@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:zendy_app/models/product_model.dart';
+import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/services/remote_services.dart';
 
 class ProductController extends GetxController {

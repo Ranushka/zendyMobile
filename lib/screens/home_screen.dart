@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/product_controller.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 class HomeScreen extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,12 @@ class HomeScreen extends StatelessWidget {
         _buildDumySearchInput(),
         SizedBox(height: 8),
         _buildLatustNewsList(),
-        SizedBox(height: 8),
-        _buildJoinZendyPlus(),
+        Obx(() {
+          if (authController.currentUser.value.name == '') {
+            return _buildJoinZendyPlus();
+          }
+          return Container();
+        }),
         _buildFromOurBlog(),
         SizedBox(height: 32),
       ],
@@ -48,13 +53,24 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 32),
-          Gutter(Title3('Welcome to Zendy')),
+          _buildUserGreating(),
           SizedBox(height: 16),
           Gutter(Title1('Research is creating new knowledge.')),
           SizedBox(height: 16),
         ],
       ),
     );
+  }
+
+  Widget _buildUserGreating() {
+    return Obx(() {
+      if (authController.currentUser.value.name != '')
+        return Gutter(
+          Title3('G, day ${authController.currentUser.value.name}'),
+        );
+      else
+        return Gutter(Title3('Welcome to Zendy'));
+    });
   }
 
   Widget _buildJoinZendyPlus() {
@@ -80,7 +96,9 @@ class HomeScreen extends StatelessWidget {
               ),
               TextButton(
                 child: const Text('Create account'),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Goto.login);
+                },
               ),
             ],
           ),
@@ -119,7 +137,6 @@ class HomeScreen extends StatelessWidget {
       if (productController.isLoading.value)
         return sc;
       else
-        // return sc;
         return _content();
     });
   }
@@ -152,7 +169,7 @@ class HomeScreen extends StatelessWidget {
       width: Get.width * 0.8,
       child: Card(
         clipBehavior: Clip.antiAlias,
-        // elevation: 2,
+        elevation: 1,
         // clipBehavior: Clip.antiAlias,
         child: Column(
           children: [

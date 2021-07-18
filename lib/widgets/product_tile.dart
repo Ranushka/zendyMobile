@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animate_do/animate_do.dart';
 
-import 'package:zendy_app/models/product_model.dart';
+import 'package:zendy_app/models/models.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;

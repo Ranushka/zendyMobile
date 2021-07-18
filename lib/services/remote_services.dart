@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:zendy_app/models/product_model.dart';
+import 'package:zendy_app/models/models.dart';
 
 final requestUrl = Uri.parse(
     'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
