@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
         SizedBox(height: 8),
         _buildLatustNewsList(),
         Obx(() {
-          if (authController.currentUser.value.name == '') {
+          if (authController.currentUser.value.firstName == '') {
             return _buildJoinZendyPlus();
           }
           return Container();
@@ -64,9 +64,9 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildUserGreating() {
     return Obx(() {
-      if (authController.currentUser.value.name != '')
+      if (authController.currentUser.value.firstName != '')
         return Gutter(
-          Title3('G, day ${authController.currentUser.value.name}'),
+          Title3('G, day ${authController.currentUser.value.firstName}'),
         );
       else
         return Gutter(Title3('Welcome to Zendy'));

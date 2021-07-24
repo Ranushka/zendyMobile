@@ -17,7 +17,8 @@ Widget bottomNavigation() {
     return Expanded(
       flex: 1,
       child: Material(
-        color: Theme.of(Get.context).primaryColorLight,
+        // color: Theme.of(Get.context).primaryColorLight,
+        color: Theme.of(Get.context).backgroundColor,
         child: IconButton(
           highlightColor: c.primaryLight,
           color: isActive ? pc : sc,
@@ -73,7 +74,8 @@ Widget bottomNavigation() {
 
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(Get.context).primaryColorLight,
+      // color: Theme.of(Get.context).primaryColorLight,
+      color: Theme.of(Get.context).backgroundColor,
       boxShadow: [
         BoxShadow(
           color: Theme.of(Get.context).primaryColor.withOpacity(0.4),

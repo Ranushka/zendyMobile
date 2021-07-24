@@ -1,10 +1,11 @@
 class UserModel {
-  String name, last, email;
-  int age;
+  String firstName, lastName, email, id, phoneNumber;
+
   UserModel({
-    this.name,
-    this.last,
+    this.firstName,
+    this.lastName,
     this.email,
-    this.age,
+    this.id,
+    this.phoneNumber,
   });
 }

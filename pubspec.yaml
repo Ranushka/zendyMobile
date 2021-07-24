@@ -38,6 +38,7 @@ dependencies:
   smart_select: ^4.3.2
   pdf_viewer_jk: ^2.1.0
   g_captcha: ^1.0.0
+  flutter_libphonenumber: ^1.1.0
 
 dev_dependencies:
   flutter_test:

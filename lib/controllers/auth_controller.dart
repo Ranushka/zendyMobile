@@ -6,7 +6,13 @@ import 'package:zendy_app/services/auth_service.dart';
 
 class AuthController extends GetxController {
   var isLoading = true.obs;
-  final currentUser = UserModel(name: '', last: '', email: '').obs;
+  final currentUser = UserModel(
+    firstName: '',
+    lastName: '',
+    email: '',
+    id: '',
+    phoneNumber: '',
+  ).obs;
 
   @override
   void onInit() {
@@ -15,9 +21,11 @@ class AuthController extends GetxController {
       if (_userData != null) {
         var _data = _userData['user'];
 
-        currentUser.value.name = _data['firstName'];
-        currentUser.value.last = _data['lastName'];
+        currentUser.value.firstName = _data['firstName'];
+        currentUser.value.lastName = _data['lastName'];
         currentUser.value.email = _data['email'];
+        currentUser.value.id = _data['id'];
+        currentUser.value.phoneNumber = _data['phoneNumber'];
 
         // userData.addAll(_userData);
         print(_userData);

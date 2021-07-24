@@ -48,7 +48,7 @@ Widget buildUserSubscrionInfo() {
                 child: Column(
                   children: [
                     DividerX,
-                    SizedBox(height: 16),
+                    // SizedBox(height: 8),
                     ProfileTilePlan(),
                     DividerX,
                     ProfileTilePayment(),
