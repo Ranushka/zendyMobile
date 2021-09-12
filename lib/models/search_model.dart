@@ -11,358 +11,299 @@ String searchModelToJson(SearchModel data) => json.encode(data.toJson());
 
 class SearchModel {
   SearchModel({
-    this.total,
-    this.page,
-    this.pageSize,
-    this.timestamp,
-    this.query,
-    this.results,
-    this.next,
-    this.last,
+    this.data,
+    this.searchCounter,
   });
 
-  int total;
-  int page;
-  int pageSize;
-  DateTime timestamp;
-  String query;
-  List<SearchModelResult> results;
-  String next;
-  String last;
+  Data data;
+  int searchCounter;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
-        total: json["total"],
-        page: json["page"],
-        pageSize: json["pageSize"],
-        timestamp: DateTime.parse(json["timestamp"]),
-        query: json["query"],
-        results: List<SearchModelResult>.from(
-            json["results"].map((x) => SearchModelResult.fromJson(x))),
-        next: json["next"],
-        last: json["last"],
+        data: Data.fromJson(json["data"]),
+        searchCounter: json["searchCounter"],
       );
 
   Map<String, dynamic> toJson() => {
-        "total": total,
-        "page": page,
-        "pageSize": pageSize,
-        "timestamp": timestamp.toIso8601String(),
-        "query": query,
+        "data": data.toJson(),
+        "searchCounter": searchCounter,
+      };
+}
+
+class Data {
+  Data({
+    this.searchRequestCriteria,
+    this.searchResults,
+  });
+
+  SearchRequestCriteria searchRequestCriteria;
+  SearchResults searchResults;
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        searchRequestCriteria:
+            SearchRequestCriteria.fromJson(json["searchRequestCriteria"]),
+        searchResults: SearchResults.fromJson(json["searchResults"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "searchRequestCriteria": searchRequestCriteria.toJson(),
+        "searchResults": searchResults.toJson(),
+      };
+}
+
+class SearchRequestCriteria {
+  SearchRequestCriteria({
+    this.searchQuery,
+    this.appliedFacets,
+  });
+
+  List<SearchQuery> searchQuery;
+  List<dynamic> appliedFacets;
+
+  factory SearchRequestCriteria.fromJson(Map<String, dynamic> json) =>
+      SearchRequestCriteria(
+        searchQuery: List<SearchQuery>.from(
+            json["searchQuery"].map((x) => SearchQuery.fromJson(x))),
+        appliedFacets: List<dynamic>.from(json["appliedFacets"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "searchQuery": List<dynamic>.from(searchQuery.map((x) => x.toJson())),
+        "appliedFacets": List<dynamic>.from(appliedFacets.map((x) => x)),
+      };
+}
+
+class SearchQuery {
+  SearchQuery({
+    this.term,
+  });
+
+  String term;
+
+  factory SearchQuery.fromJson(Map<String, dynamic> json) => SearchQuery(
+        term: json["term"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "term": term,
+      };
+}
+
+class SearchResults {
+  SearchResults({
+    this.totalResults,
+    this.maximumScore,
+    this.results,
+    this.availableFacets,
+  });
+
+  int totalResults;
+  double maximumScore;
+  List<SearchModelResultItem> results;
+  List<AvailableFacet> availableFacets;
+
+  factory SearchResults.fromJson(Map<String, dynamic> json) => SearchResults(
+        totalResults: json["totalResults"],
+        maximumScore: json["maximumScore"].toDouble(),
+        results: List<SearchModelResultItem>.from(
+            json["results"].map((x) => SearchModelResultItem.fromJson(x))),
+        availableFacets: List<AvailableFacet>.from(
+            json["availableFacets"].map((x) => AvailableFacet.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "totalResults": totalResults,
+        "maximumScore": maximumScore,
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
-        "next": next,
-        "last": last,
+        "availableFacets":
+            List<dynamic>.from(availableFacets.map((x) => x.toJson())),
       };
 }
 
-class SearchModelResult {
-  SearchModelResult({
-    this.lastUpdated,
-    this.bibjson,
-    this.admin,
-    this.createdDate,
-    this.id,
+class AvailableFacet {
+  AvailableFacet({
+    this.categoryId,
+    this.categoryLabel,
+    this.facets,
   });
 
-  DateTime lastUpdated;
-  SearchModelResultItem bibjson;
-  Admin admin;
-  DateTime createdDate;
-  String id;
+  String categoryId;
+  String categoryLabel;
+  List<Facet> facets;
 
-  factory SearchModelResult.fromJson(Map<String, dynamic> json) =>
-      SearchModelResult(
-        lastUpdated: DateTime.parse(json["last_updated"]),
-        bibjson: SearchModelResultItem.fromJson(json["bibjson"]),
-        admin: json["admin"] == null ? null : Admin.fromJson(json["admin"]),
-        createdDate: DateTime.parse(json["created_date"]),
-        id: json["id"],
+  factory AvailableFacet.fromJson(Map<String, dynamic> json) => AvailableFacet(
+        categoryId: json["categoryId"],
+        categoryLabel: json["categoryLabel"],
+        facets: List<Facet>.from(json["facets"].map((x) => Facet.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "last_updated": lastUpdated.toIso8601String(),
-        "bibjson": bibjson.toJson(),
-        "admin": admin == null ? null : admin.toJson(),
-        "created_date": createdDate.toIso8601String(),
-        "id": id,
+        "categoryId": categoryId,
+        "categoryLabel": categoryLabel,
+        "facets": List<dynamic>.from(facets.map((x) => x.toJson())),
       };
 }
 
-class Admin {
-  Admin({
-    this.seal,
+class Facet {
+  Facet({
+    this.facetLabel,
+    this.count,
+    this.active,
   });
 
-  bool seal;
+  String facetLabel;
+  int count;
+  bool active;
 
-  factory Admin.fromJson(Map<String, dynamic> json) => Admin(
-        seal: json["seal"],
+  factory Facet.fromJson(Map<String, dynamic> json) => Facet(
+        facetLabel: json["facetLabel"],
+        count: json["count"],
+        active: json["active"],
       );
 
   Map<String, dynamic> toJson() => {
-        "seal": seal,
+        "facetLabel": facetLabel,
+        "count": count,
+        "active": active,
       };
 }
 
 class SearchModelResultItem {
   SearchModelResultItem({
-    this.identifier,
-    this.journal,
-    this.month,
-    this.keywords,
-    this.year,
-    this.startPage,
-    this.subject,
-    this.author,
-    this.link,
-    this.bibjsonAbstract,
+    this.resultId,
+    this.header,
     this.title,
-    this.endPage,
+    this.resultAbstract,
+    this.publicationName,
+    this.publicationYear,
+    this.publicationType,
+    this.publicationDate,
+    this.language,
+    this.authors,
+    this.keywords,
+    this.subjects,
+    this.isOpenAccess,
+    this.licenseType,
+    this.snip,
+    this.snipYear,
+    this.hIndex,
+    this.doi,
+    this.pIssn,
+    this.eIssn,
+    this.issn,
+    this.isbn,
+    this.issue,
+    this.volume,
+    this.journalTitle,
+    this.zendyLink,
+    this.downloadLink,
+    this.permanentLinkId,
+    this.resultScore,
   });
 
-  List<Identifier> identifier;
-  Journal journal;
-  String month;
-  List<String> keywords;
-  String year;
-  String startPage;
-  List<Subject> subject;
-  List<Author> author;
-  List<Link> link;
-  String bibjsonAbstract;
+  int resultId;
+  Header header;
   String title;
-  String endPage;
+  String resultAbstract;
+  String publicationName;
+  dynamic publicationYear;
+  String publicationType;
+  String publicationDate;
+  String language;
+  String authors;
+  String keywords;
+  String subjects;
+  bool isOpenAccess;
+  String licenseType;
+  String snip;
+  String snipYear;
+  String hIndex;
+  String doi;
+  String pIssn;
+  String eIssn;
+  String issn;
+  String isbn;
+  String issue;
+  String volume;
+  String journalTitle;
+  String zendyLink;
+  String downloadLink;
+  String permanentLinkId;
+  double resultScore;
 
   factory SearchModelResultItem.fromJson(Map<String, dynamic> json) =>
       SearchModelResultItem(
-        identifier: List<Identifier>.from(
-            json["identifier"].map((x) => Identifier.fromJson(x))),
-        journal: Journal.fromJson(json["journal"]),
-        month: json["month"] == null ? null : json["month"],
-        keywords: json["keywords"] == null
-            ? null
-            : List<String>.from(json["keywords"].map((x) => x)),
-        year: json["year"],
-        startPage: json["start_page"] == null ? null : json["start_page"],
-        subject:
-            List<Subject>.from(json["subject"].map((x) => Subject.fromJson(x))),
-        author:
-            List<Author>.from(json["author"].map((x) => Author.fromJson(x))),
-        link: List<Link>.from(json["link"].map((x) => Link.fromJson(x))),
-        bibjsonAbstract: json["abstract"],
+        resultId: json["resultId"],
+        header: Header.fromJson(json["header"]),
         title: json["title"],
-        endPage: json["end_page"] == null ? null : json["end_page"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "identifier": List<dynamic>.from(identifier.map((x) => x.toJson())),
-        "journal": journal.toJson(),
-        "month": month == null ? null : month,
-        "keywords": keywords == null
-            ? null
-            : List<dynamic>.from(keywords.map((x) => x)),
-        "year": year,
-        "start_page": startPage == null ? null : startPage,
-        "subject": List<dynamic>.from(subject.map((x) => x.toJson())),
-        "author": List<dynamic>.from(author.map((x) => x.toJson())),
-        "link": List<dynamic>.from(link.map((x) => x.toJson())),
-        "abstract": bibjsonAbstract,
-        "title": title,
-        "end_page": endPage == null ? null : endPage,
-      };
-}
-
-class Author {
-  Author({
-    this.affiliation,
-    this.name,
-    this.orcidId,
-  });
-
-  String affiliation;
-  String name;
-  String orcidId;
-
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-        affiliation: json["affiliation"],
-        name: json["name"],
-        orcidId: json["orcid_id"] == null ? null : json["orcid_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "affiliation": affiliation,
-        "name": name,
-        "orcid_id": orcidId == null ? null : orcidId,
-      };
-}
-
-class Identifier {
-  Identifier({
-    this.id,
-    this.type,
-  });
-
-  String id;
-  IdentifierType type;
-
-  factory Identifier.fromJson(Map<String, dynamic> json) => Identifier(
-        id: json["id"],
-        type: identifierTypeValues.map[json["type"]],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": identifierTypeValues.reverse[type],
-      };
-}
-
-enum IdentifierType { DOI, EISSN, PISSN, TYPE_DOI }
-
-final identifierTypeValues = EnumValues({
-  "doi": IdentifierType.DOI,
-  "eissn": IdentifierType.EISSN,
-  "pissn": IdentifierType.PISSN,
-  "DOI": IdentifierType.TYPE_DOI
-});
-
-class Journal {
-  Journal({
-    this.volume,
-    this.country,
-    this.license,
-    this.issns,
-    this.publisher,
-    this.language,
-    this.title,
-    this.number,
-  });
-
-  String volume;
-  String country;
-  List<License> license;
-  List<String> issns;
-  String publisher;
-  List<Language> language;
-  String title;
-  String number;
-
-  factory Journal.fromJson(Map<String, dynamic> json) => Journal(
+        resultAbstract: json["abstract"],
+        publicationName:
+            json["publicationName"] == null ? null : json["publicationName"],
+        publicationYear: json["publicationYear"],
+        publicationType: json["publicationType"],
+        publicationDate: json["publicationDate"],
+        language: json["language"],
+        authors: json["authors"],
+        keywords: json["keywords"],
+        // subjects: json["subjects"] == null ? null : json["subjects"],
+        isOpenAccess: json["isOpenAccess"],
+        licenseType: json["licenseType"],
+        snip: json["snip"],
+        snipYear: json["snipYear"],
+        hIndex: json["hIndex"],
+        doi: json["doi"],
+        pIssn: json["pISSN"],
+        eIssn: json["eISSN"],
+        issn: json["issn"],
+        isbn: json["isbn"],
+        issue: json["issue"],
         volume: json["volume"],
-        country: json["country"],
-        license: json["license"] == null
-            ? null
-            : List<License>.from(
-                json["license"].map((x) => License.fromJson(x))),
-        issns: List<String>.from(json["issns"].map((x) => x)),
-        publisher: json["publisher"],
-        language: List<Language>.from(
-            json["language"].map((x) => languageValues.map[x])),
-        title: json["title"],
-        number: json["number"] == null ? null : json["number"],
+        journalTitle: json["journalTitle"],
+        zendyLink: json["zendyLink"],
+        downloadLink: json["downloadLink"],
+        permanentLinkId: json["permanentLinkId"],
+        resultScore: json["resultScore"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
+        "resultId": resultId,
+        "header": header.toJson(),
+        "title": title,
+        "abstract": resultAbstract,
+        "publicationName": publicationName == null ? null : publicationName,
+        "publicationYear": publicationYear,
+        "publicationType": publicationType,
+        "publicationDate": publicationDate,
+        "language": language,
+        "authors": authors,
+        "keywords": keywords,
+        "subjects": subjects == null ? null : subjects,
+        "isOpenAccess": isOpenAccess,
+        "licenseType": licenseType,
+        "snip": snip,
+        "snipYear": snipYear,
+        "hIndex": hIndex,
+        "doi": doi,
+        "pISSN": pIssn,
+        "eISSN": eIssn,
+        "issn": issn,
+        "isbn": isbn,
+        "issue": issue,
         "volume": volume,
-        "country": country,
-        "license": license == null
-            ? null
-            : List<dynamic>.from(license.map((x) => x.toJson())),
-        "issns": List<dynamic>.from(issns.map((x) => x)),
-        "publisher": publisher,
-        "language":
-            List<dynamic>.from(language.map((x) => languageValues.reverse[x])),
-        "title": title,
-        "number": number == null ? null : number,
+        "journalTitle": journalTitle,
+        "zendyLink": zendyLink,
+        "downloadLink": downloadLink,
+        "permanentLinkId": permanentLinkId,
+        "resultScore": resultScore,
       };
 }
 
-enum Language { EN, FR, ZH }
+class Header {
+  Header();
 
-final languageValues =
-    EnumValues({"EN": Language.EN, "FR": Language.FR, "ZH": Language.ZH});
+  factory Header.fromJson(Map<String, dynamic> json) => Header();
 
-class License {
-  License({
-    this.openAccess,
-    this.title,
-    this.type,
-    this.url,
-  });
-
-  bool openAccess;
-  String title;
-  String type;
-  String url;
-
-  factory License.fromJson(Map<String, dynamic> json) => License(
-        openAccess: json["open_access"],
-        title: json["title"],
-        type: json["type"],
-        url: json["url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "open_access": openAccess,
-        "title": title,
-        "type": type,
-        "url": url,
-      };
+  Map<String, dynamic> toJson() => {};
 }
-
-class Link {
-  Link({
-    this.contentType,
-    this.type,
-    this.url,
-  });
-
-  String contentType;
-  LinkType type;
-  String url;
-
-  factory Link.fromJson(Map<String, dynamic> json) => Link(
-        contentType: json["content_type"] == null ? null : json["content_type"],
-        type: linkTypeValues.map[json["type"]],
-        url: json["url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "content_type": contentType == null ? null : contentType,
-        "type": linkTypeValues.reverse[type],
-        "url": url,
-      };
-}
-
-enum LinkType { FULLTEXT }
-
-final linkTypeValues = EnumValues({"fulltext": LinkType.FULLTEXT});
-
-class Subject {
-  Subject({
-    this.code,
-    this.scheme,
-    this.term,
-  });
-
-  String code;
-  Scheme scheme;
-  String term;
-
-  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
-        code: json["code"],
-        scheme: schemeValues.map[json["scheme"]],
-        term: json["term"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "code": code,
-        "scheme": schemeValues.reverse[scheme],
-        "term": term,
-      };
-}
-
-enum Scheme { LCC }
-
-final schemeValues = EnumValues({"LCC": Scheme.LCC});
 
 class EnumValues<T> {
   Map<String, T> map;

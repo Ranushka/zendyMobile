@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
+
+class HtmlH3 extends StatelessWidget {
+  final String _text;
+  const HtmlH3(this._text);
+
+  @override
+  Widget build(BuildContext context) {
+    var _fColor = '#444';
+
+    return HtmlWidget(
+        '<h3 style="color: $_fColor; font-weight: 600;">$_text</h3>');
+  }
+}
+
+class HtmlP extends StatelessWidget {
+  final String _text;
+  final bool _isShort;
+  const HtmlP(this._text, [this._isShort = false]);
+
+  @override
+  Widget build(BuildContext context) {
+    var _fColor = '#444';
+    var _mHeight = _isShort ? "max-height:84px" : "";
+
+    return HtmlWidget('<div style="color: $_fColor; $_mHeight">$_text</div>');
   }
 }
 

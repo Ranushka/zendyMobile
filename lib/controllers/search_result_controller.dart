@@ -10,8 +10,12 @@ class SearchResultController extends GetxController {
   void searchResultsGet(String qry) async {
     try {
       isLoading(true);
+      print('=====>>>>' + qry);
       SearchHistoryController().saveContact(qry);
       final dataSet = await SearchService.getResults(qry);
+
+      print(dataSet);
+      print('=====>>>>');
 
       if (dataSet != null) {
         searchResults(dataSet);

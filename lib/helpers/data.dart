@@ -18,6 +18,12 @@ List<S2Choice<String>> themesList = [
   S2Choice<String>(value: 'PAPER', title: 'Paper'),
 ];
 
+List<S2Choice<String>> nnotificationList = [
+  S2Choice<String>(value: 'DEFAULT', title: 'Default'),
+  S2Choice<String>(value: 'DARK', title: 'Dark'),
+  S2Choice<String>(value: 'PAPER', title: 'Paper'),
+];
+
 List<Map<String, dynamic>> userInterestsList = [
   {
     'id': 'sk3',

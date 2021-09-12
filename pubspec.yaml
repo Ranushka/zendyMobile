@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter: ^2.0.8
   shared_preferences: ^2.0.6
   get: ^4.1.4
   http: ^0.13.3
@@ -39,6 +38,8 @@ dependencies:
   pdf_viewer_jk: ^2.1.0
   g_captcha: ^1.0.0
   flutter_libphonenumber: ^1.1.0
+  flutter_widget_from_html: ^0.6.2
+  webview_flutter: ^2.0.12
 
 dev_dependencies:
   flutter_test:

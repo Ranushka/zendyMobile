@@ -20,9 +20,12 @@ class SearchResultScreen extends StatelessWidget {
       backgroundColor: Theme.of(Get.context).backgroundColor,
       appBar: _buildAppBar(),
       body: Obx(() {
-        if (srCrtl.isLoading.value)
-          return Center(child: CircularProgressIndicator());
+        if (ctrls.isLoading.value) {
+          return Center(child: _buildSearchResultLoading());
+        } else if (ctrls.searchResults.value.data == null)
+          return Center(child: Text('No results...'));
         else {
+          // print(srCrtl.searchResults.value);
           return _buildMainContent(srCrtl.searchResults.value);
         }
       }),
@@ -31,7 +34,9 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildHead(SearchModel data) {
-    final _keyword = data.query.capitalizeFirst;
+    // final _keyword = data.data
+    var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
+    // final _keyword = data.query.capitalizeFirst;
     return Container(
       color: Colors.white,
       child: Gutter(Flex(
@@ -45,7 +50,7 @@ class SearchResultScreen extends StatelessWidget {
               SizedBox(height: 8),
               SmallMute('Showing 203k results for'),
               Title2(_keyword),
-              SizedBox(height: 16),
+              SizedBox(height: 8),
             ],
           ),
           Spacer(),
@@ -70,7 +75,8 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildMainContent(SearchModel data) {
-    if (data.results.length == 0) {
+    var _searchResults = data.data.searchResults;
+    if (_searchResults.results.length == 0) {
       return Center(
         child: Text('No results found'),
       );
@@ -78,28 +84,27 @@ class SearchResultScreen extends StatelessWidget {
 
     return ListView.separated(
       shrinkWrap: true,
-      itemCount: data.results.length,
+      itemCount: _searchResults.results.length,
       separatorBuilder: (context, index) {
         return Gutter(Divider(
-          color: Colors.black26,
+          color: Colors.black12,
           height: 0,
         ));
       },
       itemBuilder: (context, index) {
-        final _id = data.results[index].id;
-        final _data = data.results[index].bibjson;
-        if (_id.isEmpty & _data.isBlank) return Text('Empty data');
+        final _data = _searchResults.results[index];
+        if (_data.isBlank) return Text('Empty data');
 
         if (index == 0) {
           return Column(
             children: <Widget>[
               _buildHead(data),
-              SearchResultItem(_id, _data),
+              SearchResultItem(_data.resultId.toString(), _data),
             ],
           );
         }
 
-        return SearchResultItem(_id, _data);
+        return SearchResultItem(_data.resultId.toString(), _data);
       },
     );
   }
@@ -141,6 +146,26 @@ class SearchResultScreen extends StatelessWidget {
       elevation: 0,
       leading: _buildBackButton(),
       title: _buildSearchBox(),
+    );
+  }
+
+  Widget _buildSearchResultLoading() {
+    return SingleChildScrollView(
+      child: Gutter(
+        Column(
+          children: [
+            SizedBox(height: 8),
+            Skeleton(height: 64),
+            SizedBox(height: 32),
+            Skeleton(height: 160),
+            SizedBox(height: 16),
+            Skeleton(height: 160),
+            SizedBox(height: 16),
+            Skeleton(height: 160),
+            SizedBox(height: 8),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -45,7 +45,14 @@ class UserSavedScreen extends StatelessWidget {
   Widget _buildMainContent() {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [_buildTitle(), _buildlist()],
+      children: [
+        PageTitle(
+          text: 'Searchers',
+          icon: Icons.logout,
+          action: citationsExportMenu(),
+        ),
+        _buildlist()
+      ],
       direction: Axis.vertical,
     );
   }

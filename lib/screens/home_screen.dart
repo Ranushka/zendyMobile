@@ -34,6 +34,7 @@ class HomeScreen extends StatelessWidget {
         SizedBox(height: 8),
         _buildLatustNewsList(),
         Obx(() {
+          print('>>>>auth>>>>' + authController.currentUser.value.firstName);
           if (authController.currentUser.value.firstName == '') {
             return _buildJoinZendyPlus();
           }

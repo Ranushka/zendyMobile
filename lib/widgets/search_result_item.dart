@@ -17,8 +17,8 @@ class SearchResultItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RxBool _isFullDetail = false.obs;
-    final _abstract = _item.bibjsonAbstract?.trim();
-    var _zendyLink = Goto.title + _id;
+    final _abstract = _item.resultAbstract?.trim();
+    var _zendyLink = _item.downloadLink ?? _item.zendyLink;
 
     return Card(
       color: Colors.transparent,
@@ -29,7 +29,7 @@ class SearchResultItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24),
-            _buildTitle(_item.title, _item.year, _zendyLink, _item.link[0].url),
+            _buildTitle(_item.title, _item.publicationYear, _zendyLink),
             if (_abstract != null)
               if (_isFullDetail.value)
                 _buildFullContent(_abstract)
@@ -48,79 +48,93 @@ class SearchResultItem extends StatelessWidget {
     String _title,
     String _id,
   ) {
-    return ButtonBar(
-      alignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            IconButton(
-              splashRadius: 24,
-              icon: Icon(CusIcons.share_outline),
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: 4,
+            offset: Offset(0, -2), // Shadow position
+          ),
+        ],
+      ),
+      child: ButtonBar(
+        buttonPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+        alignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                splashRadius: 24,
+                icon: Icon(CusIcons.share_outline),
+                onPressed: () {
+                  Share.share(
+                    'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
+                    subject: 'Reserch title',
+                  );
+                },
+              ),
+              IconButton(
+                splashRadius: 24,
+                icon: Icon(CusIcons.cite_outline),
+                onPressed: () {
+                  SavedCitationsController().saveData(_title, _zendyLink, _id);
+                },
+              ),
+              IconButton(
+                splashRadius: 24,
+                icon: Icon(CusIcons.logout_outline),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          if (_isFullDetail.value)
+            ElevatedButton(
               onPressed: () {
-                Share.share(
-                  'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
-                  subject: 'Reserch title',
+                print('>>>>zendyLink>>>>' + _item.zendyLink);
+                print('>>>>downloadLink>>>>' + _item.downloadLink);
+                Get.toNamed(
+                  Goto.webPage,
+                  arguments: _item.downloadLink.isBlank
+                      ? _item.zendyLink
+                      : _item.downloadLink,
                 );
               },
-            ),
-            IconButton(
-              splashRadius: 24,
-              icon: Icon(CusIcons.cite_outline),
+              child: Text("Go to source"),
+            )
+          else
+            TextButton(
               onPressed: () {
-                SavedCitationsController().saveData(_title, _zendyLink, _id);
+                _isFullDetail.value = true;
               },
+              child: const Text('Read more'),
             ),
-            IconButton(
-              splashRadius: 24,
-              icon: Icon(CusIcons.logout_outline),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        if (_isFullDetail.value)
-          ElevatedButton(
-            onPressed: () {
-              Get.toNamed(
-                Goto.webPage,
-                arguments: _item.link[0].url,
-              );
-            },
-            child: Text("Go to source"),
-          )
-        else
-          TextButton(
-            onPressed: () {
-              _isFullDetail.value = true;
-            },
-            child: const Text('Read more'),
-          ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildTitle(
-    String _title,
-    String _year,
-    String _zendyLink,
-    String _sourceLink,
-  ) {
+  Widget _buildTitle(String _title, int _year, String _zendyLink) {
     return InkWell(
       focusColor: c.transparent,
       highlightColor: c.transparent,
       splashColor: c.transparent,
       onTap: () {
+        print('>>>>_sourceLink>>>>' + _zendyLink);
+
         Get.toNamed(
           Goto.webPage,
-          arguments: _sourceLink,
+          arguments: _zendyLink,
         );
       },
       child: Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          Gutter(Title4('Journal - ${_year.trim()} - ${_linkType()}')),
+          Gutter(Title4('Journal - $_year - ${_linkType()}')),
           SizedBox(height: 8),
-          Gutter(Title3(_title.trim())),
+          Gutter(HtmlH3(_title)),
+          // HtmlH3(_title),
           SizedBox(height: 8),
         ],
       ),
@@ -137,12 +151,13 @@ class SearchResultItem extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Text(
-          _abstract,
-          maxLines: 4,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: Colors.black.withOpacity(0.6)),
-        ),
+        child: HtmlP(_abstract, true),
+        // child: Text(
+        //   _abstract,
+        //   maxLines: 4,
+        //   overflow: TextOverflow.ellipsis,
+        //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
+        // ),
       ),
     );
   }
@@ -151,25 +166,26 @@ class SearchResultItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (_item.bibjsonAbstract != null)
-          Gutter(
-            Text(
-              _item.bibjsonAbstract,
-              overflow: TextOverflow.fade,
-              style: TextStyle(color: Colors.black.withOpacity(0.6)),
-            ),
-          ),
+        if (_item.resultAbstract != null) Gutter(HtmlP(_item.resultAbstract)),
         SizedBox(height: 16),
-        if (_item.author != null) _buildAuthorsList(_item.author),
+        if (_item.authors != null) _buildAuthorsList(_item.authors),
         SizedBox(height: 16),
         if (_item.keywords != null) _buildKeyWords(_item.keywords),
         SizedBox(height: 16),
-        if (_item.subject != null) _buildSubjectsList(_item.subject),
+        if (_item.subjects != null) _buildSubjectsList(_item.subjects),
       ],
     );
   }
 
-  Widget _buildKeyWords(_data) {
+  Widget _buildKeyWords(String data) {
+    var _data = data.split(',');
+
+    // print('=====>>>>>' + _data.length.toString());
+
+    if (_data[0] == '') {
+      return Container();
+    }
+
     return Gutter(Wrap(
       children: [
         Padding(
@@ -195,7 +211,9 @@ class SearchResultItem extends StatelessWidget {
     ));
   }
 
-  Widget _buildSubjectsList(_data) {
+  Widget _buildSubjectsList(String data) {
+    var _data = data.split(',');
+
     return Gutter(Wrap(
       children: [
         Padding(
@@ -211,7 +229,7 @@ class SearchResultItem extends StatelessWidget {
               splashColor: Colors.blue.shade100,
               child: Padding(
                 padding: const EdgeInsets.only(right: 4, bottom: 4),
-                child: new LinkText(_itm.term.trim()),
+                child: new LinkText(_itm.trim()),
               ),
               onTap: () {},
             ),
@@ -221,7 +239,9 @@ class SearchResultItem extends StatelessWidget {
     ));
   }
 
-  Widget _buildAuthorsList(_data) {
+  Widget _buildAuthorsList(String data) {
+    var _data = data.split(',');
+
     return Gutter(Wrap(
       children: [
         Padding(
@@ -237,7 +257,7 @@ class SearchResultItem extends StatelessWidget {
               splashColor: Colors.blue.shade100,
               child: Padding(
                 padding: const EdgeInsets.only(right: 4, bottom: 4),
-                child: LinkText(_itm.name.trim()),
+                child: LinkText(_itm.trim()),
               ),
               onTap: () {},
             ),
@@ -248,7 +268,7 @@ class SearchResultItem extends StatelessWidget {
   }
 
   String _linkType() {
-    final url = _item.link[0].url;
+    final url = _item.downloadLink;
     if (RegExp(r'.+\.pdf$').hasMatch(url)) {
       return 'PDF';
     }

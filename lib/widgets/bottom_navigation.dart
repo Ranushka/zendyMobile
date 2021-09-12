@@ -31,17 +31,11 @@ Widget bottomNavigation() {
   }
 
   Widget btnSearch(String name, IconData icon, onClick) {
-    // final isActive = Get.currentRoute == name;
-    // final pc = Theme.of(Get.context).primaryColor;
-    // final sc = Theme.of(Get.context).accentColor.withOpacity(0.3);
-
     return Expanded(
       flex: 1,
       child: Transform.translate(
         offset: const Offset(0, -16),
         child: Container(
-          // margin: const EdgeInsets.symmetric(horizontal: 4),
-          // padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -50,20 +44,18 @@ Widget bottomNavigation() {
                 blurRadius: 3,
               ),
             ],
-            // color: Theme.of(Get.context).primaryColor,
-            // color: Colors.orange,
             color: Theme.of(Get.context).primaryColor,
             borderRadius: BorderRadius.circular(200),
-            // border: Border.all(color: Colors.blueAccent),
           ),
           child: Material(
-            // clipBehavior: Clip.none,
-            // color: Theme.of(Get.context).accentColor,
             color: Colors.transparent,
             child: IconButton(
               highlightColor: Colors.transparent,
               color: Colors.white,
-              icon: Icon(icon),
+              icon: Icon(
+                icon,
+                size: 28,
+              ),
               onPressed: onClick,
             ),
           ),
@@ -74,14 +66,12 @@ Widget bottomNavigation() {
 
   return Container(
     decoration: BoxDecoration(
-      // color: Theme.of(Get.context).primaryColorLight,
       color: Theme.of(Get.context).backgroundColor,
       boxShadow: [
         BoxShadow(
           color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
           spreadRadius: 2,
           blurRadius: 3,
-          // offset: Offset(0, 0), // changes position of shadow
         ),
       ],
     ),

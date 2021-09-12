@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:zendy_app/models/saved_search_m.dart';
 import 'package:zendy_app/helpers/routs.dart';
 import 'package:zendy_app/models/recent_search_history_m.dart';
-import 'package:zendy_app/widgets/widgets.dart';
 
 import 'package:zendy_app/controllers/controllers.dart';
 
 class SearchScreen extends StatelessWidget {
-  final SearchResultController srCtrl = Get.find();
-  final SearchController scCtrl = Get.find();
+  final SearchHistoryController shCtrl = Get.put(SearchHistoryController());
+  final SearchResultController srCtrl = Get.put(SearchResultController());
+  final SearchController scCtrl = Get.put(SearchController());
 
   @override
   Widget build(BuildContext context) {

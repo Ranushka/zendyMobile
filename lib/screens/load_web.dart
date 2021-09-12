@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:pdf_viewer_jk/pdf_viewer_jk.dart';
 
-Widget _buildPdfView(url) {
+import 'package:zendy_app/services/services.dart';
+import 'package:zendy_app/controllers/controllers.dart';
+
+Widget _buildPdfView(url, _headers) {
   return FutureBuilder(
-    future: PDFDocument.fromURL(url),
+    future: PDFDocument.fromURL(url, headers: _headers),
     builder: (_, pdfData) {
       if (pdfData.connectionState == ConnectionState.waiting) {
         return Center(child: CircularProgressIndicator());
@@ -16,6 +19,7 @@ Widget _buildPdfView(url) {
           document: pdfData.data,
           scrollDirection: Axis.vertical,
           showPicker: false,
+          lazyLoad: false,
           navigationBuilder: (
             context,
             page,
@@ -32,24 +36,34 @@ Widget _buildPdfView(url) {
 }
 
 class LoadWebScreen extends StatelessWidget {
+  final AuthController authCtrl = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
-    print(Get.arguments);
+    WebView.platform = SurfaceAndroidWebView();
     var url = Get.arguments;
-    url = url.replaceAll("http://", "https://");
+    // url = url.replaceAll("http://", "https://");
 
     Widget bodyContent = Center(child: Text('Hmmm..., some thing went wrong'));
 
-    if (url != '') {
-      bodyContent = WebView(
-        initialUrl: url,
-        javascriptMode: JavascriptMode.unrestricted,
-      );
-    }
+    var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
+    print('>>>>url>>>>' + url);
 
-    if (RegExp(r'.+\.pdf$').hasMatch(url)) {
-      bodyContent = _buildPdfView(url);
-    }
+    // if (url != '') {
+    //   bodyContent = WebView(
+    //     onWebViewCreated: (controller) {
+    //       controller.loadUrl(
+    //         url,
+    //         headers: _headers,
+    //       );
+    //     },
+    //   );
+    // }
+
+    // if (RegExp(r'.+\.pdf$').hasMatch(url)) {
+    // if (RegExp(r'.+\pdf$').hasMatch(url)) {
+    bodyContent = _buildPdfView(url, _headers);
+    // }
 
     return Scaffold(
       appBar: _buildAppBar(),

@@ -25,45 +25,17 @@ class SavedCitationsScreen extends StatelessWidget {
   Widget _buildMainContent() {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [_buildTitle(), _buildlist()],
+      children: [
+        PageTitle(
+          text: 'Citations',
+          icon: Icons.logout,
+          action: citationsExportMenu(),
+        ),
+        _buildlist()
+      ],
       direction: Axis.vertical,
     );
   }
-
-  Widget _buildTitle() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
-      color: Colors.white,
-      child: Flex(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        direction: Axis.horizontal,
-        children: [
-          Title1('Citations'),
-          citationsExportMenu(),
-        ],
-      ),
-    );
-  }
-
-  // Widget _buildlist() {
-  //   return Expanded(
-  //     child: ListView(
-  //       children: [
-  //         for (int count in List.generate(9, (index) => index + 1))
-  //           ListTile(
-  //             title: Title3(
-  //                 "Joy, Exercise, Enjoyment, Getting out: A Qualitative Study of Older People's Experience of Cycling in Sydney, Australia"),
-  //             subtitle: Text("Journal - 2020"),
-  //             trailing: Icon(Icons.check_box_outline_blank_rounded),
-  //             leading: Text("0$count."),
-  //             minLeadingWidth: 0,
-  //           ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }
 
 Widget _buildlist() {

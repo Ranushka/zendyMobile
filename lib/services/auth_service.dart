@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,17 +40,20 @@ class AuthServices {
     final url = Uri.https("api.staging-oa.zendy.io", "/auth/auth");
     final body = json.encode({'email': email, 'password': password});
 
-    print(url);
-    print(body);
     var response = await client.post(
       url,
       headers: {"Content-Type": "application/json"},
       body: body,
     );
 
-    var resBody = json.decode(response.body);
+    var resBody = jsonDecode(response.body);
 
-    print(resBody);
+    print('signIn--->' + resBody.toString());
+
+    if (resBody['status'] == false) {
+      showSnackbar(title: 'Fail', message: resBody.error);
+      return null;
+    }
 
     if (response.statusCode == 200) {
       await saveUserTokenData(response);
@@ -66,9 +68,6 @@ class AuthServices {
 
 String getSidValue(response) {
   var _value = response.headers['set-cookie'];
-  // _value = _value.split(';');
-  // _value = _value[0];
-  // _value = _value.replaceAll('connect.sid=', '');
 
   return _value;
 }
@@ -76,11 +75,20 @@ String getSidValue(response) {
 Future saveUserTokenData(response) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  String _userToken = getSidValue(response);
-  String _userData = response.body;
+  String _authToken = getSidValue(response);
+  var _allData = jsonDecode(response.body);
+  _allData['authToken'] = _authToken;
+
+  String _userData = jsonEncode(_allData);
 
   await localStorage.setString('user', _userData);
-  await localStorage.setString('token', _userToken);
+  await localStorage.setString('token', _authToken);
+}
+
+Future deleteUserTokenData() async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+  await localStorage.clear();
 }
 
 Future getUserData() async {
@@ -88,9 +96,38 @@ Future getUserData() async {
 
   var _userData = localStorage.getString('user');
 
-  print(_userData);
+  print('_tokenData--->' + _userData);
   if (_userData != null) {
     return jsonDecode(_userData);
   }
   return null;
+}
+
+final requestClient = http.Client();
+
+Future getAuthindicatedResponse(String path, dynamic body) async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  final _url = Uri.https("api.staging-oa.zendy.io", path);
+  final _body = json.encode(body);
+  var _tokenData = localStorage.getString('token');
+
+  print('_tokenData--->' + _tokenData);
+
+  var _response = await requestClient.post(
+    _url,
+    headers: {"Content-Type": "application/json", "cookie": _tokenData},
+    body: _body,
+  );
+
+  if (_response != null) {
+    return _response;
+  }
+
+  return null;
+}
+
+Future getAokenData() async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+  return localStorage.getString('token');
 }

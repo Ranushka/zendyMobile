@@ -5,6 +5,7 @@ import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/services/services.dart';
 
 class SettingsScreen extends StatelessWidget {
   final AuthController authController = Get.put(AuthController());
@@ -22,7 +23,14 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildMainContent() {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [_buildTitle(), buildSettingsList()],
+      children: [
+        PageTitle(
+          text: 'Profile',
+          icon: Icons.logout,
+          action: _buildUserLogoutBtn(),
+        ),
+        buildSettingsList()
+      ],
       direction: Axis.vertical,
     );
   }
@@ -120,11 +128,10 @@ class SettingsScreen extends StatelessWidget {
                         },
                       ),
                       DividerX,
-                      ProfileTileDropdownMultiple(
+                      ProfileTileRadio(
                         icon: Icons.notifications_active_outlined,
                         title: 'Notifications',
-                        initialValue: ['DEFAULT'],
-                        options: themesList,
+                        initialValue: true,
                         onChange: (val) {
                           print(val);
                         },
@@ -180,26 +187,35 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-Widget _buildTitle() {
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
-    color: Colors.white,
-    child: Flex(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      direction: Axis.horizontal,
-      children: [
-        Title1('Profile'),
-        _buildUserLogoutBtn(),
-      ],
-    ),
-  );
-}
+// Widget _buildTitle() {
+//   return Container(
+//     width: double.infinity,
+//     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+//     color: Colors.white,
+//     child: Flex(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       direction: Axis.horizontal,
+//       children: [
+//         Title1('Profile'),
+//         _buildUserLogoutBtn(),
+//       ],
+//     ),
+//   );
+// }
 
 Widget _buildUserLogoutBtn() {
   return IconButton(
     icon: Icon(Icons.logout),
-    onPressed: () => Get.back(),
+    onPressed: () {
+      print('user loging out');
+      deleteUserTokenData();
+      Get.reset();
+      Get.put(SavedCitationsController());
+      Get.put(SearchHistoryController());
+      Get.put(SearchResultController());
+      Get.put(SearchController());
+      Get.toNamed(Goto.home);
+    },
   );
 }

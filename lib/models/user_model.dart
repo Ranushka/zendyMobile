@@ -1,5 +1,5 @@
 class UserModel {
-  String firstName, lastName, email, id, phoneNumber;
+  String firstName, lastName, email, id, phoneNumber, authToken;
 
   UserModel({
     this.firstName,
@@ -7,5 +7,6 @@ class UserModel {
     this.email,
     this.id,
     this.phoneNumber,
+    this.authToken,
   });
 }
