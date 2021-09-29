@@ -40,6 +40,7 @@ dependencies:
   flutter_libphonenumber: ^1.1.0
   flutter_widget_from_html: ^0.6.2
   webview_flutter: ^2.0.12
+  infinite_scroll_pagination: ^3.1.0
 
 dev_dependencies:
   flutter_test:

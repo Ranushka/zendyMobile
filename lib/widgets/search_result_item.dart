@@ -35,6 +35,7 @@ class SearchResultItem extends StatelessWidget {
                 _buildFullContent(_abstract)
               else
                 _buildShortContent(_abstract, _isFullDetail),
+            _actionsReadMore(_isFullDetail),
             _actionsBar(_isFullDetail, _zendyLink, _item.title, _id),
           ],
         );
@@ -49,67 +50,105 @@ class SearchResultItem extends StatelessWidget {
     String _id,
   ) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white,
-            blurRadius: 4,
-            offset: Offset(0, -2), // Shadow position
-          ),
-        ],
-      ),
-      child: ButtonBar(
-        buttonPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-        alignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+        alignment: const Alignment(-40, -100),
+        child: Gutter(
+          ButtonBar(
+            buttonPadding: const EdgeInsets.all(0),
+            alignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                splashRadius: 24,
-                icon: Icon(CusIcons.share_outline),
+              Row(
+                children: [
+                  IconButton(
+                    splashRadius: 24,
+                    icon: Icon(CusIcons.share_outline),
+                    onPressed: () {
+                      Share.share(
+                        'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
+                        subject: 'Reserch title',
+                      );
+                    },
+                  ),
+                  IconButton(
+                    splashRadius: 24,
+                    icon: Icon(CusIcons.cite_outline),
+                    onPressed: () {
+                      SavedCitationsController()
+                          .saveData(_title, _zendyLink, _id);
+                    },
+                  ),
+                  IconButton(
+                    splashRadius: 24,
+                    icon: Icon(CusIcons.logout_outline),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              // OutlinedButton(
+              //   onPressed: () {
+              //     print('>>>>zendyLink>>>>' + _item.zendyLink);
+              //     print('>>>>downloadLink>>>>' + _item.downloadLink);
+              //     Get.toNamed(
+              //       Goto.webPage,
+              //       arguments: _item.downloadLink.isBlank
+              //           ? _item.zendyLink
+              //           : _item.downloadLink,
+              //     );
+              //   },
+              //   style: OutlinedButton.styleFrom(
+              //     side: BorderSide(
+              //       width: 1,
+              //       color: Theme.of(Get.context).primaryColor,
+              //     ),
+              //   ),
+              //   child: Text(
+              //     "Read full text",
+              //     style: TextStyle(
+              //         fontWeight: FontWeight.w600,
+              //         color: Theme.of(Get.context).primaryColor),
+              //   ),
+              // )
+              // else
+              TextButton(
                 onPressed: () {
-                  Share.share(
-                    'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
-                    subject: 'Reserch title',
+                  Get.toNamed(
+                    Goto.webPage,
+                    arguments: _item.downloadLink.isBlank
+                        ? _item.zendyLink
+                        : _item.downloadLink,
                   );
                 },
-              ),
-              IconButton(
-                splashRadius: 24,
-                icon: Icon(CusIcons.cite_outline),
-                onPressed: () {
-                  SavedCitationsController().saveData(_title, _zendyLink, _id);
-                },
-              ),
-              IconButton(
-                splashRadius: 24,
-                icon: Icon(CusIcons.logout_outline),
-                onPressed: () {},
+                child: const Text('Read full'),
               ),
             ],
           ),
-          if (_isFullDetail.value)
-            ElevatedButton(
-              onPressed: () {
-                print('>>>>zendyLink>>>>' + _item.zendyLink);
-                print('>>>>downloadLink>>>>' + _item.downloadLink);
-                Get.toNamed(
-                  Goto.webPage,
-                  arguments: _item.downloadLink.isBlank
-                      ? _item.zendyLink
-                      : _item.downloadLink,
-                );
-              },
-              child: Text("Go to source"),
-            )
-          else
-            TextButton(
-              onPressed: () {
-                _isFullDetail.value = true;
-              },
-              child: const Text('Read more'),
-            ),
-        ],
+        ));
+  }
+
+  Widget _actionsReadMore(_isFullDetail) {
+    return InkWell(
+      focusColor: c.transparent,
+      highlightColor: c.transparent,
+      splashColor: c.transparent,
+      onTap: () {
+        _isFullDetail.value = !_isFullDetail.value;
+      },
+      child: Gutter(
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.white,
+                blurRadius: 4,
+                offset: Offset(0, -2), // Shadow position
+              ),
+            ],
+          ),
+          width: double.infinity,
+          // color: Colors.black54,
+          child: _isFullDetail.value
+              ? Icon(Icons.arrow_drop_up_rounded)
+              : Icon(Icons.arrow_drop_down_rounded),
+        ),
       ),
     );
   }
@@ -179,8 +218,6 @@ class SearchResultItem extends StatelessWidget {
 
   Widget _buildKeyWords(String data) {
     var _data = data.split(',');
-
-    // print('=====>>>>>' + _data.length.toString());
 
     if (_data[0] == '') {
       return Container();

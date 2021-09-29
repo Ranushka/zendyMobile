@@ -87,13 +87,7 @@ class SearchScreen extends StatelessWidget {
         autofocus: true,
         textInputAction: TextInputAction.search,
         controller: scCtrl.searchField,
-        onFieldSubmitted: (value) {
-          if (value == null) return;
-          if (value == '') return;
-
-          srCtrl.searchResultsGet(value);
-          Get.offNamed(Goto.searchResult);
-        },
+        onFieldSubmitted: (value) => _searchAction(value),
         onChanged: (value) => scCtrl.change(value),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
@@ -162,18 +156,17 @@ Widget _resentSearchHistory() {
               queryDocSnapshot: item,
             );
 
+            var _qryVal = contactItem.query;
+
             return ListTile(
               minLeadingWidth: 32,
               leading: Icon(Icons.history_toggle_off),
-              title: Text(contactItem.query),
-              onTap: () {
-                srCtrl.searchResultsGet(contactItem.query);
-                Get.offNamed(Goto.searchResult);
-              },
+              title: Text(_qryVal),
+              onTap: () => _searchAction(_qryVal),
               trailing: IconButton(
                 icon: Icon(Icons.upgrade_rounded),
                 onPressed: () {
-                  scCtrl.searchField.text = contactItem.query;
+                  scCtrl.searchField.text = _qryVal;
                 },
               ),
             );
@@ -182,4 +175,17 @@ Widget _resentSearchHistory() {
       },
     ),
   );
+}
+
+void _searchAction(value) {
+  final SearchResultController srCtrl = Get.put(SearchResultController());
+
+  if (value == null) return;
+  if (value == '') return;
+
+  srCtrl.searchQry.value = value;
+  srCtrl.clearCtrl();
+  srCtrl.searchResultsGet();
+
+  Get.offNamed(Goto.searchResult);
 }
