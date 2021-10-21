@@ -51,8 +51,8 @@ class AuthServices {
     print('signIn--->' + resBody.toString());
 
     if (resBody['status'] == false) {
-      showSnackbar(title: 'Fail', message: resBody.error);
-      return null;
+      showSnackbar(title: 'Fail', message: resBody['error']);
+      return false;
     }
 
     if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class AuthServices {
       return true;
     } else {
       showSnackbar(title: 'Fail', message: response.toString());
-      return null;
+      return false;
     }
   }
 }
@@ -96,7 +96,7 @@ Future getUserData() async {
 
   var _userData = localStorage.getString('user');
 
-  print('_tokenData--->' + _userData);
+  print('_tokenData--->' + _userData.toString());
   if (_userData != null) {
     return jsonDecode(_userData);
   }

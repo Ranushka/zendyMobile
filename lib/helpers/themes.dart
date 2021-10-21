@@ -23,11 +23,26 @@ final customTheme = {
     primaryColor: Colors.orange,
     primaryColorLight: Colors.orange[50],
     backgroundColor: Colors.white,
-    accentColor: Colors.black38,
     textTheme: TextTheme(
-      headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-      headline2: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      headline3: TextStyle(fontSize: 16, color: Colors.black87),
+      headline1: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'PlayfairDisplay',
+      ),
+      headline2: TextStyle(
+        fontSize: 20,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade900,
+        fontFamily: 'Lora',
+      ),
+      headline3: TextStyle(
+        fontSize: 16,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade900,
+        fontFamily: 'Lora',
+      ),
     ),
     fontFamily: 'SourceSansPro',
     elevatedButtonTheme: ElevatedButtonThemeData(

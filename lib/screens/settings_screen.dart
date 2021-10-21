@@ -15,19 +15,19 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: emptyAppbar(),
-      body: _buildMainContent(),
+      body: _buildMainContent(context),
       bottomNavigationBar: bottomNavigation(),
     );
   }
 
-  Widget _buildMainContent() {
+  Widget _buildMainContent(context) {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PageTitle(
           text: 'Profile',
           icon: Icons.logout,
-          action: _buildUserLogoutBtn(),
+          action: _buildUserLogoutBtn(context),
         ),
         buildSettingsList()
       ],
@@ -204,7 +204,7 @@ class SettingsScreen extends StatelessWidget {
 //   );
 // }
 
-Widget _buildUserLogoutBtn() {
+Widget _buildUserLogoutBtn(context) {
   return IconButton(
     icon: Icon(Icons.logout),
     onPressed: () {
@@ -215,7 +215,7 @@ Widget _buildUserLogoutBtn() {
       Get.put(SearchHistoryController());
       Get.put(SearchResultController());
       Get.put(SearchController());
-      Get.toNamed(Goto.home);
+      // Get.toNamed('/');
     },
   );
 }

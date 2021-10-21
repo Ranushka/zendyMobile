@@ -11,8 +11,6 @@ import 'package:zendy_app/widgets/search_result_item.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 class SearchResultScreen extends StatelessWidget {
-  // const SearchResultScreen({Key key}) : super(key: key);
-
   final SearchResultController srCrtl = Get.put(SearchResultController());
   final SearchResultController ctrls = Get.find();
 
@@ -22,9 +20,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     _scrollController.addListener(() {
       var _scrolPos = _scrollController.position;
-      var _loadingStart = _scrolPos.maxScrollExtent + 200;
-
-      print('paginating...');
+      var _loadingStart = _scrolPos.maxScrollExtent;
 
       if (_scrolPos.pixels == _loadingStart) {
         print('paginating...' + srCrtl.pageNumber.value.toString());
@@ -33,39 +29,30 @@ class SearchResultScreen extends StatelessWidget {
       }
     });
 
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Theme.of(Get.context).backgroundColor,
-        body: CustomScrollView(
-          slivers: [
-            _buildAppBar(),
-            SliverToBoxAdapter(
-              key: UniqueKey(),
-              child: Center(
-                child: Obx(() {
-                  var _resultData = srCrtl.searchResults.value.data;
+    return Scaffold(
+      backgroundColor: Theme.of(Get.context).backgroundColor,
+      appBar: _buildAppBar(),
+      body: Obx(() {
+        var _resultData = srCrtl.searchResults.value.data;
 
-                  if (_resultData != null) {
-                    return _buildMainContent(srCrtl.searchResults.value);
-                  }
+        if (_resultData != null) {
+          return _buildMainContent(srCrtl.searchResults.value);
+        }
 
-                  if (ctrls.isLoading.value) {
-                    return Center(child: _buildSearchResultLoading());
-                  }
+        if (ctrls.isLoading.value) {
+          return Center(child: _buildSearchResultLoading());
+        }
 
-                  return Center(child: Text('No results...'));
-                }),
-              ),
-            )
-          ],
-        ),
-        bottomNavigationBar: bottomNavigation(),
-      ),
+        return Center(child: Text('No results...'));
+      }),
+      bottomNavigationBar: bottomNavigation(),
     );
   }
 
   Widget _buildHead(SearchModel data) {
+    // final _keyword = data.data
     var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
+    // final _keyword = data.query.capitalizeFirst;
     return Container(
       color: Colors.white,
       child: Gutter(Flex(
@@ -127,8 +114,6 @@ class SearchResultScreen extends StatelessWidget {
         final _data = _searchResults.results[index];
         if (_data.isBlank) return Text('Empty data');
 
-        print('index-->' + index.toString() + '-->' + _itemCount.toString());
-
         if (index == 0) {
           return Column(
             children: <Widget>[
@@ -139,6 +124,7 @@ class SearchResultScreen extends StatelessWidget {
         }
 
         if (index == _itemCount - 1) {
+          print('++++++++++++++++++++++');
           return Column(
             children: <Widget>[
               SearchResultItem(_data.resultId.toString(), _data),
@@ -146,6 +132,8 @@ class SearchResultScreen extends StatelessWidget {
             ],
           );
         }
+
+        print('index-->' + index.toString() + '-->' + _itemCount.toString());
 
         return SearchResultItem(_data.resultId.toString(), _data);
       },
@@ -184,57 +172,51 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildAppBar() {
-    return SliverAppBar(
-      floating: true,
+    return AppBar(
       centerTitle: true,
       elevation: 0,
       leading: _buildBackButton(),
       title: _buildSearchBox(),
     );
   }
-}
 
-Widget _buildSearchResultLoading({bool paginating: false}) {
-  print('_buildSearchResultLoading----<' + paginating.toString());
+  Widget _buildSearchResultLoading({bool paginating: false}) {
+    print('_buildSearchResultLoading----<' + paginating.toString());
 
-  if (paginating) {
+    if (paginating) {
+      return Center(
+        child: SingleChildScrollView(
+          child: Gutter(
+            Column(
+              children: [
+                SizedBox(height: 8),
+                Skeleton(height: 160),
+                SizedBox(height: 16),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Center(
       child: SingleChildScrollView(
         child: Gutter(
           Column(
             children: [
               SizedBox(height: 8),
+              Skeleton(height: 64),
+              SizedBox(height: 32),
               Skeleton(height: 160),
               SizedBox(height: 16),
+              Skeleton(height: 160),
+              SizedBox(height: 16),
+              Skeleton(height: 160),
+              SizedBox(height: 8),
             ],
           ),
         ),
       ),
     );
   }
-
-  return Center(
-    child: SingleChildScrollView(
-      child: Gutter(
-        Column(
-          children: [
-            SizedBox(height: 8),
-            Skeleton(height: 64),
-            SizedBox(height: 32),
-            Skeleton(height: 160),
-            Skeleton(height: 160),
-            Skeleton(height: 160),
-            Skeleton(height: 160),
-            Skeleton(height: 160),
-            Skeleton(height: 160),
-            SizedBox(height: 16),
-            Skeleton(height: 160),
-            SizedBox(height: 16),
-            Skeleton(height: 160),
-            SizedBox(height: 8),
-          ],
-        ),
-      ),
-    ),
-  );
 }

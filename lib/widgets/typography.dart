@@ -6,6 +6,10 @@ extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
+
+  String titleCase() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+  }
 }
 
 class HtmlH3 extends StatelessWidget {
@@ -14,10 +18,10 @@ class HtmlH3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _fColor = '#444';
-
     return HtmlWidget(
-        '<h3 style="color: $_fColor; font-weight: 600;">$_text</h3>');
+      '<div>${_text.titleCase()}</div>',
+      textStyle: Theme.of(context).textTheme.headline3,
+    );
   }
 }
 

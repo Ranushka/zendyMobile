@@ -19,7 +19,9 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     getUserData().then((_userData) {
-      _setUserData(_userData);
+      if (_userData != null) {
+        _setUserData(_userData);
+      }
     });
   }
 

@@ -20,10 +20,13 @@ class SearchResultItem extends StatelessWidget {
     final _abstract = _item.resultAbstract?.trim();
     var _zendyLink = _item.downloadLink ?? _item.zendyLink;
 
-    return Card(
-      color: Colors.transparent,
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
+    // return Card(
+    //   margin: EdgeInsets.all(0),
+    //   color: Colors.transparent,
+    //   elevation: 0,
+    //   clipBehavior: Clip.antiAlias,
+
+    return Container(
       child: Obx(() {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,10 +35,9 @@ class SearchResultItem extends StatelessWidget {
             _buildTitle(_item.title, _item.publicationYear, _zendyLink),
             if (_abstract != null)
               if (_isFullDetail.value)
-                _buildFullContent(_abstract)
+                _buildFullContent(_abstract, _isFullDetail)
               else
                 _buildShortContent(_abstract, _isFullDetail),
-            _actionsReadMore(_isFullDetail),
             _actionsBar(_isFullDetail, _zendyLink, _item.title, _id),
           ],
         );
@@ -83,31 +85,6 @@ class SearchResultItem extends StatelessWidget {
                   ),
                 ],
               ),
-              // OutlinedButton(
-              //   onPressed: () {
-              //     print('>>>>zendyLink>>>>' + _item.zendyLink);
-              //     print('>>>>downloadLink>>>>' + _item.downloadLink);
-              //     Get.toNamed(
-              //       Goto.webPage,
-              //       arguments: _item.downloadLink.isBlank
-              //           ? _item.zendyLink
-              //           : _item.downloadLink,
-              //     );
-              //   },
-              //   style: OutlinedButton.styleFrom(
-              //     side: BorderSide(
-              //       width: 1,
-              //       color: Theme.of(Get.context).primaryColor,
-              //     ),
-              //   ),
-              //   child: Text(
-              //     "Read full text",
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w600,
-              //         color: Theme.of(Get.context).primaryColor),
-              //   ),
-              // )
-              // else
               TextButton(
                 onPressed: () {
                   Get.toNamed(
@@ -134,15 +111,8 @@ class SearchResultItem extends StatelessWidget {
       },
       child: Gutter(
         Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white,
-                blurRadius: 4,
-                offset: Offset(0, -2), // Shadow position
-              ),
-            ],
-          ),
+          height: _isFullDetail.value ? 32 : 16,
+          color: Colors.white.withAlpha(220),
           width: double.infinity,
           // color: Colors.black54,
           child: _isFullDetail.value
@@ -188,67 +158,72 @@ class SearchResultItem extends StatelessWidget {
       onTap: () {
         _isFullDetail.value = true;
       },
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: HtmlP(_abstract, true),
-        // child: Text(
-        //   _abstract,
-        //   maxLines: 4,
-        //   overflow: TextOverflow.ellipsis,
-        //   style: TextStyle(color: Colors.black.withOpacity(0.6)),
-        // ),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: HtmlP(_abstract, true),
+          ),
+          _actionsReadMore(_isFullDetail),
+        ],
       ),
     );
   }
 
-  Widget _buildFullContent(String data) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (_item.resultAbstract != null) Gutter(HtmlP(_item.resultAbstract)),
-        SizedBox(height: 16),
-        if (_item.authors != null) _buildAuthorsList(_item.authors),
-        SizedBox(height: 16),
-        if (_item.keywords != null) _buildKeyWords(_item.keywords),
-        SizedBox(height: 16),
-        if (_item.subjects != null) _buildSubjectsList(_item.subjects),
+  Widget _buildFullContent(String data, _isFullDetail) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildAbstract(_item.resultAbstract),
+            _buildAuthorsList(_item.authors),
+            _buildKeyWords(_item.keywords),
+            _buildSubjectsList(_item.subjects),
+            SizedBox(height: 16),
+          ],
+        ),
+        _actionsReadMore(_isFullDetail),
       ],
     );
   }
 
   Widget _buildKeyWords(String data) {
+    if (data == null || data == '' || data[0] == '') return Container();
     var _data = data.split(',');
 
-    if (_data[0] == '') {
-      return Container();
-    }
-
-    return Gutter(Wrap(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Title4('Keywords'),
-        ),
-        ..._data.map((_itm) {
-          return Padding(
+    return Gutter(
+      Column(children: [
+        Wrap(children: [
+          Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.blue.shade100,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 4, bottom: 4),
-                child: new LinkText(_itm.trim()),
+            child: Title4('Keywords'),
+          ),
+          ..._data.map((_itm) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: InkWell(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.blue.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 4, bottom: 4),
+                  child: new LinkText(_itm.trim()),
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
-            ),
-          );
-        })
-      ],
-    ));
+            );
+          }),
+        ]),
+        SizedBox(height: 16, width: 16),
+      ]),
+    );
   }
 
   Widget _buildSubjectsList(String data) {
+    if (data == null) return Container();
     var _data = data.split(',');
 
     return Gutter(Wrap(
@@ -276,32 +251,47 @@ class SearchResultItem extends StatelessWidget {
     ));
   }
 
-  Widget _buildAuthorsList(String data) {
-    var _data = data.split(',');
+  Widget _buildAbstract(String data) {
+    if (data == null) return Container();
 
     return Gutter(Wrap(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Title4('Authors'),
-        ),
-        ..._data.map((_itm) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: InkWell(
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.blue.shade100,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 4, bottom: 4),
-                child: LinkText(_itm.trim()),
-              ),
-              onTap: () {},
-            ),
-          );
-        })
+        HtmlP(_item.resultAbstract),
+        SizedBox(height: 16, width: 16),
       ],
     ));
+  }
+
+  Widget _buildAuthorsList(String data) {
+    if (data == null) return Container();
+    var _data = data.split(',');
+
+    return Gutter(
+      Column(children: [
+        Wrap(children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Title4('Authors'),
+          ),
+          ..._data.map((_itm) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: InkWell(
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.blue.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 4, bottom: 4),
+                  child: LinkText(_itm.trim()),
+                ),
+                onTap: () {},
+              ),
+            );
+          }),
+        ]),
+        SizedBox(height: 16, width: 16),
+      ]),
+    );
   }
 
   String _linkType() {

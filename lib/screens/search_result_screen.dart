@@ -14,21 +14,10 @@ class SearchResultScreen extends StatelessWidget {
   final SearchResultController srCrtl = Get.put(SearchResultController());
   final SearchResultController ctrls = Get.find();
 
-  final ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(() {
-      var _scrolPos = _scrollController.position;
-      var _loadingStart = _scrolPos.maxScrollExtent;
-
-      if (_scrolPos.pixels == _loadingStart) {
-        print('paginating...' + srCrtl.pageNumber.value.toString());
-        srCrtl.pageNumber.value = srCrtl.pageNumber.value + 1;
-        srCrtl.searchResultsGet();
-      }
-    });
-
     return Scaffold(
       backgroundColor: Theme.of(Get.context).backgroundColor,
       appBar: _buildAppBar(),
@@ -65,7 +54,7 @@ class SearchResultScreen extends StatelessWidget {
             children: [
               SizedBox(height: 8),
               SmallMute('Showing 203k results for'),
-              Title2(_keyword),
+              Title2(_keyword.capitalizeFirst),
               SizedBox(height: 8),
             ],
           ),
@@ -100,14 +89,25 @@ class SearchResultScreen extends StatelessWidget {
 
     var _itemCount = _searchResults.results.length;
 
+    _scrollController.addListener(() {
+      var _scrolPos = _scrollController.position;
+      var _loadingStart = _scrolPos.maxScrollExtent;
+
+      if (_scrolPos.pixels == _loadingStart) {
+        print('paginating...' + srCrtl.pageNumber.value.toString());
+        srCrtl.pageNumber.value = srCrtl.pageNumber.value + 1;
+        srCrtl.searchResultsGet();
+      }
+    });
+
     return ListView.separated(
       controller: _scrollController,
       shrinkWrap: true,
       itemCount: _itemCount,
       separatorBuilder: (context, index) {
         return Gutter(Divider(
-          color: Colors.black12,
-          height: 0,
+          color: Theme.of(Get.context).primaryColor,
+          height: 2,
         ));
       },
       itemBuilder: (context, index) {
@@ -124,7 +124,6 @@ class SearchResultScreen extends StatelessWidget {
         }
 
         if (index == _itemCount - 1) {
-          print('++++++++++++++++++++++');
           return Column(
             children: <Widget>[
               SearchResultItem(_data.resultId.toString(), _data),
@@ -132,8 +131,6 @@ class SearchResultScreen extends StatelessWidget {
             ],
           );
         }
-
-        print('index-->' + index.toString() + '-->' + _itemCount.toString());
 
         return SearchResultItem(_data.resultId.toString(), _data);
       },

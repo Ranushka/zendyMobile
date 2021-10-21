@@ -1,39 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:pdf_viewer_jk/pdf_viewer_jk.dart';
-
-import 'package:zendy_app/services/services.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:zendy_app/controllers/controllers.dart';
-
-Widget _buildPdfView(url, _headers) {
-  return FutureBuilder(
-    future: PDFDocument.fromURL(url, headers: _headers),
-    builder: (_, pdfData) {
-      if (pdfData.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
-      } else if (pdfData.data == null) {
-        return Text('No PDF data');
-      } else {
-        return PDFViewer(
-          document: pdfData.data,
-          scrollDirection: Axis.vertical,
-          showPicker: false,
-          lazyLoad: false,
-          navigationBuilder: (
-            context,
-            page,
-            totalPages,
-            jumpToPage,
-            animateToPage,
-          ) {
-            return ButtonBar(children: []);
-          },
-        );
-      }
-    },
-  );
-}
 
 class LoadWebScreen extends StatelessWidget {
   final AuthController authCtrl = Get.put(AuthController());
@@ -42,28 +11,29 @@ class LoadWebScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WebView.platform = SurfaceAndroidWebView();
     var url = Get.arguments;
-    // url = url.replaceAll("http://", "https://");
+    print('> url >' + url);
 
     Widget bodyContent = Center(child: Text('Hmmm..., some thing went wrong'));
 
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
-    print('>>>>url>>>>' + url);
 
-    // if (url != '') {
-    //   bodyContent = WebView(
-    //     onWebViewCreated: (controller) {
-    //       controller.loadUrl(
-    //         url,
-    //         headers: _headers,
-    //       );
-    //     },
-    //   );
-    // }
-
-    // if (RegExp(r'.+\.pdf$').hasMatch(url)) {
-    // if (RegExp(r'.+\pdf$').hasMatch(url)) {
-    bodyContent = _buildPdfView(url, _headers);
-    // }
+    if (RegExp(r'.+\.pdf$').hasMatch(url)) {
+      bodyContent = const PDF().cachedFromUrl(
+        url,
+        headers: _headers,
+        placeholder: (double progress) => Center(child: Text('$progress %')),
+        errorWidget: (dynamic error) => Center(child: Text(error.toString())),
+      );
+    } else {
+      bodyContent = WebView(
+        onWebViewCreated: (controller) {
+          controller.loadUrl(
+            url,
+            headers: _headers,
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: _buildAppBar(),
@@ -74,7 +44,6 @@ class LoadWebScreen extends StatelessWidget {
   Widget _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
-      brightness: Brightness.light,
       leading: _buildBackButton(),
       actions: [
         IconButton(
