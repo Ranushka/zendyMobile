@@ -82,7 +82,6 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: Goto.profile,
           page: () => SettingsScreen(),
-          // page: () => ProfileScreen(),
           transition: Transition.noTransition,
         ),
         GetPage(
