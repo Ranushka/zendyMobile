@@ -25,6 +25,10 @@ class AuthController extends GetxController {
     });
   }
 
+  bool isLoggedIn() {
+    return currentUser.value.authToken != '';
+  }
+
   void signUp() async {
     try {
       isLoading(true);

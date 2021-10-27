@@ -103,9 +103,7 @@ class HomeScreen extends StatelessWidget {
           )),
         ));
       }
-      // return Container();
-      return Text(
-          'Create account' + authController.currentUser.value.firstName);
+      return Container();
     });
   }
 

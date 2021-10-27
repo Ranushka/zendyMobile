@@ -147,7 +147,7 @@ Widget _resentSearchHistory() {
           padding: EdgeInsets.only(top: 10, bottom: 20),
           physics: BouncingScrollPhysics(),
           itemCount: snapshot.data.size,
-          separatorBuilder: (context, index) => Divider(),
+          separatorBuilder: (context, index) => Divider(height: 1),
           itemBuilder: (context, index) {
             final item = snapshot.data.docs[index];
 
@@ -159,12 +159,17 @@ Widget _resentSearchHistory() {
             var _qryVal = contactItem.query;
 
             return ListTile(
-              minLeadingWidth: 32,
+              // dense: true,
+              // horizontalTitleGap: 8,
+              // minLeadingWidth: 32,
+              // contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
               leading: Icon(Icons.history_toggle_off),
               title: Text(_qryVal),
               onTap: () => _searchAction(_qryVal),
               trailing: IconButton(
-                icon: Icon(Icons.upgrade_rounded),
+                icon: Icon(
+                  Icons.upgrade_rounded,
+                ),
                 onPressed: () {
                   scCtrl.searchField.text = _qryVal;
                 },

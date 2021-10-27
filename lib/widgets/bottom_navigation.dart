@@ -1,13 +1,13 @@
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 Widget bottomNavigation() {
   final RxInt _curIn = 0.obs;
+  final AuthController authCtrl = Get.find();
 
   Widget btnReguler(String name, IconData icon, onClick) {
     final isActive = Get.currentRoute == name;
@@ -123,7 +123,11 @@ Widget bottomNavigation() {
               CusIcons.user,
               () {
                 _curIn.value = 4;
-                Get.toNamed(Goto.profile);
+                if (authCtrl.isLoggedIn()) {
+                  Get.toNamed(Goto.profile);
+                } else {
+                  Get.toNamed(Goto.login);
+                }
               },
             ),
           ],
@@ -131,33 +135,4 @@ Widget bottomNavigation() {
       ),
     ),
   );
-
-  // return BottomNavigationBar(
-  //   type: BottomNavigationBarType.fixed,
-  //   // showUnselectedLabels: true,
-  //   selectedFontSize: 14,
-  //   onTap: onTabTapped, // new
-  //   currentIndex: _curIn.value,
-  //   items: [
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.home),
-  //       label: 'Home',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.business),
-  //       label: 'Business',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.school),
-  //       label: 'School',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.settings),
-  //       label: 'Settings',
-  //     ),
-  //   ],
-  //   // currentIndex: _selectedIndex,
-  //   selectedItemColor: Colors.amber[800],
-  //   // onTap: _onItemTapped,
-  // );
 }
