@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
 
-// final c = {
-//   'transparent': Colors.transparent,
-//   'primary': Colors.orange,
-// };
-
-class CusColors {
-  final transparent = Colors.transparent;
-  final primary = Colors.orange;
-  final primaryLight = Colors.orange[100];
-  final acc1 = Colors.black87;
-  final acc2 = Colors.black54;
-}
-
-final c = CusColors();
-
 final customTheme = {
   "BASE": ThemeData(
-    focusColor: c.primaryLight,
-    highlightColor: c.primaryLight,
-    splashColor: c.primaryLight,
+    focusColor: Colors.orange[100],
+    highlightColor: Colors.orange[100],
+    splashColor: Colors.orange[100],
     primaryColor: Colors.orange,
     primaryColorLight: Colors.orange[50],
+    hintColor: Colors.grey.shade400,
     backgroundColor: Colors.white,
     textTheme: TextTheme(
       headline1: TextStyle(

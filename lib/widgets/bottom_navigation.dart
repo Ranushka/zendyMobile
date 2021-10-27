@@ -12,15 +12,14 @@ Widget bottomNavigation() {
   Widget btnReguler(String name, IconData icon, onClick) {
     final isActive = Get.currentRoute == name;
     final pc = Theme.of(Get.context).primaryColor;
-    final sc = Theme.of(Get.context).accentColor.withOpacity(0.3);
+    final sc = Theme.of(Get.context).hintColor;
 
     return Expanded(
       flex: 1,
       child: Material(
-        // color: Theme.of(Get.context).primaryColorLight,
         color: Theme.of(Get.context).backgroundColor,
         child: IconButton(
-          highlightColor: c.primaryLight,
+          highlightColor: Theme.of(Get.context).primaryColorLight,
           color: isActive ? pc : sc,
           iconSize: 24,
           icon: Icon(icon),
@@ -31,11 +30,17 @@ Widget bottomNavigation() {
   }
 
   Widget btnSearch(String name, IconData icon, onClick) {
+    // final isActive = Get.currentRoute == Goto.searchResult;
+    // final pc = Theme.of(Get.context).primaryColor;
+    // // final sc = Theme.of(Get.context).hintColor.withOpacity(0.3);
+    // final sc = Theme.of(Get.context).hintColor;
+
     return Expanded(
       flex: 1,
       child: Transform.translate(
         offset: const Offset(0, -16),
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(

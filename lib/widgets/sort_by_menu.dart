@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-
 Widget sortByMenu() {
   final selected = "By relevence".obs;
 
@@ -12,7 +10,6 @@ Widget sortByMenu() {
 
   return Obx(() {
     return DropdownButton(
-      style: TextStyle(color: c.acc1, fontSize: 14),
       underline: Container(),
       value: selected.value,
       itemHeight: 50.0,

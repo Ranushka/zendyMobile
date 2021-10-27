@@ -18,6 +18,7 @@ class SearchResultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final RxBool _isFullDetail = false.obs;
     final _abstract = _item.resultAbstract?.trim();
+    print(_item.downloadLink + '---' + _item.zendyLink);
     var _zendyLink = _item.downloadLink ?? _item.zendyLink;
 
     // return Card(
@@ -89,9 +90,10 @@ class SearchResultItem extends StatelessWidget {
                 onPressed: () {
                   Get.toNamed(
                     Goto.webPage,
-                    arguments: _item.downloadLink.isBlank
-                        ? _item.zendyLink
-                        : _item.downloadLink,
+                    arguments: {
+                      'read': _item.zendyLink,
+                      'download': _item.downloadLink,
+                    },
                   );
                 },
                 child: const Text('Read full'),
@@ -103,9 +105,9 @@ class SearchResultItem extends StatelessWidget {
 
   Widget _actionsReadMore(_isFullDetail) {
     return InkWell(
-      focusColor: c.transparent,
-      highlightColor: c.transparent,
-      splashColor: c.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onTap: () {
         _isFullDetail.value = !_isFullDetail.value;
       },
@@ -125,22 +127,23 @@ class SearchResultItem extends StatelessWidget {
 
   Widget _buildTitle(String _title, int _year, String _zendyLink) {
     return InkWell(
-      focusColor: c.transparent,
-      highlightColor: c.transparent,
-      splashColor: c.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onTap: () {
-        print('>>>>_sourceLink>>>>' + _zendyLink);
-
         Get.toNamed(
           Goto.webPage,
-          arguments: _zendyLink,
+          arguments: {
+            'read': _item.zendyLink,
+            'download': _item.downloadLink,
+          },
         );
       },
       child: Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          Gutter(Title4('Journal - $_year - ${_linkType()}')),
+          Gutter(Title4('Journal - $_year - ${_item.journalTitle}')),
           SizedBox(height: 8),
           Gutter(HtmlH3(_title)),
           // HtmlH3(_title),
@@ -152,9 +155,9 @@ class SearchResultItem extends StatelessWidget {
 
   Widget _buildShortContent(_abstract, _isFullDetail) {
     return InkWell(
-      focusColor: c.transparent,
-      highlightColor: c.transparent,
-      splashColor: c.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onTap: () {
         _isFullDetail.value = true;
       },

@@ -19,26 +19,19 @@ void getHttp(url) async {
       await Permission.storage.request();
     }
 
-    String path = await getDirectoryPath();
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String path = appDocDir.path;
 
+    dynamic response1 = await _request.get(url, '$path/pdf/xx.html');
     dynamic response = await _request.download(url, '$path/pdf/xx.html');
 
     print('---->>>>');
+    print(response1);
     print(response);
     print('---->>>');
   } catch (e) {
     print(e);
   }
-}
-
-Future<String> getDirectoryPath() async {
-  Directory appDocDirectory = await getApplicationDocumentsDirectory();
-
-  Directory directory = await new Directory(
-    appDocDirectory.path + '/' + 'dir',
-  ).create(recursive: true);
-
-  return directory.path;
 }
 
 class LoadWebScreen extends StatelessWidget {
@@ -48,38 +41,33 @@ class LoadWebScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WebView.platform = SurfaceAndroidWebView();
-    Map url = Get.arguments;
-    String _readLink = url['read'];
-    String _downloadLink = url['download'];
-    print('> url >' + url.toString());
+    var url = Get.arguments;
+    print('> url >' + url);
 
     Widget bodyContent = Center(child: Text('Hmmm..., some thing went wrong'));
 
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
 
-    // if (!url.isEmpty) {
-    //   getHttp(url);
-    // }
+    if (!url.isEmpty) {
+      getHttp(url);
+    }
 
-    // if (RegExp(r'.+\.pdf$').hasMatch(url)) {
-    if (_downloadLink.isNotEmpty) {
+    if (RegExp(r'.+\.pdf$').hasMatch(url)) {
       bodyContent = const PDF().cachedFromUrl(
-        _downloadLink,
+        url,
         headers: _headers,
         placeholder: (double progress) => Center(child: Text('$progress %')),
         errorWidget: (dynamic error) => Center(child: Text(error.toString())),
       );
-    } else if (_readLink.isNotEmpty) {
+    } else {
       bodyContent = WebView(
         onWebViewCreated: (controller) {
           controller.loadUrl(
-            _readLink,
+            url,
             headers: _headers,
           );
         },
       );
-    } else {
-      bodyContent = Center(child: Text('Hmmm..., No link'));
     }
 
     return Scaffold(
