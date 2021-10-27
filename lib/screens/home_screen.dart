@@ -33,13 +33,7 @@ class HomeScreen extends StatelessWidget {
         _buildDumySearchInput(),
         SizedBox(height: 8),
         _buildLatustNewsList(),
-        Obx(() {
-          print('>>>>auth>>>>' + authController.currentUser.value.firstName);
-          if (authController.currentUser.value.firstName == '') {
-            return _buildJoinZendyPlus();
-          }
-          return Container();
-        }),
+        _buildJoinZendyPlus(),
         _buildFromOurBlog(),
         SizedBox(height: 32),
       ],
@@ -75,37 +69,44 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildJoinZendyPlus() {
-    return Gutter(Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Theme.of(Get.context).primaryColorLight,
-      ),
-      child: Gutter(Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 16),
-          Title2('Join Zendy plus'),
-          SizedBox(height: 16),
-          TextBody(
-              'Create free account and enjoy Zendy plus and the feacthers comes with it.'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Obx(() {
+      if (authController.currentUser.value.firstName == '') {
+        return Gutter(Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Theme.of(Get.context).primaryColorLight,
+          ),
+          child: Gutter(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextButton(
-                child: const Text('Learn more'),
-                onPressed: () {},
-              ),
-              TextButton(
-                child: const Text('Create account'),
-                onPressed: () {
-                  Get.toNamed(Goto.login);
-                },
+              SizedBox(height: 16),
+              Title2('Join Zendy plus'),
+              SizedBox(height: 16),
+              TextBody(
+                  'Create free account and enjoy Zendy plus and the feacthers comes with it.'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    child: const Text('Learn more'),
+                    onPressed: () {},
+                  ),
+                  TextButton(
+                    child: const Text('Create account'),
+                    onPressed: () {
+                      Get.toNamed(Goto.login);
+                    },
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
-      )),
-    ));
+          )),
+        ));
+      }
+      // return Container();
+      return Text(
+          'Create account' + authController.currentUser.value.firstName);
+    });
   }
 
   Widget _buildLatustNewsList() {

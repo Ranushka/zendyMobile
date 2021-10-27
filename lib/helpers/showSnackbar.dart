@@ -7,12 +7,12 @@ void showSnackbar({
   Color colorText = Colors.white,
   Color backgroundColor = Colors.black54,
 }) {
-  // Get.back();
   Get.snackbar(
     title,
     message,
     colorText: colorText,
     backgroundColor: backgroundColor,
     snackPosition: SnackPosition.BOTTOM,
+    margin: EdgeInsets.all(8),
   );
 }

@@ -2,6 +2,7 @@ class Goto {
   static const baseUrl = 'https://zendy-ranushka.vercel.app';
   static const home = '/';
   static const login = '/login';
+  static const loginEmail = '/login/email';
   static const signup = '/signup';
   static const title = '/title/';
   static const search = '/search';

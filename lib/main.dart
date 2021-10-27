@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
           transition: Transition.noTransition,
         ),
         GetPage(name: Goto.settings, page: () => SettingsScreen()),
-        GetPage(name: Goto.login, page: () => SignInScreen()),
+        GetPage(name: Goto.login, page: () => LoginScreen()),
+        GetPage(name: Goto.loginEmail, page: () => LoginEmailScreen()),
         GetPage(name: Goto.signup, page: () => SignUpScreen()),
         GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
         GetPage(

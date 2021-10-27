@@ -205,17 +205,20 @@ class SettingsScreen extends StatelessWidget {
 // }
 
 Widget _buildUserLogoutBtn(context) {
+  final AuthController authController = Get.put(AuthController());
+
   return IconButton(
     icon: Icon(Icons.logout),
     onPressed: () {
       print('user loging out');
       deleteUserTokenData();
-      Get.reset();
-      Get.put(SavedCitationsController());
-      Get.put(SearchHistoryController());
-      Get.put(SearchResultController());
-      Get.put(SearchController());
-      // Get.toNamed('/');
+      authController.logOut();
+      // Get.reset();
+      // Get.put(SavedCitationsController());
+      // Get.put(SearchHistoryController());
+      // Get.put(SearchResultController());
+      // Get.put(SearchController());
+      Get.toNamed('/');
     },
   );
 }

@@ -7,12 +7,12 @@ import 'package:zendy_app/services/auth_service.dart';
 class AuthController extends GetxController {
   var isLoading = true.obs;
   final currentUser = UserModel(
-    firstName: '',
-    lastName: '',
-    email: '',
-    id: '',
-    phoneNumber: '',
     authToken: '',
+    email: '',
+    firstName: '',
+    id: '',
+    lastName: '',
+    phoneNumber: '',
   ).obs;
 
   @override
@@ -51,17 +51,26 @@ class AuthController extends GetxController {
     }
   }
 
+  void logOut() {
+    currentUser.value.authToken = '';
+    currentUser.value.email = '';
+    currentUser.value.firstName = '';
+    currentUser.value.id = '';
+    currentUser.value.lastName = '';
+    currentUser.value.phoneNumber = '';
+  }
+
   void _setUserData(_userData) {
     if (_userData != null) {
       var _data = _userData['user'];
       var _dataAuthToken = _userData['authToken'];
 
-      currentUser.value.firstName = _data['firstName'];
-      currentUser.value.lastName = _data['lastName'];
-      currentUser.value.email = _data['email'];
-      currentUser.value.id = _data['id'];
-      currentUser.value.phoneNumber = _data['phoneNumber'];
       currentUser.value.authToken = _dataAuthToken;
+      currentUser.value.email = _data['email'];
+      currentUser.value.firstName = _data['firstName'];
+      currentUser.value.id = _data['id'];
+      currentUser.value.lastName = _data['lastName'];
+      currentUser.value.phoneNumber = _data['phoneNumber'];
     }
   }
 }
