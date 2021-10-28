@@ -99,15 +99,20 @@ class LoginEmailScreen extends StatelessWidget {
   }
 
   Widget _buildBackButton() {
-    return Flex(
-      direction: Axis.horizontal,
+    return Row(
+      // direction: Axis.horizontal,
       children: [
-        IconButton(
-          splashRadius: 24,
-          icon: Icon(Icons.arrow_back_rounded),
-          onPressed: () => Get.back(),
+        Transform.translate(
+          offset: Offset(-16, 0),
+          child: IconButton(
+            splashRadius: 24,
+            icon: Icon(Icons.arrow_back_rounded),
+            onPressed: () => Get.back(),
+          ),
         ),
-        Title1('Join with Email')
+        Container(
+          child: Title1('Join with Email'),
+        )
       ],
     );
   }

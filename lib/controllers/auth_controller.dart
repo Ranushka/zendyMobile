@@ -5,7 +5,7 @@ import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/services/auth_service.dart';
 
 class AuthController extends GetxController {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   final currentUser = UserModel(
     authToken: '',
     email: '',

@@ -12,7 +12,7 @@ class SearchService {
   ) async {
     pageNumber ??= 1;
 
-    final _response = await getAuthindicatedResponse('/search/oa/search', {
+    final _response = await getResponse('/search/oa/search', {
       "searchQuery": [
         {"term": searchQuery}
       ],

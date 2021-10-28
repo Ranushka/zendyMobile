@@ -126,6 +126,23 @@ Future getAuthindicatedResponse(String path, dynamic body) async {
   return null;
 }
 
+Future getResponse(String path, dynamic body) async {
+  final _url = Uri.https("api.staging-oa.zendy.io", path);
+  final _body = json.encode(body);
+
+  var _response = await requestClient.post(
+    _url,
+    headers: {"Content-Type": "application/json"},
+    body: _body,
+  );
+
+  if (_response != null) {
+    return _response;
+  }
+
+  return null;
+}
+
 Future getAokenData() async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 

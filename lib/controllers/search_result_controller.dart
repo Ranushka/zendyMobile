@@ -19,13 +19,15 @@ class SearchResultController extends GetxController {
       if (pageNumber.value == 1) {
         isLoading(true);
       }
-      print('>>>>>>>>' + pageNumber.value.toString() + '--' + searchQry.value);
 
       SearchHistoryController().saveContact(searchQry.value);
+      print('searchQry >>>>>>>>' + searchQry.value);
       var _dataSet = await SearchService.getResults(
         searchQry.value,
         pageNumber.value,
       );
+
+      print('_dataSet >>>>>>>');
 
       if (pageNumber > 1) {
         List<SearchModelResultItem> _oldList =

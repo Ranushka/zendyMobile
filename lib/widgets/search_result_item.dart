@@ -87,15 +87,7 @@ class SearchResultItem extends StatelessWidget {
                 ],
               ),
               TextButton(
-                onPressed: () {
-                  Get.toNamed(
-                    Goto.webPage,
-                    arguments: {
-                      'read': _item.zendyLink,
-                      'download': _item.downloadLink,
-                    },
-                  );
-                },
+                onPressed: () => _goToWebPage(),
                 child: const Text('Read full'),
               ),
             ],
@@ -130,15 +122,7 @@ class SearchResultItem extends StatelessWidget {
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      onTap: () {
-        Get.toNamed(
-          Goto.webPage,
-          arguments: {
-            'read': _item.zendyLink,
-            'download': _item.downloadLink,
-          },
-        );
-      },
+      onTap: () => _goToWebPage(),
       child: Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
@@ -303,5 +287,21 @@ class SearchResultItem extends StatelessWidget {
       return 'PDF';
     }
     return 'URL';
+  }
+
+  _goToWebPage() {
+    final AuthController authCtrl = Get.find();
+
+    if (authCtrl.isLoggedIn()) {
+      Get.toNamed(
+        Goto.webPage,
+        arguments: {
+          'read': _item.zendyLink,
+          'download': _item.downloadLink,
+        },
+      );
+    } else {
+      loginToProceed();
+    }
   }
 }

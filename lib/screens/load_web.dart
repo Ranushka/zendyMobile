@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/request_controller.dart';
 
 void getHttp(url) async {
@@ -57,6 +58,14 @@ class LoadWebScreen extends StatelessWidget {
 
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
 
+    if (!authCtrl.isLoggedIn()) {
+      loginToProceed();
+      return Scaffold(
+        appBar: _buildAppBar(),
+        body: Text('User Not loggedIn'),
+      );
+    }
+
     // if (!url.isEmpty) {
     //   getHttp(url);
     // }
@@ -67,10 +76,11 @@ class LoadWebScreen extends StatelessWidget {
         _downloadLink,
         headers: _headers,
         placeholder: (double progress) => Center(child: Text('$progress %')),
-        errorWidget: (dynamic error) => Center(child: Text(error.toString())),
+        errorWidget: (dynamic error) => _buildPdfError(error),
       );
     } else if (_readLink.isNotEmpty) {
       bodyContent = WebView(
+        // onWebResourceError: (dynamic error) => _buildPdfError(error),
         onWebViewCreated: (controller) {
           controller.loadUrl(
             _readLink,
@@ -78,6 +88,7 @@ class LoadWebScreen extends StatelessWidget {
           );
         },
       );
+      print('object');
     } else {
       bodyContent = Center(child: Text('Hmmm..., No link'));
     }
@@ -116,5 +127,13 @@ class LoadWebScreen extends StatelessWidget {
       icon: Icon(Icons.arrow_back_rounded),
       onPressed: () => Get.back(),
     );
+  }
+
+  dynamic _buildPdfError(dynamic error) {
+    print('object--------?');
+    if (error.statusCode == 401) {
+      loginToProceed();
+    }
+    return Center(child: Text(error.toString()));
   }
 }
