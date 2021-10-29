@@ -49,6 +49,11 @@ void main() async {
     permanent: true,
   );
 
+  Get.put<FeaturedContentController>(
+    FeaturedContentController(),
+    permanent: true,
+  );
+
   runApp(MyApp());
 }
 

@@ -13,3 +13,8 @@ class Goto {
   static const webPage = '/web';
   static const settings = '/settings';
 }
+
+class Api {
+  static const featuredContent =
+      'https://curated-test.zendy.io/wp-json/zendy-region/v1/featured_content/oa?cat=en';
+}

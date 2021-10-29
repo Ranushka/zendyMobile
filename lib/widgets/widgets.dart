@@ -4,6 +4,7 @@ export 'cite_model.dart';
 export 'cus_icons.dart';
 export 'empty_appBar.dart';
 export 'filters_model.dart';
+export 'latest_news_list.dart';
 export 'login_to_proceed.dart';
 export 'page_title.dart';
 export 'profile_tile_dropdown_multiple.dart';
