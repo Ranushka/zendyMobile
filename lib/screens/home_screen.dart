@@ -7,8 +7,8 @@ import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 
 class HomeScreen extends StatelessWidget {
-  final ProductController productController = Get.put(ProductController());
-  final AuthController authController = Get.put(AuthController());
+  final ProductController productController = Get.find();
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         LatestNewsList(),
         BySubjects(),
         SizedBox(height: 32),
-        _buildJoinZendyPlus(),
+        JoinZendy(),
         FromBlog(),
         SizedBox(height: 32),
       ],
@@ -68,45 +68,6 @@ class HomeScreen extends StatelessWidget {
         );
       else
         return Gutter(Title3('Welcome to Zendy'));
-    });
-  }
-
-  Widget _buildJoinZendyPlus() {
-    return Obx(() {
-      if (authController.currentUser.value.firstName == '') {
-        return Gutter(Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Theme.of(Get.context).primaryColorLight,
-          ),
-          child: Gutter(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              Title2('Join Zendy plus'),
-              SizedBox(height: 16),
-              TextBody(
-                  'Create free account and enjoy Zendy plus and the feacthers comes with it.'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    child: const Text('Learn more'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: const Text('Create account'),
-                    onPressed: () {
-                      Get.toNamed(Goto.login);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          )),
-        ));
-      }
-      return Container();
     });
   }
 

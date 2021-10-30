@@ -99,7 +99,11 @@ Widget bottomNavigation() {
               CusIcons.searches,
               () {
                 _curIn.value = 2;
-                Get.toNamed(Goto.searches);
+                if (authCtrl.isLoggedIn()) {
+                  Get.toNamed(Goto.searches);
+                } else {
+                  Get.toNamed(Goto.login);
+                }
               },
             ),
             btnSearch(
@@ -115,7 +119,11 @@ Widget bottomNavigation() {
               CusIcons.cite,
               () {
                 _curIn.value = 3;
-                Get.toNamed(Goto.citations);
+                if (authCtrl.isLoggedIn()) {
+                  Get.toNamed(Goto.citations);
+                } else {
+                  Get.toNamed(Goto.login);
+                }
               },
             ),
             btnReguler(
@@ -123,11 +131,7 @@ Widget bottomNavigation() {
               CusIcons.user,
               () {
                 _curIn.value = 4;
-                if (authCtrl.isLoggedIn()) {
-                  Get.toNamed(Goto.profile);
-                } else {
-                  Get.toNamed(Goto.login);
-                }
+                Get.toNamed(Goto.profile);
               },
             ),
           ],

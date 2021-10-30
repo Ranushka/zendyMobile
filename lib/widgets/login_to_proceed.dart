@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-loginToProceed() {
-  // Get.defaultDialog(content: Text('Please sign in to proseed'));
+import 'package:zendy_app/helpers/helpers.dart';
 
-  Get.defaultDialog(title: 'GetX Alert', middleText: 'Simple GetX alert');
+loginToProceed() {
+  Get.defaultDialog(
+    radius: 8,
+    title: 'Join Zendy',
+    middleText:
+        'Please login or crate account to download or read full article.',
+    actions: [
+      ElevatedButton(
+        child: const Text('Create account / Login'),
+        onPressed: () {
+          Get.back();
+          Get.toNamed(Goto.login);
+        },
+      )
+    ],
+  );
 }
