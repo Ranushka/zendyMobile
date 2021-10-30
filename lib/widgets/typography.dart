@@ -67,13 +67,16 @@ class Title2 extends StatelessWidget {
 
 class Title3 extends StatelessWidget {
   final String _text;
-  const Title3(this._text);
+  final int ml;
+  const Title3(this._text, {this.ml = 6});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
       style: Theme.of(context).textTheme.headline3,
+      maxLines: ml,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

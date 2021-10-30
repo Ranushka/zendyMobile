@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zendy_app/widgets/from_blog.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/helpers/helpers.dart';
@@ -33,9 +34,10 @@ class HomeScreen extends StatelessWidget {
         _buildDumySearchInput(),
         SizedBox(height: 8),
         LatestNewsList(),
-        // _buildLatustNewsList(),
+        BySubjects(),
+        SizedBox(height: 32),
         _buildJoinZendyPlus(),
-        _buildFromOurBlog(),
+        FromBlog(),
         SizedBox(height: 32),
       ],
       direction: Axis.vertical,
@@ -106,129 +108,6 @@ class HomeScreen extends StatelessWidget {
       }
       return Container();
     });
-  }
-
-  Widget _buildLatustNewsList() {
-    _content() {
-      return Gutter(Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          WidgetTitleAction('Curated just for you', () {}),
-          _buildLatustNews(),
-          _buildLatustNews(),
-          _buildLatustNews(),
-        ],
-      ));
-    }
-
-    final sc = Gutter(
-      Column(
-        children: [
-          Skeleton(),
-          SizedBox(height: 8),
-          Skeleton(),
-          SizedBox(height: 8),
-          Skeleton(),
-          SizedBox(height: 8),
-        ],
-      ),
-    );
-
-    return Obx(() {
-      if (productController.isLoading.value)
-        return sc;
-      else
-        return _content();
-    });
-  }
-
-  Widget _buildFromOurBlog() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: 8),
-        Gutter(WidgetTitleAction('From our blog', () {})),
-        SingleChildScrollView(
-          clipBehavior: Clip.none,
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SizedBox(width: 16),
-              _buildBlogNewsItem(),
-              _buildBlogNewsItem(),
-              _buildBlogNewsItem(),
-              SizedBox(width: 16),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildBlogNewsItem() {
-    return Container(
-      width: Get.width * 0.8,
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        elevation: 1,
-        // clipBehavior: Clip.antiAlias,
-        child: Column(
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('https://picsum.photos/id/237/300/200'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Title3('Card title 1'),
-                  SizedBox(height: 8),
-                  TextBody(
-                      'Greyhound divisively hello coldly wonderfully marginally far upon excluding.')
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLatustNews() {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.only(bottom: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Title5('Elsevier - Journal'),
-                  SizedBox(height: 4),
-                  Title3('Debut Novelists and Women Dominate'),
-                  SizedBox(height: 4),
-                  TextBody(
-                    'Some literary heavy hitters missed out, including Hilary Mantel, whose latest work, “The Mirror and the Light,” did not make the cut',
-                    ml: 2,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _buildDumySearchInput() {

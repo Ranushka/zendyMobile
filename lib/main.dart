@@ -11,6 +11,7 @@ import 'package:zendy_app/controllers/search_result_controller.dart';
 import 'package:zendy_app/controllers/search_history_c.dart';
 
 import 'package:zendy_app/screens/screens.dart';
+import 'package:zendy_app/widgets/widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,11 @@ void main() async {
 
   Get.put<FeaturedContentController>(
     FeaturedContentController(),
+    permanent: true,
+  );
+
+  Get.put<BySubjectsController>(
+    BySubjectsController(),
     permanent: true,
   );
 
