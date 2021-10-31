@@ -1,5 +1,6 @@
 export 'bottom_navigation.dart';
 export 'by_subjects.dart';
+export 'check_connection.dart';
 export 'citations_export_menu.dart';
 export 'cite_model.dart';
 export 'cus_icons.dart';

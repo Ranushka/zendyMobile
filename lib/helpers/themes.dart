@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final customTheme = {
   "BASE": ThemeData(
+    accentColor: Colors.orange[100],
     focusColor: Colors.orange[100],
     highlightColor: Colors.orange[100],
     splashColor: Colors.orange[100],

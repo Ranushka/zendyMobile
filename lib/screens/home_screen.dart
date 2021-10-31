@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        CheckConnection(),
         _buildHeroCall(),
         _buildDumySearchInput(),
         SizedBox(height: 8),

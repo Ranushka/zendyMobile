@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Zendy Demo',
+      title: 'Zendy Reserch',
       theme: customTheme['BASE'],
       debugShowCheckedModeBanner: false,
       getPages: [
