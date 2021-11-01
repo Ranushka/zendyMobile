@@ -42,7 +42,10 @@ final customTheme = {
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(primary: Colors.blueGrey[900]),
+      style: OutlinedButton.styleFrom(
+        primary: Colors.orange[800],
+        side: BorderSide(color: Colors.orange),
+      ),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,

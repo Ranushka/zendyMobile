@@ -11,7 +11,7 @@ import 'package:zendy_app/widgets/search_result_item.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 class SearchResultScreen extends StatelessWidget {
-  final SearchResultController srCrtl = Get.put(SearchResultController());
+  // final SearchResultController srCrtl = Get.put(SearchResultController());
   final SearchResultController ctrls = Get.find();
 
   final ScrollController _scrollController = ScrollController();
@@ -22,10 +22,10 @@ class SearchResultScreen extends StatelessWidget {
       backgroundColor: Theme.of(Get.context).backgroundColor,
       appBar: _buildAppBar(),
       body: Obx(() {
-        var _resultData = srCrtl.searchResults.value.data;
+        var _resultData = ctrls.searchResults.value.data;
 
         if (_resultData != null) {
-          return _buildMainContent(srCrtl.searchResults.value);
+          return _buildMainContent(ctrls.searchResults.value);
         }
 
         if (ctrls.isLoading.value) {
@@ -41,6 +41,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildHead(SearchModel data) {
     // final _keyword = data.data
     var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
+    var _totalResults = data.data.searchResults.totalResults;
     // final _keyword = data.query.capitalizeFirst;
     return Container(
       color: Colors.white,
@@ -53,7 +54,7 @@ class SearchResultScreen extends StatelessWidget {
             direction: Axis.vertical,
             children: [
               SizedBox(height: 8),
-              SmallMute('Showing 203k results for'),
+              SmallMute('Showing $_totalResults results for'),
               Title2(_keyword.capitalizeFirst),
               SizedBox(height: 8),
             ],
@@ -94,9 +95,9 @@ class SearchResultScreen extends StatelessWidget {
       var _loadingStart = _scrolPos.maxScrollExtent;
 
       if (_scrolPos.pixels == _loadingStart) {
-        print('paginating...' + srCrtl.pageNumber.value.toString());
-        srCrtl.pageNumber.value = srCrtl.pageNumber.value + 1;
-        srCrtl.searchResultsGet();
+        print('paginating...' + ctrls.pageNumber.value.toString());
+        ctrls.pageNumber.value = ctrls.pageNumber.value + 1;
+        ctrls.searchResultsGet();
       }
     });
 

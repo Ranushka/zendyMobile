@@ -6,12 +6,37 @@ import 'package:zendy_app/controllers/controllers.dart';
 class SearchResultController extends GetxController {
   var isLoading = true.obs;
   var searchResults = SearchModel().obs;
+  // dynamic filters = [].obs;
+  var filters = List.empty().obs;
   var searchQry = ''.obs;
   var pageNumber = 1.obs;
 
   void clearCtrl() {
     searchResults.value = SearchModel();
     pageNumber.value = 1;
+  }
+
+  void clearFiltrs() {
+    filters.clear();
+
+    searchResultsGet();
+  }
+
+  void toggleFilterItem(catId, name) {
+    var myListFiltered = filters.where((item) => item['facetLabel'] == name);
+
+    if (myListFiltered.length > 0) {
+      filters.removeWhere((item) => item['facetLabel'] == name);
+    } else {
+      filters.add({
+        'active': true,
+        'categoryId': catId,
+        'categoryLabel': catId,
+        'facetLabel': name,
+      });
+    }
+
+    searchResultsGet();
   }
 
   void searchResultsGet() async {
@@ -23,6 +48,7 @@ class SearchResultController extends GetxController {
       SearchHistoryController().saveContact(searchQry.value);
       print('searchQry >>>>>>>>' + searchQry.value);
       var _dataSet = await SearchService.getResults(
+        filters.value,
         searchQry.value,
         pageNumber.value,
       );

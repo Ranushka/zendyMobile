@@ -7,16 +7,18 @@ class SearchService {
   static var client = http.Client();
 
   static Future<SearchModel> getResults(
+    List facetFilters,
     String searchQuery,
     int pageNumber,
   ) async {
     pageNumber ??= 1;
+    facetFilters ??= List.empty();
 
     final _response = await getResponse('/search/oa/search', {
       "searchQuery": [
         {"term": searchQuery}
       ],
-      "filters": [],
+      "facetFilters": facetFilters,
       "dateFilters": {"start": "1000-1", "end": "2050-12"},
       "pageNumber": pageNumber
     });

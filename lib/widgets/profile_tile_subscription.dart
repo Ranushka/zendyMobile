@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 Widget buildUserSubscrionInfo() {
