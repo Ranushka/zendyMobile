@@ -56,7 +56,8 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
       final SearchResultController searchResultCtrl = Get.find();
 
       var totalResults = NumberFormat.compact().format(
-          searchResultCtrl.searchResults.value.data.searchResults.totalResults);
+        searchResultCtrl.searchResults.value.data.searchResults.totalResults,
+      );
 
       return Container(
         child: Gutter(Flex(
@@ -72,7 +73,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
             ),
             OutlinedButton(
               onPressed: () => Get.back(),
-              child: Text('Show reselts - ' + totalResults.toString()),
+              child: Text('Show reselts - ' + totalResults),
             ),
           ],
         )),
@@ -89,7 +90,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
     }
 
     return Scaffold(
-      bottomSheet: _buildBottomSheet(),
+      bottomSheet: Obx(() => _buildBottomSheet()),
       appBar: AppBar(
         leadingWidth: 8,
         leading: Container(),
@@ -141,9 +142,19 @@ class FiltersList extends StatelessWidget {
       for (var availableFacetGroup in availableFacets) {
         var catId = availableFacetGroup.categoryId;
 
-        finalList.add(Padding(
-          padding: EdgeInsets.fromLTRB(16, 32, 0, 0),
-          child: Title4(titleMap[catId]),
+        finalList.add(Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Colors.grey.shade200,
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 32, 0, 8),
+            child: Title4(titleMap[catId]),
+          ),
         ));
 
         int _indexC = 0;

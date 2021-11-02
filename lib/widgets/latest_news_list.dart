@@ -35,7 +35,10 @@ Widget _newsContent(_data) {
   return Gutter(Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      WidgetTitleAction('Curated just for you', () {}),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+        child: Title4('Curated just for you'),
+      ),
       for (var item in _data.value) _buildLatustNews(item)
     ],
   ));

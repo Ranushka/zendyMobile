@@ -64,11 +64,33 @@ class HomeScreen extends StatelessWidget {
   Widget _buildUserGreating() {
     return Obx(() {
       if (authController.currentUser.value.firstName != '')
-        return Gutter(
-          Title3('G, day ${authController.currentUser.value.firstName}'),
-        );
+        return Gutter(Flex(
+          direction: Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image(
+              width: 80,
+              image: AssetImage('assets/images/zendy_logo.png'),
+            ),
+            TextBody('G, day ${authController.currentUser.value.firstName}'),
+          ],
+        ));
       else
-        return Gutter(Title3('Welcome to Zendy'));
+        return Gutter(Flex(
+          direction: Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image(
+              width: 100,
+              image: AssetImage('assets/images/zendy_logo.png'),
+            ),
+            TextButton(
+              onPressed: () => Get.toNamed(Goto.login),
+              child: Text('Join Zendy'),
+            )
+            // TextBody('Welcome to Zendy'),
+          ],
+        ));
     });
   }
 

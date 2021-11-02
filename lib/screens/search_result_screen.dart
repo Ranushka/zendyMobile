@@ -1,4 +1,4 @@
-// import 'dart:developer';
+import "package:intl/intl.dart";
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,8 +41,10 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildHead(SearchModel data) {
     // final _keyword = data.data
     var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
-    var _totalResults = data.data.searchResults.totalResults;
-    // final _keyword = data.query.capitalizeFirst;
+    var _totalResults = NumberFormat.compact().format(
+      data.data.searchResults.totalResults,
+    );
+
     return Container(
       color: Colors.white,
       child: Gutter(Flex(
@@ -95,7 +97,6 @@ class SearchResultScreen extends StatelessWidget {
       var _loadingStart = _scrolPos.maxScrollExtent;
 
       if (_scrolPos.pixels == _loadingStart) {
-        print('paginating...' + ctrls.pageNumber.value.toString());
         ctrls.pageNumber.value = ctrls.pageNumber.value + 1;
         ctrls.searchResultsGet();
       }
@@ -179,8 +180,6 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildSearchResultLoading({bool paginating: false}) {
-    print('_buildSearchResultLoading----<' + paginating.toString());
-
     if (paginating) {
       return Center(
         child: SingleChildScrollView(
