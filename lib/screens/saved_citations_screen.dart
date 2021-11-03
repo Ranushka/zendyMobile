@@ -11,6 +11,7 @@ class SavedCitationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: emptyAppbar(),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
         children: [
           Expanded(
@@ -27,7 +28,7 @@ class SavedCitationsScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PageTitle(
-          text: 'Citations',
+          text: 'Read list',
           icon: Icons.logout,
           action: citationsExportMenu(),
         ),
@@ -59,7 +60,7 @@ Widget _buildlist() {
           padding: EdgeInsets.only(top: 10, bottom: 20),
           physics: BouncingScrollPhysics(),
           itemCount: snapshot.data.size,
-          separatorBuilder: (context, index) => Divider(),
+          separatorBuilder: (context, index) => dividerX,
           itemBuilder: (context, index) {
             final item = snapshot.data.docs[index];
 
@@ -69,8 +70,9 @@ Widget _buildlist() {
             );
 
             return ListTile(
-              title: Text(contactItem.title),
-              subtitle: Text("Journal - 2020"),
+              tileColor: Theme.of(Get.context).backgroundColor,
+              title: TextBody(contactItem.title),
+              subtitle: TextSmall("Journal - 2020"),
             );
           },
         );

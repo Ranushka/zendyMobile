@@ -98,6 +98,7 @@ Widget _content() {
           return SlidableWidget(
             uniqueId: '${item.id ?? ''}',
             child: ListTile(
+              tileColor: Theme.of(Get.context).backgroundColor,
               title: Title3(contactItem.keyword),
               subtitle:
                   Title3('In - ${contactItem.sort} - ${contactItem.filters}'),

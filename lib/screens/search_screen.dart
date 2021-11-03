@@ -134,7 +134,7 @@ class SearchScreen extends StatelessWidget {
 }
 
 Widget _resentSearchHistory() {
-  final SearchResultController srCtrl = Get.find();
+  // final SearchResultController srCtrl = Get.find();
   final SearchController scCtrl = Get.find();
 
   return Expanded(

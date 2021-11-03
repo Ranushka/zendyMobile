@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
 
@@ -91,12 +92,24 @@ Future deleteUserTokenData() async {
   await localStorage.clear();
 }
 
+Future getTempUserId() async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+  var _tempUserId = localStorage.getString('tempUserId');
+
+  if (_tempUserId == null) {
+    var tempId = 'temp-' + Uuid().v4();
+    return tempId;
+  }
+
+  return _tempUserId;
+}
+
 Future getUserData() async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
   var _userData = localStorage.getString('user');
 
-  print('_tokenData--->' + _userData.toString());
   if (_userData != null) {
     return jsonDecode(_userData);
   }

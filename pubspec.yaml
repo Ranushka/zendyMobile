@@ -46,6 +46,7 @@ dependencies:
   path_provider: ^2.0.5
   connectivity: ^3.0.6
   flutter_restart: ^0.0.3
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:
@@ -103,9 +104,6 @@ flutter:
           weight: 400
         - asset: assets/fonts/SourceSansPro-Bold.ttf
           weight: 700
-    - family: PlayFairDisplay
-      fonts:
-        - asset: assets/fonts/PlayfairDisplay-VariableFont_wght.ttf
     - family: Lora
       fonts:
         - asset: assets/fonts/Lora.ttf

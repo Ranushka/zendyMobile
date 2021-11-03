@@ -67,7 +67,6 @@ class LoginEmailScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffixIcon: TextButton(
-                    // padding: EdgeInsets.all(0),
                     child: Text('Forgot?'),
                     onPressed: _passwordReset,
                   ),

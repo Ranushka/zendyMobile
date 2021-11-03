@@ -5,20 +5,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zendy_app/models/recent_search_history_m.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/services/search_history_s.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 class SearchHistoryController extends GetxController {
   final SearchHistoryService _service = SearchHistoryService();
+  final AuthController authCtrl = Get.find();
 
   Stream<QuerySnapshot> getData() {
-    Stream<QuerySnapshot> qSnapStream = _service.fetchdata('073571245X');
+    var userId = authCtrl.currentUser.value.id;
+    Stream<QuerySnapshot> qSnapStream = _service.fetchdata(userId);
 
     return qSnapStream;
   }
 
   void saveContact(String query) async {
     try {
+      var userId = authCtrl.currentUser.value.id;
       SearchHistoryModel _contact = SearchHistoryModel(
-        userId: '073571245X',
+        userId: userId,
         query: query,
       );
 

@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 getLogoImg(140),
                 SizedBox(height: 32),
-                Title1('Sign in to Zendy app'),
+                Title1('Sign in'),
                 SizedBox(height: 32),
                 _buildUseEmail(),
                 SizedBox(height: 16),

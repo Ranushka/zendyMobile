@@ -21,10 +21,19 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getTheme().then((data) => currentUser.value.theme = data);
+
+    getTheme().then((data) {
+      if (data != null) {
+        currentUser.value.theme = data;
+      }
+    });
+
     getUserData().then((_userData) {
       if (_userData != null) {
         _setUserData(_userData);
+      } else {
+        // Assign temp Id to the user
+        getTempUserId().then((tempId) => currentUser.value.id = tempId);
       }
     });
   }

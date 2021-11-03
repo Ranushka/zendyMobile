@@ -2,6 +2,8 @@
 
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/services/services.dart';
@@ -12,6 +14,7 @@ class SavedCitationsController extends GetxController {
   void setContactListCount(int val) => _contactListCount.value = val;
 
   final SavedCitationsService _service = SavedCitationsService();
+  final AuthController authCtrl = Get.find();
 
   @override
   void onInit() {
@@ -19,7 +22,8 @@ class SavedCitationsController extends GetxController {
   }
 
   Stream<QuerySnapshot> getData() {
-    Stream<QuerySnapshot> qSnapStream = _service.fetchdata('073571245X');
+    var userId = authCtrl.currentUser.value.id;
+    Stream<QuerySnapshot> qSnapStream = _service.fetchdata(userId);
 
     qSnapStream.forEach((QuerySnapshot qSnapItem) {
       setContactListCount(qSnapItem.size);
@@ -34,8 +38,9 @@ class SavedCitationsController extends GetxController {
     String id,
   ) async {
     try {
+      var userId = authCtrl.currentUser.value.id;
       SavedCitationsModel _contact = SavedCitationsModel(
-        userId: '073571245X',
+        userId: userId,
         id: id,
         title: title,
         sourceUrl: sourceUrl,
@@ -56,8 +61,9 @@ class SavedCitationsController extends GetxController {
     String sourceUrl,
   }) async {
     try {
+      var userId = authCtrl.currentUser.value.id;
       SavedCitationsModel _contact = SavedCitationsModel(
-        userId: '073571245X',
+        userId: userId,
         title: title,
         sourceUrl: sourceUrl,
       );

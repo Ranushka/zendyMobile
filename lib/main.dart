@@ -20,6 +20,11 @@ void main() async {
 
   await Firebase.initializeApp();
 
+  Get.put<AuthController>(
+    AuthController(),
+    permanent: true,
+  );
+
   Get.put<SearchController>(
     SearchController(),
     permanent: true,
@@ -42,11 +47,6 @@ void main() async {
 
   Get.put<SavedSearchersController>(
     SavedSearchersController(),
-    permanent: true,
-  );
-
-  Get.put<AuthController>(
-    AuthController(),
     permanent: true,
   );
 

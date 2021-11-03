@@ -9,6 +9,7 @@ class SearchHistoryService {
         .collection("users")
         .doc(userId.toString())
         .collection('searchHistory')
+        .orderBy('createdAt', descending: true)
         .snapshots();
   }
 
@@ -22,7 +23,10 @@ class SearchHistoryService {
         await colRefSearch.where('query', isEqualTo: query).limit(1).get();
 
     if (queryData.size == 0) {
-      await colRefSearch.add({"query": contact.query});
+      await colRefSearch.add({
+        'query': contact.query,
+        'createdAt': Timestamp.now(),
+      });
     }
 
     return contact;
