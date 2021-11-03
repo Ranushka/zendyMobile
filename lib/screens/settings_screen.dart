@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
+import 'package:flutter_restart/flutter_restart.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
@@ -13,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(Get.context).backgroundColor,
       appBar: emptyAppbar(),
       body: _buildMainContent(context),
       bottomNavigationBar: bottomNavigation(),
@@ -55,7 +56,7 @@ class SettingsScreen extends StatelessWidget {
                       print(val);
                     },
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTileDropdown(
                     icon: Icons.font_download_outlined,
                     title: 'Font size',
@@ -65,17 +66,19 @@ class SettingsScreen extends StatelessWidget {
                       print(val);
                     },
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTileDropdown(
                     icon: Icons.image_search_outlined,
                     title: 'Theme',
-                    initialValue: 'DEFAULT',
+                    initialValue: authController.currentUser.value.theme,
                     options: themesList,
                     onChange: (val) {
-                      print(val);
+                      authController
+                          .setTheme(val.value)
+                          .then((value) => {FlutterRestart.restartApp()});
                     },
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTileRadio(
                     icon: Icons.notifications_active_outlined,
                     title: 'Notifications',
@@ -95,18 +98,18 @@ class SettingsScreen extends StatelessWidget {
                     title: 'Product tour',
                     action: () => {},
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTile(
                     title: 'FAQ',
                     action: () => {},
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTile(
                     title: 'Feedback',
                     subTitle: 'Report any issues or request featchrs.',
                     action: () => {},
                   ),
-                  DividerX,
+                  dividerX,
                   ProfileTile(
                     title: 'Terms of Service',
                     action: () => {},
@@ -163,7 +166,7 @@ Widget _buildUserInfo() {
                 print(val);
               },
             ),
-            DividerX,
+            dividerX,
             ProfileTileInput(
               title: 'Phone',
               initialValue: _phoneNumber,
@@ -173,7 +176,7 @@ Widget _buildUserInfo() {
                 print(val);
               },
             ),
-            DividerX,
+            dividerX,
             ProfileTileInput(
               title: 'E-mail',
               initialValue: _email,
@@ -183,9 +186,9 @@ Widget _buildUserInfo() {
                 print(val);
               },
             ),
-            DividerX,
+            dividerX,
             ProfileTileInterests(),
-            DividerX,
+            dividerX,
             ProfileTileProfession()
           ],
         ),
@@ -208,14 +211,8 @@ Widget _buildUserLogoutBtn(context) {
   return IconButton(
     icon: Icon(Icons.logout),
     onPressed: () {
-      print('user loging out');
       deleteUserTokenData();
       authController.logOut();
-      // Get.reset();
-      // Get.put(SavedCitationsController());
-      // Get.put(SearchHistoryController());
-      // Get.put(SearchResultController());
-      // Get.put(SearchController());
       Get.toNamed('/');
     },
   );

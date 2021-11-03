@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 extension StringExtension on String {
@@ -32,10 +34,12 @@ class HtmlP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _fColor = '#444';
     var _mHeight = _isShort ? "max-height:84px" : "";
 
-    return HtmlWidget('<div style="color: $_fColor; $_mHeight">$_text</div>');
+    return HtmlWidget(
+      '<div style=" $_mHeight">$_text</div>',
+      textStyle: Theme.of(context).textTheme.bodyText1,
+    );
   }
 }
 
@@ -89,28 +93,7 @@ class Title4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: const TextStyle(
-        color: Colors.black38,
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-}
-
-class Title5 extends StatelessWidget {
-  final String _text;
-  const Title5(this._text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _text.toUpperCase(),
-      style: const TextStyle(
-        color: Colors.black54,
-        fontSize: 12,
-        // fontWeight: FontWeight.w600,
-      ),
+      style: Theme.of(context).textTheme.headline4,
     );
   }
 }
@@ -127,25 +110,20 @@ class TextBody extends StatelessWidget {
       _text,
       maxLines: ml,
       overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: Colors.black54,
-      ),
+      style: Theme.of(context).textTheme.bodyText1,
     );
   }
 }
 
-class SmallMute extends StatelessWidget {
+class TextSmall extends StatelessWidget {
   final String _text;
-  const SmallMute(this._text);
+  const TextSmall(this._text);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: const TextStyle(
-        color: Colors.black45,
-        // fontSize: 13,
-      ),
+      style: Theme.of(context).textTheme.subtitle1,
     );
   }
 }
@@ -196,7 +174,11 @@ class Gutter extends StatelessWidget {
   }
 }
 
-const DividerX = const Gutter(Divider(height: 0.5));
+Widget dividerX = Gutter(Divider(
+  height: 1,
+  color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+  // color: Theme.of(Get.context).primaryColor,
+));
 
 class Skeleton extends StatelessWidget {
   final double height;
@@ -209,12 +191,12 @@ class Skeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SkeletonAnimation(
-      shimmerColor: Colors.white54,
+      shimmerColor: Colors.grey.withOpacity(0.1),
       child: Container(
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.grey[200],
+          color: Colors.grey.withOpacity(0.3),
         ),
       ),
     );

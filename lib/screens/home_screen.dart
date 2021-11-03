@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildHeroCall() {
     return Container(
-      color: Colors.white,
+      color: Theme.of(Get.context).backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,10 +68,7 @@ class HomeScreen extends StatelessWidget {
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image(
-              width: 80,
-              image: AssetImage('assets/images/zendy_logo.png'),
-            ),
+            getLogoImg(80),
             TextBody('G, day ${authController.currentUser.value.firstName}'),
           ],
         ));
@@ -80,10 +77,7 @@ class HomeScreen extends StatelessWidget {
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image(
-              width: 100,
-              image: AssetImage('assets/images/zendy_logo.png'),
-            ),
+            getLogoImg(80),
             TextButton(
               onPressed: () => Get.toNamed(Goto.login),
               child: Text('Join Zendy'),
@@ -96,11 +90,12 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildDumySearchInput() {
     return Container(
-      color: Colors.white,
+      color: Theme.of(Get.context).backgroundColor,
       child: Gutter(
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
           child: TextFormField(
+            style: Theme.of(Get.context).textTheme.bodyText1,
             autofocus: false,
             onTap: () {
               Get.toNamed(Goto.search);

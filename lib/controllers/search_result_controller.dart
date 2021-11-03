@@ -6,7 +6,6 @@ import 'package:zendy_app/controllers/controllers.dart';
 class SearchResultController extends GetxController {
   var isLoading = true.obs;
   var searchResults = SearchModel().obs;
-  // dynamic filters = [].obs;
   var filters = List.empty().obs;
   var searchQry = ''.obs;
   var pageNumber = 1.obs;

@@ -22,7 +22,7 @@ Widget buildUserSubscrionInfo() {
               child: Container(
                 // padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 padding: EdgeInsets.all(16),
-                color: Colors.white,
+                color: Theme.of(Get.context).backgroundColor,
                 child: Flex(
                   direction: Axis.horizontal,
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ Widget buildUserSubscrionInfo() {
                     SizedBox(width: 16),
                     Title3('Your Subscription is'),
                     SizedBox(width: 16),
-                    SmallMute('Active'),
+                    TextSmall('Active'),
                     Spacer(),
                     _getIcon(_isExpanded.value)
                   ],
@@ -43,15 +43,15 @@ Widget buildUserSubscrionInfo() {
             ),
             if (_isExpanded.value)
               Container(
-                color: Colors.white,
+                color: Theme.of(Get.context).backgroundColor,
                 child: Column(
                   children: [
-                    DividerX,
+                    dividerX,
                     // SizedBox(height: 8),
                     ProfileTilePlan(),
-                    DividerX,
+                    dividerX,
                     ProfileTilePayment(),
-                    DividerX,
+                    dividerX,
                     ProfileTilePaymentHistory(),
                     SizedBox(height: 16),
                   ],

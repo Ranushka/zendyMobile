@@ -1,5 +1,7 @@
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/services/auth_service.dart';
@@ -13,16 +15,32 @@ class AuthController extends GetxController {
     id: '',
     lastName: '',
     phoneNumber: '',
+    theme: 'DEFAULT',
   ).obs;
 
   @override
   void onInit() {
     super.onInit();
+    getTheme().then((data) => currentUser.value.theme = data);
     getUserData().then((_userData) {
       if (_userData != null) {
         _setUserData(_userData);
       }
     });
+  }
+
+  Future setTheme(themeName) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+    currentUser.value.theme = themeName;
+    await localStorage.setString('theme', themeName);
+  }
+
+  Future getTheme() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var themeName = localStorage.getString('theme');
+
+    return themeName;
   }
 
   bool isLoggedIn() {

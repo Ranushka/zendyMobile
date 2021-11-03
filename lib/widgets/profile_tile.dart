@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zendy_app/widgets/typography.dart';
 
 class ProfileTile extends StatelessWidget {
@@ -19,7 +20,7 @@ class ProfileTile extends StatelessWidget {
       onTap: action,
       child: Container(
         padding: EdgeInsets.all(16),
-        color: Colors.white,
+        color: Theme.of(Get.context).backgroundColor,
         child: Flex(
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,7 +30,7 @@ class ProfileTile extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Title3(title),
-                if (subTitle != '') SmallMute(subTitle),
+                if (subTitle != '') TextSmall(subTitle),
               ],
             ),
             Spacer(),

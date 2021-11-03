@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import 'package:zendy_app/controllers/controllers.dart';
 
 // class EmptyAppbar extends StatelessWidget {
 //   @override
@@ -13,9 +17,15 @@ import 'package:flutter/material.dart';
 // }
 
 PreferredSizeWidget emptyAppbar() {
+  final AuthController authController = Get.find();
+
+  final isDark = authController.currentUser.value.theme == 'DARK';
+  // final statusBarColor = Theme.of(Get.context).backgroundColor;
+  final statusBarColor = isDark ? Colors.black : Colors.white;
+
   return AppBar(
-    backgroundColor: Colors.white,
-    brightness: Brightness.light,
+    systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: statusBarColor),
+    backgroundColor: isDark ? Colors.black : Colors.white,
     automaticallyImplyLeading: false,
     toolbarHeight: 0,
     elevation: 0,

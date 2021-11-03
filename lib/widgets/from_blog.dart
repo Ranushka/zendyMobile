@@ -58,6 +58,7 @@ Widget _buildItem(_itm) {
   return Container(
     width: Get.width * 0.8,
     child: Card(
+      color: Theme.of(Get.context).backgroundColor,
       clipBehavior: Clip.antiAlias,
       elevation: 1,
       child: Column(

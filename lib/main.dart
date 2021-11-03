@@ -69,11 +69,13 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final AuthController authController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Zendy Reserch',
-      theme: customTheme['BASE'],
+      theme: customTheme[authController.currentUser.value.theme],
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(

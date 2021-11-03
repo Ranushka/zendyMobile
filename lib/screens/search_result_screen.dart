@@ -46,7 +46,7 @@ class SearchResultScreen extends StatelessWidget {
     );
 
     return Container(
-      color: Colors.white,
+      color: Theme.of(Get.context).backgroundColor,
       child: Gutter(Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.horizontal,
@@ -56,7 +56,7 @@ class SearchResultScreen extends StatelessWidget {
             direction: Axis.vertical,
             children: [
               SizedBox(height: 8),
-              SmallMute('Showing $_totalResults results for'),
+              TextSmall('Showing $_totalResults results for'),
               Title2(_keyword.capitalizeFirst),
               SizedBox(height: 8),
             ],
@@ -107,10 +107,7 @@ class SearchResultScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: _itemCount,
       separatorBuilder: (context, index) {
-        return Gutter(Divider(
-          color: Theme.of(Get.context).primaryColor,
-          height: 2,
-        ));
+        return Gutter(dividerX);
       },
       itemBuilder: (context, index) {
         final _data = _searchResults.results[index];

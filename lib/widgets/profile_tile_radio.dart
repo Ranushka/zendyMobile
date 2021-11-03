@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 class ProfileTileRadio extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ProfileTileRadioState extends State<ProfileTileRadio> {
     return InkWell(
       child: Container(
         padding: EdgeInsets.all(16),
-        color: Colors.white,
+        color: Theme.of(Get.context).backgroundColor,
         child: Flex(
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

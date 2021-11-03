@@ -48,6 +48,7 @@ Widget _buildLatustNews(_itm) {
   if (_itm['paragraph'] == '') return Container();
 
   return Card(
+    color: Theme.of(Get.context).backgroundColor,
     elevation: 0,
     margin: EdgeInsets.only(bottom: 8),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -59,7 +60,7 @@ Widget _buildLatustNews(_itm) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Title5('Elsevier - Journal'),
+                TextSmall('Elsevier - Journal'.toUpperCase()),
                 SizedBox(height: 4),
                 Title3(_itm['title']),
                 SizedBox(height: 4),

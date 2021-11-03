@@ -6,6 +6,7 @@ import 'package:zendy_app/helpers/routs.dart';
 import 'package:zendy_app/models/recent_search_history_m.dart';
 
 import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/widgets/typography.dart';
 
 class SearchScreen extends StatelessWidget {
   final SearchHistoryController shCtrl = Get.put(SearchHistoryController());
@@ -22,29 +23,33 @@ class SearchScreen extends StatelessWidget {
         children: [
           // Title4('RECENT SEARCHES'),
           _resentSearchHistory(),
-          Container(
-            color: Theme.of(Get.context).primaryColorLight,
-            child: SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton.icon(
-                    icon: Icon(Icons.filter_center_focus),
-                    onPressed: () {},
-                    label: Text('Advanced search'),
-                  ),
-                  TextButton.icon(
-                    icon: Icon(Icons.saved_search),
-                    onPressed: () {
-                      Get.toNamed(Goto.searches);
-                    },
-                    label: Text('Saved searchers'),
-                  ),
-                ],
-              ),
-            ),
-          )
+          _buildActionBar()
         ],
+      ),
+    );
+  }
+
+  Widget _buildActionBar() {
+    return Container(
+      color: Theme.of(Get.context).primaryColor.withOpacity(0.2),
+      child: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            TextButton.icon(
+              icon: Icon(Icons.filter_center_focus),
+              onPressed: () {},
+              label: Text('Advanced search'),
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.saved_search),
+              onPressed: () {
+                Get.toNamed(Goto.searches);
+              },
+              label: Text('Saved searchers'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -53,12 +58,14 @@ class SearchScreen extends StatelessWidget {
     return Obx(() {
       if (scCtrl.searchQuery.value == '') {
         return IconButton(
+          color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
           icon: Icon(Icons.search_rounded),
           onPressed: () => {},
         );
       } else {
         return IconButton(
+          color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
           icon: Icon(Icons.close_rounded),
           onPressed: () => scCtrl.clear(),
@@ -84,14 +91,18 @@ class SearchScreen extends StatelessWidget {
       shadowColor: Theme.of(Get.context).primaryColor,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
+        style: Theme.of(Get.context).textTheme.bodyText1,
         autofocus: true,
         textInputAction: TextInputAction.search,
         controller: scCtrl.searchField,
         onFieldSubmitted: (value) => _searchAction(value),
         onChanged: (value) => scCtrl.change(value),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+          fillColor: Theme.of(Get.context).backgroundColor,
+          filled: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
           enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
               color: Theme.of(Get.context).primaryColor,
               width: 1.5,
@@ -104,9 +115,9 @@ class SearchScreen extends StatelessWidget {
               width: 1.5,
             ),
           ),
-          prefixIcon: _buildBackButton(),
           suffixIcon: _buildSearchIcon(),
-          hintText: 'Search for title ...',
+          prefixIcon: _buildBackButton(),
+          hintText: 'Search for title, subject, author ...',
         ),
       ),
     );
@@ -114,8 +125,7 @@ class SearchScreen extends StatelessWidget {
 
   Widget _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
-      iconTheme: IconThemeData(color: Colors.blue),
+      backgroundColor: Theme.of(Get.context).backgroundColor,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: _buildSearchInput(),
@@ -147,7 +157,7 @@ Widget _resentSearchHistory() {
           padding: EdgeInsets.only(top: 10, bottom: 20),
           physics: BouncingScrollPhysics(),
           itemCount: snapshot.data.size,
-          separatorBuilder: (context, index) => Divider(height: 1),
+          separatorBuilder: (context, index) => dividerX,
           itemBuilder: (context, index) {
             final item = snapshot.data.docs[index];
 
@@ -158,22 +168,32 @@ Widget _resentSearchHistory() {
 
             var _qryVal = contactItem.query;
 
-            return ListTile(
-              // dense: true,
-              // horizontalTitleGap: 8,
-              // minLeadingWidth: 32,
-              // contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-              leading: Icon(Icons.history_toggle_off),
-              title: Text(_qryVal),
+            return InkWell(
               onTap: () => _searchAction(_qryVal),
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.upgrade_rounded,
-                ),
-                onPressed: () {
-                  scCtrl.searchField.text = _qryVal;
-                },
-              ),
+              child: Gutter(Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Icon(Icons.history_toggle_off),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: TextBody(_qryVal),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.upgrade_rounded,
+                      ),
+                      onPressed: () {
+                        scCtrl.searchField.text = _qryVal;
+                      },
+                    ),
+                  ),
+                ],
+              )),
             );
           },
         );

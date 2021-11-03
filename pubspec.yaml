@@ -35,8 +35,6 @@ dependencies:
   firebase_core: ^1.2.0
   cloud_firestore: ^2.2.0
   smart_select: ^4.3.2
-  # pdf_viewer_jk: ^2.1.0
-  # g_captcha: ^1.0.0
   flutter_libphonenumber: ^1.1.0
   flutter_widget_from_html: ^0.6.2
   webview_flutter: ^2.0.12
@@ -47,6 +45,7 @@ dependencies:
   permission_handler: ^8.2.5
   path_provider: ^2.0.5
   connectivity: ^3.0.6
+  flutter_restart: ^0.0.3
 
 dev_dependencies:
   flutter_test:
@@ -104,7 +103,7 @@ flutter:
           weight: 400
         - asset: assets/fonts/SourceSansPro-Bold.ttf
           weight: 700
-    - family: PlayfairDisplay
+    - family: PlayFairDisplay
       fonts:
         - asset: assets/fonts/PlayfairDisplay-VariableFont_wght.ttf
     - family: Lora

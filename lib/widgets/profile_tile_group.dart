@@ -18,7 +18,7 @@ class ProfileTileGroup extends StatelessWidget {
       direction: Axis.vertical,
       children: [
         SizedBox(height: 32),
-        Gutter(SmallMute(title)),
+        Gutter(TextSmall(title)),
         SizedBox(height: 8),
         content,
       ],

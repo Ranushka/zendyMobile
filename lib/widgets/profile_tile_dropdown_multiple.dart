@@ -45,7 +45,7 @@ class ProfileTileDropdownMultiple extends StatelessWidget {
                 SizedBox(width: 16),
                 Title3(state.title),
                 Spacer(),
-                SmallMute(state.valueTitle.toString()),
+                TextSmall(state.valueTitle.toString()),
                 SizedBox(width: 8),
                 Icon(
                   Icons.keyboard_arrow_right_rounded,

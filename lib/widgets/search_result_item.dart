@@ -106,9 +106,8 @@ class SearchResultItem extends StatelessWidget {
       child: Gutter(
         Container(
           height: _isFullDetail.value ? 32 : 16,
-          color: Colors.white.withAlpha(220),
+          color: Theme.of(Get.context).backgroundColor.withOpacity(0.6),
           width: double.infinity,
-          // color: Colors.black54,
           child: _isFullDetail.value
               ? Icon(Icons.arrow_drop_up_rounded)
               : Icon(Icons.arrow_drop_down_rounded),
@@ -127,7 +126,7 @@ class SearchResultItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          Gutter(Title4('Journal - $_year - ${_item.journalTitle}')),
+          Gutter(TextSmall('Journal - $_year - ${_item.journalTitle}')),
           SizedBox(height: 8),
           Gutter(HtmlH3(_title)),
           // HtmlH3(_title),

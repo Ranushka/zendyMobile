@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildLogo(),
+                getLogoImg(140),
                 SizedBox(height: 32),
                 Title1('Sign in to Zendy app'),
                 SizedBox(height: 32),
@@ -37,13 +37,6 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildLogo() {
-    return Image(
-      width: 140,
-      image: AssetImage('assets/images/zendy_logo.png'),
     );
   }
 

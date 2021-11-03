@@ -26,7 +26,7 @@ class ProfileTileInput extends StatelessWidget {
       // onTap: state.showModal,
       child: Container(
         padding: EdgeInsets.all(16),
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         child: Flex(
           direction: Axis.horizontal,
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +43,7 @@ class ProfileTileInput extends StatelessWidget {
             ),
             SizedBox(width: 16),
             // Spacer(),
-            SmallMute(initialValue.toString()),
+            TextSmall(initialValue.toString()),
             SizedBox(width: 8),
             // Icon(
             //   Icons.keyboard_arrow_right_rounded,

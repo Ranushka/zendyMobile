@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/helpers/helpers.dart';
 
 final customTheme = {
-  "BASE": ThemeData(
+  "DEFAULT": ThemeData(
     accentColor: Colors.orange[100],
     focusColor: Colors.orange[100],
     highlightColor: Colors.orange[100],
@@ -10,27 +14,44 @@ final customTheme = {
     primaryColorLight: Colors.orange[50],
     hintColor: Colors.grey.shade400,
     backgroundColor: Colors.white,
+    iconTheme: new IconThemeData(color: Colors.orange),
     textTheme: TextTheme(
-      headline1: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'PlayfairDisplay',
-      ),
-      headline2: TextStyle(
-        fontSize: 20,
-        letterSpacing: 0.2,
-        fontWeight: FontWeight.w400,
-        color: Colors.grey.shade900,
-        fontFamily: 'Lora',
-      ),
-      headline3: TextStyle(
-        fontSize: 16,
-        letterSpacing: 0.2,
-        fontWeight: FontWeight.w400,
-        color: Colors.grey.shade900,
-        fontFamily: 'Lora',
-      ),
-    ),
+        headline1: TextStyle(
+          fontSize: 28,
+          // fontWeight: FontWeight.bold,
+          color: Colors.grey.shade900,
+          fontFamily: 'Lora',
+        ),
+        headline2: TextStyle(
+          fontSize: 20,
+          letterSpacing: 0.2,
+          fontWeight: FontWeight.w400,
+          color: Colors.grey.shade900,
+          fontFamily: 'Lora',
+        ),
+        headline3: TextStyle(
+          fontSize: 16,
+          letterSpacing: 0.2,
+          fontWeight: FontWeight.w400,
+          color: Colors.grey.shade900,
+          fontFamily: 'Lora',
+        ),
+        headline4: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: Colors.grey.shade600,
+          fontFamily: 'Lora',
+        ),
+        bodyText1: TextStyle(
+          fontSize: 14,
+          color: Colors.grey.shade800,
+          fontFamily: 'SourceSansPro',
+        ),
+        subtitle1: TextStyle(
+          fontSize: 12,
+          color: Colors.grey.shade800,
+          fontFamily: 'SourceSansPro',
+        )),
     fontFamily: 'SourceSansPro',
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: Colors.orange),
@@ -53,12 +74,75 @@ final customTheme = {
     ),
   ),
   "LIGHT": ThemeData.light(),
-  "BLACK": ThemeData(
-    scaffoldBackgroundColor: Colors.grey[50],
-    primaryColor: Colors.black,
-    primaryColorLight: Colors.black54,
-    primaryColorDark: Colors.black54,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
+  "DARK": ThemeData(
+    accentColor: Colors.orange[100],
+    focusColor: Colors.orange[100],
+    highlightColor: Colors.orange[100],
+    splashColor: Colors.orange[100],
+    primaryColor: Colors.orange,
+    primaryColorLight: Colors.grey[900],
+    hintColor: Colors.grey.shade400,
+    backgroundColor: Colors.black87,
+    iconTheme: new IconThemeData(color: Colors.orange[400]),
+    textTheme: TextTheme(
+      headline1: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey.shade100,
+        fontFamily: 'Lora',
+      ),
+      headline2: TextStyle(
+        fontSize: 20,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade100,
+        fontFamily: 'Lora',
+      ),
+      headline3: TextStyle(
+        fontSize: 16,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade100,
+        fontFamily: 'Lora',
+      ),
+      headline4: TextStyle(
+        fontSize: 14,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w600,
+        color: Colors.grey.shade200,
+        fontFamily: 'Lora',
+      ),
+      bodyText1: TextStyle(
+        fontSize: 14,
+        color: Colors.grey.shade500,
+        fontFamily: 'SourceSansPro',
+      ),
+      subtitle1: TextStyle(
+        fontSize: 12,
+        color: Colors.grey.shade100,
+        fontFamily: 'SourceSansPro',
+      ),
+    ),
+    fontFamily: 'SourceSansPro',
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(primary: Colors.orange),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.w500),
+        primary: Colors.orange.shade800,
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        primary: Colors.orange[800],
+        side: BorderSide(color: Colors.orange),
+      ),
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.black,
+      iconTheme: IconThemeData(color: Colors.blueGrey[900]),
+    ),
   ),
 };
 
@@ -69,4 +153,22 @@ Color darken(Color color, [double amount = .1]) {
   final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
 
   return hslDark.toColor();
+}
+
+Widget getLogoImg(width) {
+  width ??= 80;
+  final AuthController authController = Get.find();
+
+  final isDark = authController.currentUser.value.theme == 'DARK';
+  final logoPath = isDark
+      ? 'assets/images/zendy_logo_dark.png'
+      : 'assets/images/zendy_logo.png';
+
+  return InkWell(
+    onTap: () => Get.toNamed(Goto.home),
+    child: Image(
+      width: width.toDouble(),
+      image: AssetImage(logoPath),
+    ),
+  );
 }

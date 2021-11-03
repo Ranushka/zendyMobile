@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
@@ -33,7 +34,7 @@ class ProfileTileDropdown extends StatelessWidget {
           onTap: state.showModal,
           child: Container(
             padding: EdgeInsets.all(16),
-            color: Colors.white,
+            color: Theme.of(Get.context).backgroundColor,
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +46,7 @@ class ProfileTileDropdown extends StatelessWidget {
                 SizedBox(width: 16),
                 Title3(state.title),
                 Spacer(),
-                SmallMute(state.valueTitle.toString()),
+                TextBody(state.valueTitle.toString()),
                 SizedBox(width: 8),
                 Icon(
                   Icons.keyboard_arrow_right_rounded,

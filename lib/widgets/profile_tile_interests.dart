@@ -39,7 +39,7 @@ class ProfileTileInterests extends StatelessWidget {
       ),
       tileBuilder: (context, state) {
         return Container(
-          color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           child: S2Tile.fromState(
             state,
             isTwoLine: true,
