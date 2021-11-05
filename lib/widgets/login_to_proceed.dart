@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy_app/widgets/widgets.dart';
 
 loginToProceed() {
   Get.defaultDialog(
@@ -16,7 +17,7 @@ loginToProceed() {
         'Please login or crate account to download or read full article.',
     actions: [
       ElevatedButton(
-        child: const Text('Create account / Login'),
+        child: TextBody('Create account / Login'),
         onPressed: () {
           Get.back();
           Get.toNamed(Goto.login);

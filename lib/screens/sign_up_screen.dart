@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zendy_app/widgets/typography.dart';
 // import 'package:get/instance_manager.dart';
 
 // import 'package:zendy_app/controllers/auth_controller.dart';
@@ -40,10 +41,7 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildTitle() {
     return Container(
       width: double.infinity,
-      child: Text(
-        'Create account',
-        textScaleFactor: 2,
-      ),
+      child: TextBody('Create account'),
     );
   }
 
@@ -95,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
             minWidth: double.infinity,
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            child: Text("Crate account"),
+            child: TextBody("Crate account"),
             onPressed: _loginPressed,
           ),
         ],
@@ -111,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
-              label: Text('Skip'),
+              label: TextBody('Skip'),
               icon: Icon(Icons.navigate_before_sharp),
               onPressed: _skipCreateAccountPressed,
             ),

@@ -43,7 +43,7 @@ class ProfileTileInput extends StatelessWidget {
             ),
             SizedBox(width: 16),
             // Spacer(),
-            TextSmall(initialValue.toString()),
+            TextBody(initialValue.toString()),
             SizedBox(width: 8),
             // Icon(
             //   Icons.keyboard_arrow_right_rounded,

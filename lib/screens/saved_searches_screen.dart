@@ -56,12 +56,12 @@ Widget _content() {
       }
 
       if (snapshot.hasError) {
-        return Center(child: Text('Something went wrong'));
+        return Center(child: TextBody('Something went wrong'));
       }
 
       if (snapshot.data.docs.length < 1) {
         return Gutter(Center(
-          child: Text(
+          child: TextBody(
             'Save your search use it later and you you can get updates relate to it',
           ),
         ));

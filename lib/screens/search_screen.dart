@@ -6,7 +6,9 @@ import 'package:zendy_app/helpers/routs.dart';
 import 'package:zendy_app/models/recent_search_history_m.dart';
 
 import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/widgets/cus_icons.dart';
 import 'package:zendy_app/widgets/typography.dart';
+import 'package:zendy_app/widgets/widgets.dart';
 
 class SearchScreen extends StatelessWidget {
   final SearchHistoryController shCtrl = Get.put(SearchHistoryController());
@@ -21,9 +23,8 @@ class SearchScreen extends StatelessWidget {
       body: Flex(
         direction: Axis.vertical,
         children: [
-          // Title4('RECENT SEARCHES'),
           _resentSearchHistory(),
-          _buildActionBar()
+          _buildActionBar(),
         ],
       ),
     );
@@ -37,16 +38,16 @@ class SearchScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton.icon(
-              icon: Icon(Icons.filter_center_focus),
+              icon: Icon(CusIcons.search_refine),
               onPressed: () {},
-              label: Text('Advanced search'),
+              label: TextBody('Advanced search'),
             ),
             TextButton.icon(
-              icon: Icon(Icons.saved_search),
+              icon: Icon(CusIcons.saved_search),
               onPressed: () {
                 Get.toNamed(Goto.searches);
               },
-              label: Text('Saved searchers'),
+              label: TextBody('Saved searchers'),
             ),
           ],
         ),
@@ -78,7 +79,8 @@ class SearchScreen extends StatelessWidget {
     return IconButton(
       splashRadius: 28,
       color: Colors.black26,
-      icon: Icon(Icons.arrow_back_rounded),
+      icon:
+          Icon(CusIcons.arrow_back, color: Theme.of(Get.context).primaryColor),
       onPressed: () {
         Get.back();
       },
@@ -146,11 +148,11 @@ Widget _resentSearchHistory() {
         }
 
         if (snapshot.hasError) {
-          return Center(child: Text('Something went wrong'));
+          return Center(child: TextBody('Something went wrong'));
         }
 
         if (snapshot.data.docs.length < 1) {
-          return Center(child: Text('Start searching...'));
+          return Center(child: TextBody('Start searching...'));
         }
 
         return ListView.separated(
@@ -175,7 +177,7 @@ Widget _resentSearchHistory() {
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Icon(Icons.history_toggle_off),
+                    child: Icon(CusIcons.history),
                   ),
                   Expanded(
                     flex: 7,
@@ -185,7 +187,7 @@ Widget _resentSearchHistory() {
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: IconButton(
                       icon: Icon(
-                        Icons.upgrade_rounded,
+                        CusIcons.history_reuse,
                       ),
                       onPressed: () {
                         scCtrl.searchField.text = _qryVal;

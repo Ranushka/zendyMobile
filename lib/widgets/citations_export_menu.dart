@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy_app/widgets/widgets.dart';
 
 Widget citationsExportMenu() {
   // final selected = "Bulk action".obs;
@@ -15,15 +14,15 @@ Widget citationsExportMenu() {
     icon: Icon(Icons.more_vert),
     itemBuilder: (BuildContext bc) => [
       PopupMenuItem(
-        child: Text("Export Selected"),
+        child: TextBody("Export Selected"),
         value: "/newchat",
       ),
       PopupMenuItem(
-        child: Text("Select all"),
+        child: TextBody("Select all"),
         value: "/new-group-chat",
       ),
       PopupMenuItem(
-        child: Text("Settings"),
+        child: TextBody("Settings"),
         value: "/settings",
       ),
     ],

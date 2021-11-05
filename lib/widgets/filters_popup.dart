@@ -65,7 +65,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
           direction: Axis.horizontal,
           children: [
             TextButton(
-              child: Text('Clear filters'),
+              child: TextBody('Clear filters'),
               onPressed: () {
                 searchResultCtrl.clearFiltrs();
                 Get.back();
@@ -73,7 +73,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
             ),
             OutlinedButton(
               onPressed: () => Get.back(),
-              child: Text('Show reselts - ' + totalResults),
+              child: TextBody('Show reselts - ' + totalResults),
             ),
           ],
         )),

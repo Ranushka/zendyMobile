@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
             getLogoImg(80),
             TextButton(
               onPressed: () => Get.toNamed(Goto.login),
-              child: Text('Join Zendy'),
+              child: TextBody('Join Zendy'),
             )
             // TextBody('Welcome to Zendy'),
           ],

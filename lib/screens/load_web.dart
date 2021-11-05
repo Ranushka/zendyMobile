@@ -54,7 +54,8 @@ class LoadWebScreen extends StatelessWidget {
     String _downloadLink = url['download'];
     print('> url >' + url.toString());
 
-    Widget bodyContent = Center(child: Text('Hmmm..., some thing went wrong'));
+    Widget bodyContent =
+        Center(child: TextBody('Hmmm..., some thing went wrong'));
 
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
 
@@ -62,7 +63,7 @@ class LoadWebScreen extends StatelessWidget {
       loginToProceed();
       return Scaffold(
         appBar: _buildAppBar(),
-        body: Text('User Not loggedIn'),
+        body: TextBody('User Not loggedIn'),
       );
     }
 
@@ -75,7 +76,9 @@ class LoadWebScreen extends StatelessWidget {
       bodyContent = const PDF().cachedFromUrl(
         _downloadLink,
         headers: _headers,
-        placeholder: (double progress) => Center(child: Text('$progress %')),
+        placeholder: (double progress) => Center(
+          child: TextBody('$progress %'),
+        ),
         errorWidget: (dynamic error) => _buildPdfError(error),
       );
     } else if (_readLink.isNotEmpty) {
@@ -90,7 +93,7 @@ class LoadWebScreen extends StatelessWidget {
       );
       print('object');
     } else {
-      bodyContent = Center(child: Text('Hmmm..., No link'));
+      bodyContent = Center(child: TextBody('Hmmm..., No link'));
     }
 
     return Scaffold(
@@ -134,6 +137,6 @@ class LoadWebScreen extends StatelessWidget {
     if (error.statusCode == 401) {
       loginToProceed();
     }
-    return Center(child: Text(error.toString()));
+    return Center(child: TextBody(error.toString()));
   }
 }

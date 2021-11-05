@@ -69,7 +69,7 @@ class LoginEmailScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffixIcon: TextButton(
-                    child: Text('Forgot?'),
+                    child: TextBody('Forgot?'),
                     onPressed: _passwordReset,
                   ),
                 ),
@@ -83,7 +83,7 @@ class LoginEmailScreen extends StatelessWidget {
             ),
             SizedBox(height: 16),
             TextButton(
-              child: Text('Dont have an account?'),
+              child: TextBody('Dont have an account?'),
               onPressed: _createAccountPressed,
             ),
           ],

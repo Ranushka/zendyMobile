@@ -32,11 +32,11 @@ class JoinZendy extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  child: const Text('Learn more'),
+                  child: TextBody('Learn more'),
                   onPressed: () {},
                 ),
                 ElevatedButton(
-                  child: const Text('Create account / Login'),
+                  child: TextBody('Create account / Login'),
                   onPressed: () {
                     Get.toNamed(Goto.login);
                   },

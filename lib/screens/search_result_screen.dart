@@ -32,7 +32,7 @@ class SearchResultScreen extends StatelessWidget {
           return Center(child: _buildSearchResultLoading());
         }
 
-        return Center(child: Text('No results...'));
+        return Center(child: TextBody('No results...'));
       }),
       bottomNavigationBar: bottomNavigation(),
     );
@@ -86,7 +86,7 @@ class SearchResultScreen extends StatelessWidget {
     var _searchResults = data.data.searchResults;
     if (_searchResults.results.length == 0) {
       return Center(
-        child: Text('No results found'),
+        child: TextBody('No results found'),
       );
     }
 
@@ -111,7 +111,7 @@ class SearchResultScreen extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         final _data = _searchResults.results[index];
-        if (_data.isBlank) return Text('Empty data');
+        if (_data.isBlank) return TextBody('Empty data');
 
         if (index == 0) {
           return Column(

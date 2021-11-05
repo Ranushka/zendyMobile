@@ -49,13 +49,13 @@ Widget _buildlist() {
         }
 
         if (snapshot.hasError) {
-          return Center(child: Text('Something went wrong'));
+          return Center(child: TextBody('Something went wrong'));
         }
 
         if (snapshot.data.docs.length < 1) {
           return Gutter(Center(
-            child: Text(
-              'Add to your library will help you to read later',
+            child: TextBody(
+              'Add Search results to your library will help you to read or export later',
             ),
           ));
         }
