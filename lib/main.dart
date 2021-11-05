@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: Goto.searches,
-          page: () => UserSavedScreen(),
+          page: () => SavedSearchersScreen(),
           transition: Transition.noTransition,
         ),
         GetPage(

@@ -51,6 +51,7 @@ class LoginEmailScreen extends StatelessWidget {
             if (authCtrl.isLoading.value) LinearProgressIndicator(),
             Container(
               child: TextField(
+                style: Theme.of(Get.context).textTheme.bodyText2,
                 autofocus: true,
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -60,6 +61,7 @@ class LoginEmailScreen extends StatelessWidget {
             ),
             Container(
               child: TextField(
+                style: Theme.of(Get.context).textTheme.bodyText2,
                 controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,

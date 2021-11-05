@@ -120,10 +120,7 @@ class SettingsScreen extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: 32),
-                Text(
-                  'Version: 1.4.0',
-                  style: TextStyle(color: Color(0xFF777777)),
-                ),
+                Opacity(opacity: 0.5, child: TextSmall('Version: 1.4.0')),
                 SizedBox(height: 32),
               ],
             ),

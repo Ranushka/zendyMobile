@@ -27,18 +27,6 @@ class SlidableWidget extends StatelessWidget {
 
       /// left side
       actions: <Widget>[
-        // IconSlideAction(
-        //   caption: 'Archive',
-        //   color: Colors.blue,
-        //   icon: Icons.archive,
-        //   onTap: () => onDismissed(SlidableAction.archive),
-        // ),
-        // IconSlideAction(
-        //   caption: 'Share',
-        //   color: Colors.indigo,
-        //   icon: Icons.share,
-        //   onTap: () => onDismissed(SlidableAction.share),
-        // ),
         IconSlideAction(
           caption: 'Delete',
           color: Colors.red,
@@ -48,14 +36,14 @@ class SlidableWidget extends StatelessWidget {
       ],
 
       /// right side
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: 'Edit',
-          color: Colors.teal,
-          icon: Icons.edit,
-          onTap: () => onDismissed(SlidableAction.edit),
-        ),
-      ],
+      // secondaryActions: <Widget>[
+      //   IconSlideAction(
+      //     caption: 'Edit',
+      //     color: Colors.teal,
+      //     icon: Icons.edit,
+      //     onTap: () => onDismissed(SlidableAction.edit),
+      //   ),
+      // ],
     );
   }
 }

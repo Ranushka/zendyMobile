@@ -21,12 +21,6 @@ class SearchResultItem extends StatelessWidget {
     print(_item.downloadLink + '---' + _item.zendyLink);
     var _zendyLink = _item.downloadLink ?? _item.zendyLink;
 
-    // return Card(
-    //   margin: EdgeInsets.all(0),
-    //   color: Colors.transparent,
-    //   elevation: 0,
-    //   clipBehavior: Clip.antiAlias,
-
     return Container(
       child: Obx(() {
         return Column(
@@ -63,7 +57,7 @@ class SearchResultItem extends StatelessWidget {
                 children: [
                   IconButton(
                     splashRadius: 24,
-                    icon: Icon(CusIcons.share_outline),
+                    icon: Icon(CusIcons.share),
                     onPressed: () {
                       Share.share(
                         'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
@@ -73,7 +67,7 @@ class SearchResultItem extends StatelessWidget {
                   ),
                   IconButton(
                     splashRadius: 24,
-                    icon: Icon(CusIcons.cite_outline),
+                    icon: Icon(CusIcons.cite),
                     onPressed: () {
                       SavedCitationsController()
                           .saveData(_title, _zendyLink, _id);
@@ -81,7 +75,7 @@ class SearchResultItem extends StatelessWidget {
                   ),
                   IconButton(
                     splashRadius: 24,
-                    icon: Icon(CusIcons.logout_outline),
+                    icon: Icon(CusIcons.paper_add),
                     onPressed: () {},
                   ),
                 ],
@@ -104,13 +98,26 @@ class SearchResultItem extends StatelessWidget {
         _isFullDetail.value = !_isFullDetail.value;
       },
       child: Gutter(
-        Container(
-          height: _isFullDetail.value ? 32 : 16,
-          color: Theme.of(Get.context).backgroundColor.withOpacity(0.6),
-          width: double.infinity,
-          child: _isFullDetail.value
-              ? Icon(Icons.arrow_drop_up_rounded)
-              : Icon(Icons.arrow_drop_down_rounded),
+        Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(
+              height: _isFullDetail.value ? 32 : 16,
+              color: Theme.of(Get.context).backgroundColor.withOpacity(0.6),
+              width: double.infinity,
+            ),
+            Transform.translate(
+              offset: const Offset(0, 1),
+              child: Container(
+                height: 16,
+                color: Theme.of(Get.context).backgroundColor,
+                width: 32,
+                child: _isFullDetail.value
+                    ? Icon(Icons.arrow_drop_up_rounded)
+                    : Icon(Icons.arrow_drop_down_rounded),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -196,7 +203,7 @@ class SearchResultItem extends StatelessWidget {
                 splashColor: Colors.blue.shade100,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4, bottom: 4),
-                  child: new LinkText(_itm.trim()),
+                  child: new TextBody(_itm.trim(), link: true),
                 ),
                 onTap: () {},
               ),
@@ -227,7 +234,7 @@ class SearchResultItem extends StatelessWidget {
               splashColor: Colors.blue.shade100,
               child: Padding(
                 padding: const EdgeInsets.only(right: 4, bottom: 4),
-                child: new LinkText(_itm.trim()),
+                child: new TextBody(_itm.trim(), link: true),
               ),
               onTap: () {},
             ),
@@ -268,9 +275,8 @@ class SearchResultItem extends StatelessWidget {
                 splashColor: Colors.blue.shade100,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4, bottom: 4),
-                  child: LinkText(_itm.trim()),
+                  child: TextBody(_itm.trim(), link: true),
                 ),
-                onTap: () {},
               ),
             );
           }),

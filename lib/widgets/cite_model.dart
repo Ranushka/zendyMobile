@@ -35,7 +35,7 @@ Widget citeItem(title, _id) {
           splashColor: Colors.blue.shade100,
           child: Padding(
             padding: const EdgeInsets.only(right: 4, bottom: 4),
-            child: LinkText(title.trim()),
+            child: TextBody(title.trim(), link: true),
           ),
           onTap: () {
             Get.toNamed(Goto.title, arguments: _id);

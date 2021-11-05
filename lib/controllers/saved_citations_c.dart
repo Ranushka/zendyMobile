@@ -47,10 +47,13 @@ class SavedCitationsController extends GetxController {
       );
 
       await _service.create(_contact);
-      showSnackbar(title: 'Success', message: 'Citation saved');
+      showSnackbar(
+        type: MsgType.Success,
+        message: 'Citation saved',
+      );
     } catch (e) {
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }
@@ -71,7 +74,7 @@ class SavedCitationsController extends GetxController {
       await _service.update(_contact);
     } catch (e) {
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }
@@ -82,7 +85,7 @@ class SavedCitationsController extends GetxController {
       await _service.delete(contact);
     } catch (e) {
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }

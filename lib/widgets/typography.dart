@@ -101,16 +101,19 @@ class Title4 extends StatelessWidget {
 class TextBody extends StatelessWidget {
   final String _text;
   final int ml;
+  final bool link;
 
-  TextBody(this._text, {this.ml = 1000});
+  TextBody(this._text, {this.ml = 1000, this.link = false});
 
   @override
   Widget build(BuildContext context) {
+    TextStyle themeStyle = Theme.of(context).textTheme.bodyText1;
+
     return Text(
       _text,
       maxLines: ml,
       overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: themeStyle.copyWith(color: link ? Colors.blue : themeStyle.color),
     );
   }
 }
@@ -123,23 +126,7 @@ class TextSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.subtitle1,
-    );
-  }
-}
-
-class LinkText extends StatelessWidget {
-  final String _text;
-  const LinkText(this._text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _text,
-      style: const TextStyle(
-        color: Colors.blue,
-        // fontSize: 12,
-      ),
+      style: Theme.of(context).textTheme.subtitle1.copyWith(),
     );
   }
 }

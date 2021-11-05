@@ -34,12 +34,9 @@ class SavedSearchersController extends GetxController {
       );
 
       await _service.create(_contact);
-      showSnackbar(title: 'Success', message: 'Contact saved');
+      showSnackbar(type: MsgType.Success, message: 'Keyword saved');
     } catch (e) {
-      showSnackbar(
-        title: 'Error',
-        message: e?.message ?? 'something went wrong',
-      );
+      showSnackbar(type: MsgType.Error, message: e?.message ?? 'Not saved');
     }
   }
 
@@ -58,20 +55,22 @@ class SavedSearchersController extends GetxController {
       );
 
       await _service.update(_contact);
+      showSnackbar(type: MsgType.Success, message: 'Keyword updated');
     } catch (e) {
-      showSnackbar(
-        title: 'Error',
-        message: e?.message ?? 'something went wrong',
-      );
+      showSnackbar(type: MsgType.Error, message: e?.message ?? 'Not saved');
     }
   }
 
-  void deleteData({SavedSearchModel contact}) async {
+  void deleteData(String id) async {
     try {
-      await _service.delete(contact);
+      await _service.delete(id);
+      showSnackbar(
+        type: MsgType.Success,
+        message: 'Saved search removed',
+      );
     } catch (e) {
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }

@@ -96,7 +96,7 @@ Widget bottomNavigation() {
             ),
             btnReguler(
               Goto.searches,
-              CusIcons.searches,
+              CusIcons.saved_search,
               () {
                 _curIn.value = 2;
                 if (authCtrl.isLoggedIn()) {
@@ -116,7 +116,7 @@ Widget bottomNavigation() {
             ),
             btnReguler(
               Goto.citations,
-              CusIcons.cite,
+              CusIcons.my_library,
               () {
                 _curIn.value = 3;
                 if (authCtrl.isLoggedIn()) {

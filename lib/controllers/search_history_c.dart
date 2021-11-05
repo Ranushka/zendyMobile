@@ -30,7 +30,7 @@ class SearchHistoryController extends GetxController {
     } catch (e) {
       print(e);
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }
@@ -49,8 +49,8 @@ class SearchHistoryController extends GetxController {
       await _service.update(_contact);
     } catch (e) {
       showSnackbar(
-        title: 'Error',
-        message: e?.message ?? 'something went wrong',
+        type: MsgType.Error,
+        message: 'something went wrong',
       );
     }
   }
@@ -60,7 +60,7 @@ class SearchHistoryController extends GetxController {
       await _service.delete(contact);
     } catch (e) {
       showSnackbar(
-        title: 'Error',
+        type: MsgType.Error,
         message: e?.message ?? 'something went wrong',
       );
     }

@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:zendy_app/controllers/controllers.dart';
 
 class SavedSearcherService {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final AuthController authCtrl = Get.find();
 
   Stream<QuerySnapshot> fetch(String userId) {
     return _firestore
         .collection("users")
-        .doc(userId.toString())
+        .doc(authCtrl.currentUser.value.id)
         .collection('savedSearchers')
         .snapshots();
   }
@@ -15,7 +19,7 @@ class SavedSearcherService {
   Future<dynamic> create(dynamic contact) async {
     DocumentReference docRef = _firestore
         .collection("users")
-        .doc(contact.userId.toString())
+        .doc(authCtrl.currentUser.value.id)
         .collection('savedSearchers')
         .doc();
 
@@ -31,7 +35,7 @@ class SavedSearcherService {
   Future<dynamic> update(dynamic contact) async {
     DocumentReference docRef = _firestore
         .collection("users")
-        .doc(contact.userId.toString())
+        .doc(authCtrl.currentUser.value.id)
         .collection('savedSearchers')
         .doc(contact.id);
 
@@ -42,13 +46,12 @@ class SavedSearcherService {
     return contact;
   }
 
-  Future<dynamic> delete(dynamic contact) async {
+  Future<dynamic> delete(String id) async {
     await _firestore
         .collection("users")
-        .doc(contact.userId.toString())
+        .doc(authCtrl.currentUser.value.id)
         .collection('savedSearchers')
-        .doc(contact.id)
+        .doc(id)
         .delete();
-    return contact;
   }
 }

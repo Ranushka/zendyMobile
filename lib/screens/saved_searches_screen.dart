@@ -8,7 +8,7 @@ import 'package:zendy_app/models/saved_search_m.dart';
 import 'package:zendy_app/controllers/saved_searchers_c.dart';
 // import 'package:zendy_app/helpers/helpers.dart';
 
-class UserSavedScreen extends StatelessWidget {
+class SavedSearchersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +22,6 @@ class UserSavedScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: bottomNavigation(),
-    );
-  }
-
-  Widget _buildTitle() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
-      color: Colors.white,
-      child: Flex(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        direction: Axis.horizontal,
-        children: [
-          Title1('Searchers'),
-          citationsExportMenu(),
-        ],
-      ),
     );
   }
 
@@ -77,7 +60,11 @@ Widget _content() {
       }
 
       if (snapshot.data.docs.length < 1) {
-        return Center(child: Text('Something went wrong'));
+        return Gutter(Center(
+          child: Text(
+            'Save your search use it later and you you can get updates relate to it',
+          ),
+        ));
       }
 
       return ListView.separated(
@@ -93,18 +80,16 @@ Widget _content() {
             queryDocSnapshot: item,
           );
 
-          // print(contactItem);
-
           return SlidableWidget(
-            uniqueId: '${item.id ?? ''}',
+            uniqueId: '${item.id}',
             child: ListTile(
               tileColor: Theme.of(Get.context).backgroundColor,
               title: Title3(contactItem.keyword),
               subtitle:
-                  Title3('In - ${contactItem.sort} - ${contactItem.filters}'),
+                  TextBody('In - ${contactItem.sort} - ${contactItem.filters}'),
             ),
             onDismissed: (action) {
-              // dismissSlidableItem(context, contactItem, action);
+              SavedSearchersController().deleteData(contactItem.id);
             },
           );
         },

@@ -53,7 +53,11 @@ Widget _buildlist() {
         }
 
         if (snapshot.data.docs.length < 1) {
-          return Center(child: Text('Something went wrong'));
+          return Gutter(Center(
+            child: Text(
+              'Add to your library will help you to read later',
+            ),
+          ));
         }
 
         return ListView.separated(

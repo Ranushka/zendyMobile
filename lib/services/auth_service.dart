@@ -29,10 +29,16 @@ class AuthServices {
 
     if (response.statusCode == 200) {
       await saveUserTokenData(response);
-      showSnackbar(title: 'Login success');
+      showSnackbar(
+        type: MsgType.Success,
+        message: 'Login success',
+      );
       return true;
     } else {
-      showSnackbar(title: 'Fail', message: response.toString());
+      showSnackbar(
+        type: MsgType.Error,
+        message: response.toString(),
+      );
       return null;
     }
   }
@@ -52,16 +58,27 @@ class AuthServices {
     print('signIn--->' + resBody.toString());
 
     if (resBody['status'] == false) {
-      showSnackbar(title: 'Fail', message: resBody['error']);
+      showSnackbar(
+        type: MsgType.Error,
+        message: resBody['error'] ?? 'something went wrong',
+      );
+
       return false;
     }
 
     if (response.statusCode == 200) {
       await saveUserTokenData(response);
-      showSnackbar(title: 'Login success');
+      showSnackbar(
+        type: MsgType.Success,
+        message: 'Login success',
+      );
       return true;
     } else {
-      showSnackbar(title: 'Fail', message: response.toString());
+      showSnackbar(
+        type: MsgType.Error,
+        message: response.toString(),
+      );
+
       return false;
     }
   }
