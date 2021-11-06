@@ -139,7 +139,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildBackButton() {
     return IconButton(
       splashRadius: 24,
-      icon: Icon(Icons.arrow_back_rounded),
+      icon: Icon(CusIcons.arrow_back),
       onPressed: () => Get.back(),
     );
   }

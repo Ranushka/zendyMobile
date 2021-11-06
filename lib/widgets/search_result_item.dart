@@ -69,14 +69,20 @@ class SearchResultItem extends StatelessWidget {
                     splashRadius: 24,
                     icon: Icon(CusIcons.cite),
                     onPressed: () {
-                      SavedCitationsController()
-                          .saveData(_title, _zendyLink, _id);
+                      citationPopup();
                     },
                   ),
                   IconButton(
                     splashRadius: 24,
                     icon: Icon(CusIcons.paper_add),
-                    onPressed: () {},
+                    onPressed: () {
+                      SavedCitationsController().saveData(
+                        _title,
+                        _item.zendyLink,
+                        _item.downloadLink,
+                        _id,
+                      );
+                    },
                   ),
                 ],
               ),

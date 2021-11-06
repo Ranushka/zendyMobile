@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(Get.context).backgroundColor,
-      appBar: emptyAppbar(),
+      // appBar: emptyAppbar(),
       body: Container(
         child: SingleChildScrollView(
           child: _buildMainContent(),
@@ -51,6 +51,7 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 32),
+          SizedBox(height: 16),
           _buildUserGreating(),
           SizedBox(height: 16),
           Gutter(Title1('Research is creating new knowledge.')),
@@ -79,7 +80,7 @@ class HomeScreen extends StatelessWidget {
             getLogoImg(80),
             TextButton(
               onPressed: () => Get.toNamed(Goto.login),
-              child: TextBody('Join Zendy'),
+              child: Text('Join Zendy'),
             )
             // TextBody('Welcome to Zendy'),
           ],

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/models/models.dart';
+import 'package:zendy_app/helpers/helpers.dart';
 
 class SavedCitationsScreen extends StatelessWidget {
   @override
@@ -28,8 +29,8 @@ class SavedCitationsScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PageTitle(
-          text: 'Read list',
-          icon: Icons.logout,
+          text: 'Library',
+          icon: CusIcons.logout,
           action: citationsExportMenu(),
         ),
         _buildlist()
@@ -37,6 +38,16 @@ class SavedCitationsScreen extends StatelessWidget {
       direction: Axis.vertical,
     );
   }
+}
+
+_goToWebPage(readLink, downloadLink) {
+  Get.toNamed(
+    Goto.webPage,
+    arguments: {
+      'read': readLink,
+      'download': downloadLink,
+    },
+  );
 }
 
 Widget _buildlist() {
@@ -74,6 +85,9 @@ Widget _buildlist() {
             );
 
             return ListTile(
+              onTap: () {
+                _goToWebPage(contactItem.sourceUrl, contactItem.sourceUrl);
+              },
               tileColor: Theme.of(Get.context).backgroundColor,
               title: TextBody(contactItem.title),
               subtitle: TextSmall("Journal - 2020"),

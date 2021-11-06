@@ -36,7 +36,7 @@ class JoinZendy extends StatelessWidget {
                   onPressed: () {},
                 ),
                 ElevatedButton(
-                  child: TextBody('Create account / Login'),
+                  child: Text('Create account / Login'),
                   onPressed: () {
                     Get.toNamed(Goto.login);
                   },

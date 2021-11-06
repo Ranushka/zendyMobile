@@ -61,14 +61,14 @@ class SearchScreen extends StatelessWidget {
         return IconButton(
           color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
-          icon: Icon(Icons.search_rounded),
+          icon: Icon(CusIcons.search),
           onPressed: () => {},
         );
       } else {
         return IconButton(
           color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
-          icon: Icon(Icons.close_rounded),
+          icon: Icon(CusIcons.clear),
           onPressed: () => scCtrl.clear(),
         );
       }

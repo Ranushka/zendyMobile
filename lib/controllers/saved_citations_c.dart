@@ -34,17 +34,21 @@ class SavedCitationsController extends GetxController {
 
   void saveData(
     String title,
-    String sourceUrl,
+    String readLink,
+    String downloadLink,
     String id,
   ) async {
     try {
       var userId = authCtrl.currentUser.value.id;
-      SavedCitationsModel _contact = SavedCitationsModel(
-        userId: userId,
-        id: id,
-        title: title,
-        sourceUrl: sourceUrl,
-      );
+      var _title = title.replaceAll('<mark>', '').replaceAll('</mark>', '');
+
+      var _contact = {
+        'userId': userId,
+        'id': id,
+        'title': _title,
+        'readLink': readLink,
+        'downloadLink': downloadLink,
+      };
 
       await _service.create(_contact);
       showSnackbar(
