@@ -30,7 +30,7 @@ var titleMap = {
   'journalTitleFull': 'Material Type',
   'subjectsFull': 'Subjects',
   'genlanguage': 'Language',
-  'publishersFull': 'publishers',
+  'publishersFull': 'Publishers',
   'publicationTypeFull': 'Publication Type'
 };
 
@@ -78,7 +78,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
           ],
         )),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(Get.context).backgroundColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 2,
@@ -90,6 +90,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(Get.context).backgroundColor,
       bottomSheet: Obx(() => _buildBottomSheet()),
       appBar: AppBar(
         leadingWidth: 8,
@@ -108,6 +109,7 @@ checkBoxRow(name, count, bool checked, catId) {
   RxBool _isChecked = checked.obs;
   return Obx(() {
     return CheckboxListTile(
+      // checkColor: Theme.of(Get.context).primaryColor,
       activeColor: Theme.of(Get.context).primaryColor,
       title: Wrap(
         direction: Axis.horizontal,
@@ -142,18 +144,15 @@ class FiltersList extends StatelessWidget {
       for (var availableFacetGroup in availableFacets) {
         var catId = availableFacetGroup.categoryId;
 
-        finalList.add(Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Colors.grey.shade200,
+        finalList.add(Gutter(
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 32, 0, 8),
+                child: Title4(titleMap[catId]),
               ),
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(16, 32, 0, 8),
-            child: Title4(titleMap[catId]),
+              dividerX
+            ],
           ),
         ));
 

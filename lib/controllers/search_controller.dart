@@ -33,10 +33,4 @@ class SearchController extends GetxController {
     searchQuery.value = '';
     searchQuery.refresh();
   }
-
-  // void resentSearchersGet<RecentSearchModel>() {
-  //   final _data = RecentSearchService.getItems();
-
-  //   resentSearchers.value = _data;
-  // }
 }

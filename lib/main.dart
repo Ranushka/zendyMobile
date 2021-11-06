@@ -60,11 +60,6 @@ void main() async {
     permanent: true,
   );
 
-  Get.put<ProductController>(
-    ProductController(),
-    permanent: true,
-  );
-
   runApp(MyApp());
 }
 

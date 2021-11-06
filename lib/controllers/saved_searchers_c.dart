@@ -14,7 +14,7 @@ class SavedSearchersController extends GetxController {
 
   Stream<QuerySnapshot> getData() {
     var userId = authCtrl.currentUser.value.id;
-    Stream<QuerySnapshot> qSnapStream = _service.fetch(userId);
+    Stream<QuerySnapshot> qSnapStream = _service.fetch();
 
     return qSnapStream;
   }
@@ -35,27 +35,6 @@ class SavedSearchersController extends GetxController {
 
       await _service.create(_contact);
       showSnackbar(type: MsgType.Success, message: 'Keyword saved');
-    } catch (e) {
-      showSnackbar(type: MsgType.Error, message: e?.message ?? 'Not saved');
-    }
-  }
-
-  void updateData({
-    String keyword,
-    String sort,
-    String filters,
-  }) async {
-    try {
-      var userId = authCtrl.currentUser.value.id;
-      SavedSearchModel _contact = SavedSearchModel(
-        userId: userId,
-        keyword: keyword,
-        sort: sort,
-        filters: filters,
-      );
-
-      await _service.update(_contact);
-      showSnackbar(type: MsgType.Success, message: 'Keyword updated');
     } catch (e) {
       showSnackbar(type: MsgType.Error, message: e?.message ?? 'Not saved');
     }

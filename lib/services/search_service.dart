@@ -23,8 +23,6 @@ class SearchService {
       "pageNumber": pageNumber
     });
 
-    print('getResults>>>>>>>' + _response.toString());
-
     if (_response.statusCode == 200) {
       return searchModelFromJson(_response.body);
     } else {

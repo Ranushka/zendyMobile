@@ -8,20 +8,21 @@ class SavedSearcherService {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final AuthController authCtrl = Get.find();
 
-  Stream<QuerySnapshot> fetch(String userId) {
+  CollectionReference getCollection(String collectionName) {
+    var userId = authCtrl.currentUser.value.id;
+
     return _firestore
         .collection("users")
-        .doc(authCtrl.currentUser.value.id)
-        .collection('savedSearchers')
-        .snapshots();
+        .doc(userId)
+        .collection(collectionName);
+  }
+
+  Stream<QuerySnapshot> fetch() {
+    return getCollection('savedSearchers').snapshots();
   }
 
   Future<dynamic> create(dynamic contact) async {
-    DocumentReference docRef = _firestore
-        .collection("users")
-        .doc(authCtrl.currentUser.value.id)
-        .collection('savedSearchers')
-        .doc();
+    DocumentReference docRef = getCollection('savedSearchers').doc();
 
     await docRef.set({
       "id": docRef.id,
@@ -29,29 +30,11 @@ class SavedSearcherService {
       "sort": contact.sort,
       "filters": contact.filters,
     });
-    return contact;
-  }
 
-  Future<dynamic> update(dynamic contact) async {
-    DocumentReference docRef = _firestore
-        .collection("users")
-        .doc(authCtrl.currentUser.value.id)
-        .collection('savedSearchers')
-        .doc(contact.id);
-
-    await docRef.update({
-      "name": contact.name,
-      "email": contact.email,
-    });
     return contact;
   }
 
   Future<dynamic> delete(String id) async {
-    await _firestore
-        .collection("users")
-        .doc(authCtrl.currentUser.value.id)
-        .collection('savedSearchers')
-        .doc(id)
-        .delete();
+    await getCollection('savedSearchers').doc(id).delete();
   }
 }

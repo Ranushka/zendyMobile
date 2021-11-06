@@ -7,7 +7,6 @@ import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 
 class HomeScreen extends StatelessWidget {
-  final ProductController productController = Get.find();
   final AuthController authController = Get.find();
 
   @override
