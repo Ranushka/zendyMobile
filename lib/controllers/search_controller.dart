@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:zendy_app/models/recent_search_model.dart';
 // import 'package:zendy_app/models/saved_search_model.dart';
 // import 'package:zendy_app/models/search_model.dart';
-import 'package:zendy_app/services/recent_search_service.dart';
 // import 'package:zendy_app/services/saved_search_service.dart';
 // import 'package:zendy_app/services/search_service.dart';
 
