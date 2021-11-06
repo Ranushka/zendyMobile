@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:smart_select/smart_select.dart';
 
-// import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 class ProfileTilePaymentHistory extends StatelessWidget {
@@ -23,13 +21,11 @@ class ProfileTilePaymentHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: state.showModal,
       child: Container(
         padding: EdgeInsets.all(16),
         color: Theme.of(context).backgroundColor,
         child: Flex(
           direction: Axis.horizontal,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Title3('Paymnet history'),
             Spacer(),

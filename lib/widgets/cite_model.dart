@@ -5,7 +5,6 @@ import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 
 Future citeModel(_id, title) {
-  // var _internalLink = Goto.title + _id;
   return showModalBottomSheet(
     context: Get.context,
     builder: (context) {

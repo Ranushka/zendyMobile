@@ -21,7 +21,6 @@ class ProfileTilePayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: state.showModal,
       child: Container(
         padding: EdgeInsets.all(16),
         color: Theme.of(context).backgroundColor,

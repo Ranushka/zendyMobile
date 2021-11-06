@@ -27,7 +27,7 @@ class SearchResultItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24),
-            _buildTitle(_item.title, _item.publicationYear, _zendyLink),
+            _buildTitle(_item.title, _item.publicationYear),
             if (_abstract != null)
               if (_isFullDetail.value)
                 _buildFullContent(_abstract, _isFullDetail)
@@ -129,7 +129,7 @@ class SearchResultItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(String _title, int _year, String _zendyLink) {
+  Widget _buildTitle(String _title, int _year) {
     return InkWell(
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -142,7 +142,6 @@ class SearchResultItem extends StatelessWidget {
           Gutter(TextSmall('Journal - $_year - ${_item.journalTitle}')),
           SizedBox(height: 8),
           Gutter(HtmlH3(_title)),
-          // HtmlH3(_title),
           SizedBox(height: 8),
         ],
       ),

@@ -14,7 +14,6 @@ class CheckConnection extends StatefulWidget {
 class _CheckConnection extends State {
   StreamSubscription internetconnection;
   bool isoffline = false;
-  //set variable for Connectivity subscription listiner
 
   @override
   void initState() {

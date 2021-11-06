@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zendy_app/services/services.dart';
 
 class SearchHistoryService {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   Stream<QuerySnapshot> fetchdata(String userId) {
     return FirestoreService()
         .getCollection('searchHistory')

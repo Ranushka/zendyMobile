@@ -109,7 +109,6 @@ checkBoxRow(name, count, bool checked, catId) {
   RxBool _isChecked = checked.obs;
   return Obx(() {
     return CheckboxListTile(
-      // checkColor: Theme.of(Get.context).primaryColor,
       activeColor: Theme.of(Get.context).primaryColor,
       title: Wrap(
         direction: Axis.horizontal,

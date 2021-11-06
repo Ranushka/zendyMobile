@@ -30,11 +30,6 @@ Widget bottomNavigation() {
   }
 
   Widget btnSearch(String name, IconData icon, onClick) {
-    // final isActive = Get.currentRoute == Goto.searchResult;
-    // final pc = Theme.of(Get.context).primaryColor;
-    // // final sc = Theme.of(Get.context).hintColor.withOpacity(0.3);
-    // final sc = Theme.of(Get.context).hintColor;
-
     return Expanded(
       flex: 1,
       child: Transform.translate(

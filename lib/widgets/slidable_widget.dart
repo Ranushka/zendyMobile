@@ -24,8 +24,6 @@ class SlidableWidget extends StatelessWidget {
       controller: slidableController,
       actionPane: SlidableDrawerActionPane(),
       child: child,
-
-      /// left side
       actions: <Widget>[
         IconSlideAction(
           caption: 'Delete',
@@ -34,16 +32,6 @@ class SlidableWidget extends StatelessWidget {
           onTap: () => onDismissed(SlidableAction.delete),
         ),
       ],
-
-      /// right side
-      // secondaryActions: <Widget>[
-      //   IconSlideAction(
-      //     caption: 'Edit',
-      //     color: Colors.teal,
-      //     icon: Icons.edit,
-      //     onTap: () => onDismissed(SlidableAction.edit),
-      //   ),
-      // ],
     );
   }
 }

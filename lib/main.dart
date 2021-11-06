@@ -11,12 +11,9 @@ import 'package:zendy_app/controllers/search_result_controller.dart';
 import 'package:zendy_app/controllers/search_history_c.dart';
 
 import 'package:zendy_app/screens/screens.dart';
-import 'package:zendy_app/widgets/widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.white));
 
   await Firebase.initializeApp();
 
@@ -59,6 +56,10 @@ void main() async {
     BySubjectsController(),
     permanent: true,
   );
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+  ));
 
   runApp(MyApp());
 }

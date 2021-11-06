@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 Widget citationsExportMenu() {
-  // final selected = "Bulk action".obs;
-
-  // void setSelected(String value) {
-  //   selected.value = value;
-  // }
-
-  // return Obx(() {
   return PopupMenuButton(
     icon: Icon(Icons.more_vert),
     itemBuilder: (BuildContext bc) => [
@@ -26,7 +19,5 @@ Widget citationsExportMenu() {
         value: "/settings",
       ),
     ],
-    // onSelected: (value) => setSelected(value),
   );
-  // });
 }

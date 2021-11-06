@@ -20,12 +20,10 @@ Widget buildUserSubscrionInfo() {
                 _isExpanded(!_isExpanded.value);
               },
               child: Container(
-                // padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 padding: EdgeInsets.all(16),
                 color: Theme.of(Get.context).backgroundColor,
                 child: Flex(
                   direction: Axis.horizontal,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.payment_outlined,
@@ -47,7 +45,6 @@ Widget buildUserSubscrionInfo() {
                 child: Column(
                   children: [
                     dividerX,
-                    // SizedBox(height: 8),
                     ProfileTilePlan(),
                     dividerX,
                     ProfileTilePayment(),

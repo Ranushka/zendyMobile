@@ -133,7 +133,6 @@ class TextSmall extends StatelessWidget {
 
 class BtnText extends StatelessWidget {
   final String _text;
-  // final bool _dark = false;
   const BtnText(this._text);
 
   @override
@@ -164,7 +163,6 @@ class Gutter extends StatelessWidget {
 Widget dividerX = Gutter(Divider(
   height: 1,
   color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
-  // color: Theme.of(Get.context).primaryColor,
 ));
 
 class Skeleton extends StatelessWidget {
