@@ -6,12 +6,14 @@ import 'package:zendy_app/controllers/controllers.dart';
 class RequestController extends GetxController {
   final AuthController authCtrl = Get.put(AuthController());
 
-  // var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
-  // Dio dio = Dio(BaseOptions(headers: this._headers));
-
-  request() {
+  Dio requestWithAuth() {
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
     Dio dio = Dio(BaseOptions(headers: _headers));
     return dio;
+  }
+
+  requestGet() {
+    Dio dio = Dio();
+    return dio.get;
   }
 }

@@ -32,7 +32,7 @@ class AuthController extends GetxController {
       if (_userData != null) {
         _setUserData(_userData);
       } else {
-        // Assign temp Id to the user
+        // Assign temp Id to the user to manage the guest user
         getTempUserId().then((tempId) => currentUser.value.id = tempId);
       }
     });

@@ -11,8 +11,7 @@ import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/request_controller.dart';
 
 void getHttp(url) async {
-  final requestCtrl = RequestController();
-  final _request = requestCtrl.request();
+  final _request = RequestController().requestWithAuth();
 
   try {
     var status = await Permission.storage.status;
@@ -44,7 +43,6 @@ Future<String> getDirectoryPath() async {
 
 class LoadWebScreen extends StatelessWidget {
   final AuthController authCtrl = Get.put(AuthController());
-  final requestCtrl = RequestController();
 
   @override
   Widget build(BuildContext context) {

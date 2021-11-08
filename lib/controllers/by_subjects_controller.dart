@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 class BySubjectsController extends GetxController {
   var isLoading = true.obs;
   var data = [].obs;
+  final _request = RequestController().requestGet();
 
   @override
   void onInit() {
@@ -16,8 +17,7 @@ class BySubjectsController extends GetxController {
   void fetchContent() async {
     try {
       isLoading(true);
-      var dio = Dio();
-      var _response = await dio.get(Api.bySubjectsUrl);
+      var _response = await _request(Api.bySubjectsUrl);
 
       if (_response.statusCode == 200) {
         data.value = _response.data;

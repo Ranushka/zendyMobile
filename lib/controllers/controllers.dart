@@ -2,6 +2,7 @@ export 'auth_controller.dart';
 export 'by_subjects_controller.dart';
 export 'featured_content_controller.dart';
 export 'from_blog_controller.dart';
+export 'request_controller.dart';
 export 'saved_citations_c.dart';
 export 'saved_searchers_c.dart';
 export 'search_controller.dart';

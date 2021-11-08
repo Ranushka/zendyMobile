@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
 
-import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 class FeaturedContentController extends GetxController {
   var isLoading = true.obs;
   var data = [].obs;
+  final _request = RequestController().requestGet();
 
   @override
   void onInit() {
@@ -17,13 +17,9 @@ class FeaturedContentController extends GetxController {
   void fetchFeaturedContent() async {
     try {
       isLoading(true);
-      var dio = Dio();
-      var _response = await dio.get(Api.featuredContent);
+      var _response = await _request(Api.featuredContent);
 
       if (_response.statusCode == 200) {
-        // var bb = _response.data.toString();
-        // var data = FeaturedContentModel.fromJson(bb);
-        // print(data);
         data.value = _response.data;
       }
     } finally {
