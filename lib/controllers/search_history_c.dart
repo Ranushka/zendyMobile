@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zendy_app/models/recent_search_history_m.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/services/services.dart';
 import 'package:zendy_app/controllers/controllers.dart';
