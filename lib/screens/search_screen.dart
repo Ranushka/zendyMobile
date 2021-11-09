@@ -75,8 +75,10 @@ class SearchScreen extends StatelessWidget {
     return IconButton(
       splashRadius: 28,
       color: Colors.black26,
-      icon:
-          Icon(CusIcons.arrow_back, color: Theme.of(Get.context).primaryColor),
+      icon: Icon(
+        CusIcons.arrow_back,
+        color: Theme.of(Get.context).primaryColor,
+      ),
       onPressed: () {
         Get.back();
       },
@@ -132,7 +134,6 @@ class SearchScreen extends StatelessWidget {
 }
 
 Widget _resentSearchHistory() {
-  // final SearchResultController srCtrl = Get.find();
   final SearchController scCtrl = Get.find();
 
   return Expanded(
@@ -196,7 +197,8 @@ Widget _resentSearchHistory() {
 }
 
 void _searchAction(value) {
-  final SearchResultController srCtrl = Get.put(SearchResultController());
+  final SearchResultController srCtrl = Get.find();
+  final SearchHistoryController shCtrl = Get.find();
 
   if (value == null) return;
   if (value == '') return;
@@ -204,6 +206,7 @@ void _searchAction(value) {
   srCtrl.searchQry.value = value;
   srCtrl.clearCtrl();
   srCtrl.searchResultsGet();
+  shCtrl.createData(value);
 
   Get.offNamed(Goto.searchResult);
 }

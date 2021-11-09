@@ -11,16 +11,15 @@ class SearchHistoryService {
   }
 
   Future<dynamic> create(dynamic data) async {
-    String query = data['query'];
     CollectionReference collection =
         FirestoreService().getCollection('searchHistory');
 
     var queryData =
-        await collection.where('query', isEqualTo: query).limit(1).get();
+        await collection.where('query', isEqualTo: data).limit(1).get();
 
     if (queryData.size == 0) {
       await collection.add({
-        'query': query,
+        'query': data,
         'createdAt': Timestamp.now(),
       });
     }

@@ -4,12 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
-
 import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/controllers/search_controller.dart';
-import 'package:zendy_app/controllers/search_result_controller.dart';
-import 'package:zendy_app/controllers/search_history_c.dart';
-
 import 'package:zendy_app/screens/screens.dart';
 
 void main() async {
@@ -87,7 +82,7 @@ class MyApp extends StatelessWidget {
           page: () => LoginEmailScreen(),
         ),
         GetPage(name: Goto.signup, page: () => SignUpScreen()),
-        GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
+        // GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
         GetPage(
           name: Goto.citations,
           page: () => SavedCitationsScreen(),

@@ -19,17 +19,8 @@ class SearchHistoryController extends GetxController {
 
   void createData(String query) async {
     try {
-      var userId = authCtrl.currentUser.value.id;
-      var _data = {
-        userId: userId,
-        query: query,
-      };
-
-      await _service.create(_data);
+      await _service.create(query);
     } catch (e) {
-      print('======');
-      print(e);
-      print('======');
       showSnackbar(
         type: MsgType.Error,
         message: e['message'] ?? 'something went wrong',
