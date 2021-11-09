@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:zendy_app/models/search_model.dart';
 import 'package:zendy_app/services/search_service.dart';
-import 'package:zendy_app/controllers/controllers.dart';
 
 class SearchResultController extends GetxController {
   var isLoading = true.obs;
@@ -44,15 +43,11 @@ class SearchResultController extends GetxController {
         isLoading(true);
       }
 
-      SearchHistoryController().createData(searchQry.value);
-      print('searchQry >>>>>>>>' + searchQry.value);
       var _dataSet = await SearchService.getResults(
         filters.value,
         searchQry.value,
         pageNumber.value,
       );
-
-      print('_dataSet >>>>>>>');
 
       if (pageNumber > 1) {
         List<SearchModelResultItem> _oldList =

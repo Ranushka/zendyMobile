@@ -11,8 +11,7 @@ class SearchHistoryController extends GetxController {
   final AuthController authCtrl = Get.find();
 
   Stream<QuerySnapshot> getData() {
-    var userId = authCtrl.currentUser.value.id;
-    Stream<QuerySnapshot> qSnapStream = _service.fetchdata(userId);
+    Stream<QuerySnapshot> qSnapStream = _service.fetchdata();
 
     return qSnapStream;
   }
@@ -28,9 +27,10 @@ class SearchHistoryController extends GetxController {
     }
   }
 
-  void deleteData({data}) async {
+  void deleteData(id) async {
     try {
-      await _service.delete(data);
+      await _service.delete(id);
+      getData();
     } catch (e) {
       showSnackbar(
         type: MsgType.Error,

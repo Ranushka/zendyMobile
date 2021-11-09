@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zendy_app/services/services.dart';
 
 class SearchHistoryService {
-  Stream<QuerySnapshot> fetchdata(String userId) {
+  Stream<QuerySnapshot> fetchdata() {
     return FirestoreService()
         .getCollection('searchHistory')
         .orderBy('createdAt', descending: true)
@@ -35,12 +35,7 @@ class SearchHistoryService {
     return data;
   }
 
-  Future<dynamic> delete(dynamic data) async {
-    await FirestoreService()
-        .getCollection('searchHistory')
-        .doc(data.id)
-        .delete();
-
-    return data;
+  Future<dynamic> delete(id) async {
+    await FirestoreService().getCollection('searchHistory').doc(id).delete();
   }
 }
