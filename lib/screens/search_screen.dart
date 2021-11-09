@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:zendy_app/helpers/routs.dart';
-
+import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/widgets/cus_icons.dart';
-import 'package:zendy_app/widgets/typography.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 
 class SearchScreen extends StatelessWidget {

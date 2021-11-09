@@ -65,31 +65,23 @@ class LoadWebScreen extends StatelessWidget {
       );
     }
 
-    // if (!url.isEmpty) {
-    //   getHttp(url);
-    // }
-
-    // if (RegExp(r'.+\.pdf$').hasMatch(url)) {
     if (_downloadLink.isNotEmpty) {
       bodyContent = const PDF().cachedFromUrl(
         _downloadLink,
         headers: _headers,
-        placeholder: (double progress) => Center(
-          child: TextBody('$progress %'),
-        ),
+        placeholder: (progress) => _buildProgressIndicator(progress),
         errorWidget: (dynamic error) => _buildPdfError(error),
       );
     } else if (_readLink.isNotEmpty) {
       bodyContent = WebView(
-        // onWebResourceError: (dynamic error) => _buildPdfError(error),
         onWebViewCreated: (controller) {
           controller.loadUrl(
             _readLink,
             headers: _headers,
           );
         },
+        onProgress: (progress) => _buildProgressIndicator(progress),
       );
-      print('object');
     } else {
       bodyContent = Center(child: TextBody('Hmmm..., No link'));
     }
@@ -102,7 +94,7 @@ class LoadWebScreen extends StatelessWidget {
 
   Widget _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(Get.context).backgroundColor,
       leading: _buildBackButton(),
       actions: [
         IconButton(
@@ -119,6 +111,24 @@ class LoadWebScreen extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _buildProgressIndicator(progress) {
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Transform.scale(
+            scale: 1.5,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Theme.of(Get.context).primaryColor,
+            ),
+          ),
+          TextBody('$progress %'),
+        ],
+      ),
     );
   }
 

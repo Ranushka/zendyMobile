@@ -63,15 +63,16 @@ Widget _buildItem(_itm) {
       child: Stack(
         alignment: AlignmentDirectional.bottomStart,
         children: <Widget>[
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(_itm['image']),
-                fit: BoxFit.cover,
+          if (_itm['image'] != false)
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(_itm['image']),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
           Container(
             padding: EdgeInsets.symmetric(vertical: 8),
             color: Colors.orange.withOpacity(0.8),
