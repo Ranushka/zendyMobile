@@ -44,7 +44,7 @@ class SearchResultController extends GetxController {
         isLoading(true);
       }
 
-      SearchHistoryController().saveContact(searchQry.value);
+      SearchHistoryController().createData(searchQry.value);
       print('searchQry >>>>>>>>' + searchQry.value);
       var _dataSet = await SearchService.getResults(
         filters.value,

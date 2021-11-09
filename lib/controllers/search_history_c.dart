@@ -18,46 +18,29 @@ class SearchHistoryController extends GetxController {
     return qSnapStream;
   }
 
-  void saveContact(String query) async {
+  void createData(String query) async {
     try {
       var userId = authCtrl.currentUser.value.id;
-      SearchHistoryModel _contact = SearchHistoryModel(
+      var _data = {
         userId: userId,
         query: query,
-      );
+      };
 
-      await _service.create(_contact);
+      await _service.create(_data);
     } catch (e) {
+      print('======');
       print(e);
+      print('======');
       showSnackbar(
         type: MsgType.Error,
-        message: e?.message ?? 'something went wrong',
+        message: e['message'] ?? 'something went wrong',
       );
     }
   }
 
-  void updateContact({
-    String userId,
-    String query,
-  }) async {
+  void deleteData({data}) async {
     try {
-      SearchHistoryModel _contact = SearchHistoryModel(
-        userId: userId,
-        query: query,
-      );
-
-      await _service.update(_contact);
-    } catch (e) {
-      showSnackbar(
-        type: MsgType.Error,
-        message: 'something went wrong',
-      );
-    }
-  }
-
-  void deleteContact({SearchHistoryModel contact}) async {
-    try {
-      await _service.delete(contact);
+      await _service.delete(data);
     } catch (e) {
       showSnackbar(
         type: MsgType.Error,

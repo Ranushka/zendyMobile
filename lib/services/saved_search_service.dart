@@ -12,18 +12,18 @@ class SavedSearcherService {
     return FirestoreService().getCollection('savedSearchers').snapshots();
   }
 
-  Future<dynamic> create(dynamic contact) async {
+  Future<dynamic> create(dynamic data) async {
     DocumentReference docRef =
         FirestoreService().getCollection('savedSearchers').doc();
 
     await docRef.set({
       "id": docRef.id,
-      "keyword": contact.keyword,
-      "sort": contact.sort,
-      "filters": contact.filters,
+      "keyword": data.keyword,
+      "sort": data.sort,
+      "filters": data.filters,
     });
 
-    return contact;
+    return data;
   }
 
   Future<dynamic> delete(String id) async {

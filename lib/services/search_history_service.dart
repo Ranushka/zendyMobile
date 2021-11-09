@@ -10,8 +10,8 @@ class SearchHistoryService {
         .snapshots();
   }
 
-  Future<dynamic> create(dynamic contact) async {
-    String query = contact.query;
+  Future<dynamic> create(dynamic data) async {
+    String query = data['query'];
     CollectionReference collection =
         FirestoreService().getCollection('searchHistory');
 
@@ -20,28 +20,28 @@ class SearchHistoryService {
 
     if (queryData.size == 0) {
       await collection.add({
-        'query': contact.query,
+        'query': query,
         'createdAt': Timestamp.now(),
       });
     }
 
-    return contact;
+    return data;
   }
 
-  Future<dynamic> update(dynamic contact) async {
+  Future<dynamic> update(dynamic data) async {
     DocumentReference docRef =
-        FirestoreService().getCollection('searchHistory').doc(contact.id);
+        FirestoreService().getCollection('searchHistory').doc(data.id);
 
-    await docRef.update({"query": contact.query});
-    return contact;
+    await docRef.update({"query": data.query});
+    return data;
   }
 
-  Future<dynamic> delete(dynamic contact) async {
+  Future<dynamic> delete(dynamic data) async {
     await FirestoreService()
         .getCollection('searchHistory')
-        .doc(contact.id)
+        .doc(data.id)
         .delete();
 
-    return contact;
+    return data;
   }
 }

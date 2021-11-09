@@ -161,17 +161,12 @@ Widget _resentSearchHistory() {
           itemCount: snapshot.data.size,
           separatorBuilder: (context, index) => dividerX,
           itemBuilder: (context, index) {
-            final item = snapshot.data.docs[index];
+            final _data = snapshot.data.docs[index];
 
-            final SearchHistoryModel contactItem =
-                SearchHistoryModel.fromQueryDocumentSnapshot(
-              queryDocSnapshot: item,
-            );
-
-            var _qryVal = contactItem.query;
+            var _qryText = _data['query'];
 
             return InkWell(
-              onTap: () => _searchAction(_qryVal),
+              onTap: () => _searchAction(_qryText),
               child: Gutter(Flex(
                 direction: Axis.horizontal,
                 children: [
@@ -181,7 +176,7 @@ Widget _resentSearchHistory() {
                   ),
                   Expanded(
                     flex: 7,
-                    child: TextBody(_qryVal),
+                    child: TextBody(_qryText),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -190,7 +185,7 @@ Widget _resentSearchHistory() {
                         CusIcons.history_reuse,
                       ),
                       onPressed: () {
-                        scCtrl.searchField.text = _qryVal;
+                        scCtrl.searchField.text = _qryText;
                       },
                     ),
                   ),

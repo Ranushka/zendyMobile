@@ -4,14 +4,11 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/services/services.dart';
 
 class SavedCitationsController extends GetxController {
-  RxInt _contactListCount = 0.obs;
-  RxInt get contactListCount => _contactListCount;
-  void setContactListCount(int val) => _contactListCount.value = val;
+  RxInt _savedListCount = 0.obs;
 
   final SavedCitationsService _service = SavedCitationsService();
   final AuthController authCtrl = Get.find();
@@ -26,7 +23,7 @@ class SavedCitationsController extends GetxController {
     Stream<QuerySnapshot> qSnapStream = _service.fetchdata(userId);
 
     qSnapStream.forEach((QuerySnapshot qSnapItem) {
-      setContactListCount(qSnapItem.size);
+      _savedListCount.value = qSnapItem.size;
     });
 
     return qSnapStream;
@@ -42,7 +39,7 @@ class SavedCitationsController extends GetxController {
       var userId = authCtrl.currentUser.value.id;
       var _title = title.replaceAll('<mark>', '').replaceAll('</mark>', '');
 
-      var _contact = {
+      var _data = {
         'userId': userId,
         'id': id,
         'title': _title,
@@ -50,7 +47,7 @@ class SavedCitationsController extends GetxController {
         'downloadLink': downloadLink,
       };
 
-      await _service.create(_contact);
+      await _service.create(_data);
       showSnackbar(
         type: MsgType.Success,
         message: 'Citation saved',
@@ -63,30 +60,9 @@ class SavedCitationsController extends GetxController {
     }
   }
 
-  void updateContact({
-    String title,
-    String sourceUrl,
-  }) async {
+  void deleteData({data}) async {
     try {
-      var userId = authCtrl.currentUser.value.id;
-      SavedCitationsModel _contact = SavedCitationsModel(
-        userId: userId,
-        title: title,
-        sourceUrl: sourceUrl,
-      );
-
-      await _service.update(_contact);
-    } catch (e) {
-      showSnackbar(
-        type: MsgType.Error,
-        message: e?.message ?? 'something went wrong',
-      );
-    }
-  }
-
-  void deleteContact({SavedCitationsModel contact}) async {
-    try {
-      await _service.delete(contact);
+      await _service.delete(data);
     } catch (e) {
       showSnackbar(
         type: MsgType.Error,

@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/models/models.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 
 class SavedCitationsScreen extends StatelessWidget {
@@ -79,17 +78,12 @@ Widget _buildlist() {
           itemBuilder: (context, index) {
             final item = snapshot.data.docs[index];
 
-            final SavedCitationsModel contactItem =
-                SavedCitationsModel.fromQueryDocumentSnapshot(
-              queryDocSnapshot: item,
-            );
-
             return ListTile(
               onTap: () {
-                _goToWebPage(contactItem.sourceUrl, contactItem.sourceUrl);
+                _goToWebPage(item['sourceUrl'], item['downloadLink']);
               },
               tileColor: Theme.of(Get.context).backgroundColor,
-              title: TextBody(contactItem.title),
+              title: TextBody(item['title']),
               subtitle: TextSmall("Journal - 2020"),
             );
           },

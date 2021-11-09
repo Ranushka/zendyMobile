@@ -7,28 +7,28 @@ class SavedCitationsService {
     return FirestoreService().getCollection('savedCitations').snapshots();
   }
 
-  Future<dynamic> create(dynamic contact) async {
+  Future<dynamic> create(dynamic data) async {
     DocumentReference docRef =
         FirestoreService().getCollection('savedCitations').doc();
 
-    await docRef.set(contact);
+    await docRef.set(data);
 
-    return contact;
+    return data;
   }
 
-  Future<dynamic> update(dynamic contact) async {
+  Future<dynamic> update(dynamic data) async {
     DocumentReference docRef =
-        FirestoreService().getCollection('savedCitations').doc(contact.id);
+        FirestoreService().getCollection('savedCitations').doc(data.id);
 
-    await docRef.update({"query": contact.query});
-    return contact;
+    await docRef.update({"query": data.query});
+    return data;
   }
 
-  Future<dynamic> delete(dynamic contact) async {
+  Future<dynamic> delete(dynamic data) async {
     await FirestoreService()
         .getCollection('savedCitations')
-        .doc(contact.id)
+        .doc(data.id)
         .delete();
-    return contact;
+    return data;
   }
 }

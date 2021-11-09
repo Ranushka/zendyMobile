@@ -21,7 +21,6 @@ class _CheckConnection extends State {
     internetconnection = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
-      log('message----->');
       // whenevery connection status is changed.
       if (result == ConnectivityResult.none) {
         //there is no any connection

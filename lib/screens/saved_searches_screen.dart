@@ -3,10 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
-
-import 'package:zendy_app/models/saved_search_m.dart';
 import 'package:zendy_app/controllers/saved_searchers_c.dart';
-// import 'package:zendy_app/helpers/helpers.dart';
 
 class SavedSearchersScreen extends StatelessWidget {
   @override
@@ -75,21 +72,15 @@ Widget _content() {
         itemBuilder: (context, index) {
           final item = snapshot.data.docs[index];
 
-          final SavedSearchModel contactItem =
-              SavedSearchModel.fromQueryDocumentSnapshot(
-            queryDocSnapshot: item,
-          );
-
           return SlidableWidget(
             uniqueId: '${item.id}',
             child: ListTile(
               tileColor: Theme.of(Get.context).backgroundColor,
-              title: Title3(contactItem.keyword),
-              subtitle:
-                  TextBody('In - ${contactItem.sort} - ${contactItem.filters}'),
+              title: Title3(item['keyword']),
+              subtitle: TextBody('In - ${item['sort']} - ${item['filters']}'),
             ),
             onDismissed: (action) {
-              SavedSearchersController().deleteData(contactItem.id);
+              SavedSearchersController().deleteData(item['id']);
             },
           );
         },
