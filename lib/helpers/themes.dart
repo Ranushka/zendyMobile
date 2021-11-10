@@ -92,42 +92,42 @@ final customTheme = {
     backgroundColor: Colors.amber[50],
     iconTheme: new IconThemeData(color: Colors.orange),
     textTheme: TextTheme(
-        headline1: TextStyle(
-          fontSize: 28,
-          // fontWeight: FontWeight.bold,
-          color: Colors.grey.shade900,
-          fontFamily: 'Lora',
-        ),
-        headline2: TextStyle(
-          fontSize: 20,
-          letterSpacing: 0.2,
-          fontWeight: FontWeight.w400,
-          color: Colors.grey.shade900,
-          fontFamily: 'Lora',
-        ),
-        headline3: TextStyle(
-          fontSize: 16,
-          letterSpacing: 0.2,
-          fontWeight: FontWeight.w400,
-          color: Colors.grey.shade900,
-          fontFamily: 'Lora',
-        ),
-        headline4: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey.shade600,
-          fontFamily: 'Lora',
-        ),
-        bodyText1: TextStyle(
-          fontSize: 14,
-          color: Colors.grey.shade800,
-          fontFamily: 'SourceSansPro',
-        ),
-        subtitle1: TextStyle(
-          fontSize: 12,
-          color: Colors.grey.shade800,
-          fontFamily: 'SourceSansPro',
-        )),
+      headline1: TextStyle(
+        fontSize: 28,
+        color: Colors.grey.shade900,
+        fontFamily: 'Lora',
+      ),
+      headline2: TextStyle(
+        fontSize: 20,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade900,
+        fontFamily: 'Lora',
+      ),
+      headline3: TextStyle(
+        fontSize: 16,
+        letterSpacing: 0.2,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade900,
+        fontFamily: 'Lora',
+      ),
+      headline4: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: Colors.grey.shade600,
+        fontFamily: 'Lora',
+      ),
+      bodyText1: TextStyle(
+        fontSize: 14,
+        color: Colors.grey.shade800,
+        fontFamily: 'SourceSansPro',
+      ),
+      subtitle1: TextStyle(
+        fontSize: 12,
+        color: Colors.grey.shade800,
+        fontFamily: 'SourceSansPro',
+      ),
+    ),
     fontFamily: 'SourceSansPro',
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: Colors.orange),
