@@ -29,7 +29,6 @@ dependencies:
   animate_do: ^2.0.0
   share: ^2.0.4
   reactive_forms: ^10.3.0
-  flutter_slidable: ^0.6.0
   cupertino_icons: ^1.0.2
   skeleton_text: ^3.0.0
   firebase_core: ^1.2.0

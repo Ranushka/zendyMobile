@@ -102,18 +102,33 @@ class TextBody extends StatelessWidget {
   final String _text;
   final int ml;
   final bool link;
+  final bool nigateColor;
 
-  TextBody(this._text, {this.ml = 1000, this.link = false});
+  TextBody(
+    this._text, {
+    this.ml = 1000,
+    this.link = false,
+    this.nigateColor = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     TextStyle themeStyle = Theme.of(context).textTheme.bodyText1;
+    Color _textColor = themeStyle.color;
+
+    if (link) {
+      _textColor = Colors.blue;
+    }
+
+    if (nigateColor) {
+      _textColor = Theme.of(context).backgroundColor;
+    }
 
     return Text(
       _text,
       maxLines: ml,
       overflow: TextOverflow.ellipsis,
-      style: themeStyle.copyWith(color: link ? Colors.blue : themeStyle.color),
+      style: themeStyle.copyWith(color: _textColor),
     );
   }
 }

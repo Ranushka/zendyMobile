@@ -23,12 +23,10 @@ class SavedSearchersController extends GetxController {
     String filters,
   }) async {
     try {
-      var userId = authCtrl.currentUser.value.id;
       var _data = {
-        userId: userId,
-        keyword: keyword,
-        sort: sort,
-        filters: filters,
+        'keyword': keyword,
+        'sort': sort,
+        'filters': filters,
       };
 
       await _service.create(_data);

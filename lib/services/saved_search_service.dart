@@ -18,9 +18,9 @@ class SavedSearcherService {
 
     await docRef.set({
       "id": docRef.id,
-      "keyword": data.keyword,
-      "sort": data.sort,
-      "filters": data.filters,
+      "keyword": data['keyword'],
+      "sort": data['sort'],
+      "filters": data['filters'],
     });
 
     return data;

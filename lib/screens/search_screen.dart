@@ -19,7 +19,7 @@ class SearchScreen extends StatelessWidget {
       body: Flex(
         direction: Axis.vertical,
         children: [
-          _resentSearchHistory(),
+          SearchHistory(),
           _buildActionBar(),
         ],
       ),
@@ -131,83 +131,6 @@ class SearchScreen extends StatelessWidget {
       title: _buildSearchInput(),
     );
   }
-}
-
-Widget _resentSearchHistory() {
-  final SearchController searchController = Get.find();
-  final SearchHistoryController searchHistoryController = Get.find();
-
-  return Expanded(
-    child: StreamBuilder(
-      stream: searchHistoryController.getData(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.data.toString() == 'null') {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError) {
-          return Center(child: TextBody('Something went wrong'));
-        }
-
-        if (snapshot.data.docs.length < 1) {
-          return Center(child: TextBody('Start searching...'));
-        }
-
-        return ListView.builder(
-          padding: EdgeInsets.only(top: 10, bottom: 20),
-          physics: BouncingScrollPhysics(),
-          itemCount: snapshot.data.size,
-          itemBuilder: (context, index) {
-            final _data = snapshot.data.docs[index];
-
-            var _qryText = _data['query'];
-
-            return Dismissible(
-              key: Key(_data.id),
-              background: Container(color: Colors.red),
-              direction: DismissDirection.startToEnd,
-              onDismissed: (direction) {
-                searchHistoryController.deleteData(_data.id);
-              },
-              child: InkWell(
-                onTap: () => _searchAction(_qryText),
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    Gutter(Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                          child: Icon(CusIcons.history),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: TextBody(_qryText),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                          child: IconButton(
-                            icon: Icon(
-                              CusIcons.history_reuse,
-                            ),
-                            onPressed: () {
-                              searchController.searchField.text = _qryText;
-                            },
-                          ),
-                        ),
-                      ],
-                    )),
-                    dividerX
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    ),
-  );
 }
 
 void _searchAction(value) {

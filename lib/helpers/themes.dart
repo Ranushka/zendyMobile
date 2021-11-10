@@ -14,12 +14,10 @@ final customTheme = {
     primaryColorLight: Colors.orange[50],
     hintColor: Colors.grey.shade400,
     backgroundColor: Colors.white,
-    // inputDecorationTheme: InputDecorationTheme()
     iconTheme: new IconThemeData(color: Colors.orange),
     textTheme: TextTheme(
       headline1: TextStyle(
         fontSize: 28,
-        // fontWeight: FontWeight.bold,
         color: Colors.grey.shade900,
         fontFamily: 'Lora',
       ),

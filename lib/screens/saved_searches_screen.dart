@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/saved_searchers_c.dart';
+import 'package:zendy_app/controllers/saved_searchers_controllers.dart';
 
 class SavedSearchersScreen extends StatelessWidget {
   @override
@@ -72,7 +72,7 @@ Widget _content() {
         itemBuilder: (context, index) {
           final item = snapshot.data.docs[index];
 
-          return SlidableWidget(
+          return SwipeDelete(
             uniqueId: '${item.id}',
             child: ListTile(
               tileColor: Theme.of(Get.context).backgroundColor,
