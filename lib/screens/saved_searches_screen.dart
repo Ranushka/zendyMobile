@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/saved_searchers_controllers.dart';
+import 'package:zendy_app/controllers/controllers.dart';
 
 class SavedSearchersScreen extends StatelessWidget {
   @override
@@ -45,6 +45,8 @@ class SavedSearchersScreen extends StatelessWidget {
 }
 
 Widget _content() {
+  final SearchController searchController = Get.find();
+
   return StreamBuilder(
     stream: SavedSearchersController().getData(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -69,22 +71,33 @@ Widget _content() {
         physics: BouncingScrollPhysics(),
         itemCount: snapshot.data.size,
         itemBuilder: (context, index) {
-          final item = snapshot.data.docs[index];
+          var item = snapshot.data.docs[index];
+          var _sortByText = 'Sort by - ${item['sort']}';
+          var _filterByText = 'filterd by ${item['filters']}';
 
           var _buildItem = Flex(
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
               SizedBox(height: 8),
-              TextBody(item['keyword']),
-              TextSmall("Sort by - ${item['sort']} - ${item['filters']}"),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Title3(item['keyword']),
+                  TextSmall(" - ${item['count']} results")
+                ],
+              ),
+              SizedBox(height: 4),
+              TextBody("$_sortByText and $_filterByText"),
               SizedBox(height: 8),
             ],
           );
 
           return SwipeDelete(
             uniqueId: '${item.id}',
-            onTap: () => {},
+            onTap: () {
+              searchController.searchAction(item['keyword']);
+            },
             child: _buildItem,
             onDismissed: (action) {
               SavedSearchersController().deleteData(item.id);

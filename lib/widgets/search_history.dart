@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 
 class SearchHistory extends StatelessWidget {
   final SearchHistoryController searchHistoryController = Get.find();
+  final SearchController searchController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class SearchHistory extends StatelessWidget {
 
               return SwipeDelete(
                 uniqueId: _data.id,
-                onTap: () => _searchAction(_searchText),
+                onTap: () => searchController.searchAction(_searchText),
                 onDismissed: (direction) {
                   searchHistoryController.deleteData(_data.id);
                 },
@@ -77,19 +77,4 @@ _buildHistoryItem(searchText) {
       ),
     ],
   );
-}
-
-void _searchAction(value) {
-  final SearchResultController srCtrl = Get.find();
-  final SearchHistoryController shCtrl = Get.find();
-
-  if (value == null) return;
-  if (value == '') return;
-
-  srCtrl.searchQry.value = value;
-  srCtrl.clearCtrl();
-  srCtrl.searchResultsGet();
-  shCtrl.createData(value);
-
-  Get.offNamed(Goto.searchResult);
 }

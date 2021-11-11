@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/controllers/controllers.dart';
@@ -71,21 +70,9 @@ class SearchScreen extends StatelessWidget {
     });
   }
 
-  Widget _buildBackButton() {
-    return IconButton(
-      splashRadius: 28,
-      color: Colors.black26,
-      icon: Icon(
-        CusIcons.arrow_back,
-        color: Theme.of(Get.context).primaryColor,
-      ),
-      onPressed: () {
-        Get.back();
-      },
-    );
-  }
-
   Widget _buildSearchInput() {
+    final SearchController searchController = Get.find();
+
     return Material(
       elevation: 0,
       shadowColor: Theme.of(Get.context).primaryColor,
@@ -95,7 +82,7 @@ class SearchScreen extends StatelessWidget {
         autofocus: true,
         textInputAction: TextInputAction.search,
         controller: scCtrl.searchField,
-        onFieldSubmitted: (value) => _searchAction(value),
+        onFieldSubmitted: (value) => searchController.searchAction(value),
         onChanged: (value) => scCtrl.change(value),
         decoration: InputDecoration(
           fillColor: Theme.of(Get.context).backgroundColor,
@@ -116,7 +103,7 @@ class SearchScreen extends StatelessWidget {
             ),
           ),
           suffixIcon: _buildSearchIcon(),
-          prefixIcon: _buildBackButton(),
+          prefixIcon: BackBtn(),
           hintText: 'Search for title, subject, author ...',
         ),
       ),
@@ -131,19 +118,4 @@ class SearchScreen extends StatelessWidget {
       title: _buildSearchInput(),
     );
   }
-}
-
-void _searchAction(value) {
-  final SearchResultController srCtrl = Get.find();
-  final SearchHistoryController shCtrl = Get.find();
-
-  if (value == null) return;
-  if (value == '') return;
-
-  srCtrl.searchQry.value = value;
-  srCtrl.clearCtrl();
-  srCtrl.searchResultsGet();
-  shCtrl.createData(value);
-
-  Get.offNamed(Goto.searchResult);
 }

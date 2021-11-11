@@ -8,6 +8,15 @@ import 'package:zendy_app/services/services.dart';
 class SavedSearcherService {
   final AuthController authCtrl = Get.find();
 
+  findOne(keyword) async {
+    var data = await FirestoreService()
+        .getCollection('savedSearchers')
+        .where('keyword', isEqualTo: keyword)
+        .get();
+
+    return data;
+  }
+
   Stream<QuerySnapshot> fetch() {
     return FirestoreService().getCollection('savedSearchers').snapshots();
   }
@@ -16,12 +25,7 @@ class SavedSearcherService {
     DocumentReference docRef =
         FirestoreService().getCollection('savedSearchers').doc();
 
-    await docRef.set({
-      "id": docRef.id,
-      "keyword": data['keyword'],
-      "sort": data['sort'],
-      "filters": data['filters'],
-    });
+    await docRef.set(data);
 
     return data;
   }

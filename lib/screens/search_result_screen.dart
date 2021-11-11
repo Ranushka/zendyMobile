@@ -13,6 +13,7 @@ import 'package:zendy_app/widgets/widgets.dart';
 class SearchResultScreen extends StatelessWidget {
   // final SearchResultController srCrtl = Get.put(SearchResultController());
   final SearchResultController ctrls = Get.find();
+  final SavedSearchersController savedSearchersController = Get.find();
 
   final ScrollController _scrollController = ScrollController();
 
@@ -41,8 +42,9 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildHead(SearchModel data) {
     // final _keyword = data.data
     var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
-    var _totalResults = NumberFormat.compact().format(
-      data.data.searchResults.totalResults,
+    var _resultsCount = data.data.searchResults.totalResults;
+    var _resultsCountFormated = NumberFormat.compact().format(
+      _resultsCount,
     );
 
     return Container(
@@ -56,7 +58,7 @@ class SearchResultScreen extends StatelessWidget {
             direction: Axis.vertical,
             children: [
               SizedBox(height: 8),
-              TextSmall('Showing $_totalResults results for'),
+              TextSmall('Showing $_resultsCountFormated results for'),
               Title2(_keyword.capitalizeFirst),
               SizedBox(height: 8),
             ],
@@ -67,10 +69,16 @@ class SearchResultScreen extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.circular(100),
             child: IconButton(
-              icon: Icon(Icons.star_border_rounded),
+              icon: Obx(() {
+                if (savedSearchersController.isSavedSearch.value)
+                  return Icon(Icons.star_rounded);
+                else
+                  return Icon(Icons.star_border_rounded);
+              }),
               onPressed: () {
                 SavedSearchersController().saveData(
                   keyword: _keyword,
+                  count: _resultsCount,
                   filters: 'BIO Web of Conferences, Agronomy, English',
                   sort: 'relevence',
                 );

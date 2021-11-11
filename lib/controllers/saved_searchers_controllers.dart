@@ -10,6 +10,12 @@ import 'package:zendy_app/controllers/controllers.dart';
 class SavedSearchersController extends GetxController {
   final SavedSearcherService _service = SavedSearcherService();
   final AuthController authCtrl = Get.find();
+  final SearchResultController searchResultController = Get.find();
+  var isSavedSearch = false.obs;
+
+  void onInit() {
+    super.onInit();
+  }
 
   Stream<QuerySnapshot> getData() {
     Stream<QuerySnapshot> qSnapStream = _service.fetch();
@@ -17,8 +23,14 @@ class SavedSearchersController extends GetxController {
     return qSnapStream;
   }
 
+  Future checkIsSaved(keyword) async {
+    var data = await _service.findOne(keyword);
+    isSavedSearch.value = data.size >= 1;
+  }
+
   void saveData({
     String keyword,
+    num count,
     String sort,
     String filters,
   }) async {
@@ -26,6 +38,7 @@ class SavedSearchersController extends GetxController {
       var _data = {
         'keyword': keyword,
         'sort': sort,
+        'count': count,
         'filters': filters,
       };
 
