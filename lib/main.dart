@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
         // GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
         GetPage(
           name: Goto.citations,
-          page: () => SavedCitationsScreen(),
+          page: () => LibraryScreen(),
           transition: Transition.noTransition,
         ),
         GetPage(

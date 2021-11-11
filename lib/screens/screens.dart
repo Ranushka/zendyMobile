@@ -1,6 +1,6 @@
 export 'home_screen.dart';
 export 'load_web.dart';
-export 'saved_citations_screen.dart';
+export 'library_screen.dart';
 export 'search_result_screen.dart';
 export 'search_screen.dart';
 export 'settings_screen.dart';

@@ -6,7 +6,7 @@ import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 
-class SavedCitationsScreen extends StatelessWidget {
+class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
