@@ -169,6 +169,7 @@ class SearchResultScreen extends StatelessWidget {
 
   Widget _buildAppBar() {
     return AppBar(
+      iconTheme: IconThemeData(color: Theme.of(Get.context).primaryColor),
       centerTitle: true,
       elevation: 0,
       leading: _buildBackButton(),

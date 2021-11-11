@@ -94,19 +94,15 @@ class LoadWebScreen extends StatelessWidget {
 
   Widget _buildAppBar() {
     return AppBar(
+      iconTheme: IconThemeData(color: Theme.of(Get.context).primaryColor),
       backgroundColor: Theme.of(Get.context).backgroundColor,
-      leading: _buildBackButton(),
+      leading: BackBtn(),
       actions: [
-        IconButton(
-          splashRadius: 24,
-          icon: Icon(Icons.save_alt_rounded),
-          onPressed: () {},
-        ),
         Padding(
           padding: EdgeInsets.only(right: 4),
           child: IconButton(
             splashRadius: 24,
-            icon: Icon(Icons.ios_share),
+            icon: Icon(CusIcons.share),
             onPressed: () {},
           ),
         )
@@ -129,14 +125,6 @@ class LoadWebScreen extends StatelessWidget {
           TextBody('$progress %'),
         ],
       ),
-    );
-  }
-
-  Widget _buildBackButton() {
-    return IconButton(
-      splashRadius: 24,
-      icon: Icon(Icons.arrow_back_rounded),
-      onPressed: () => Get.back(),
     );
   }
 

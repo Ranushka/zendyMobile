@@ -64,23 +64,30 @@ Widget _content() {
         ));
       }
 
-      return ListView.separated(
+      return ListView.builder(
         padding: EdgeInsets.only(top: 10, bottom: 20),
         physics: BouncingScrollPhysics(),
         itemCount: snapshot.data.size,
-        separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, index) {
           final item = snapshot.data.docs[index];
 
+          var _buildItem = Flex(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            direction: Axis.vertical,
+            children: [
+              SizedBox(height: 8),
+              TextBody(item['keyword']),
+              TextSmall("Sort by - ${item['sort']} - ${item['filters']}"),
+              SizedBox(height: 8),
+            ],
+          );
+
           return SwipeDelete(
             uniqueId: '${item.id}',
-            child: ListTile(
-              tileColor: Theme.of(Get.context).backgroundColor,
-              title: Title3(item['keyword']),
-              subtitle: TextBody('In - ${item['sort']} - ${item['filters']}'),
-            ),
+            onTap: () => {},
+            child: _buildItem,
             onDismissed: (action) {
-              SavedSearchersController().deleteData(item['id']);
+              SavedSearchersController().deleteData(item.id);
             },
           );
         },

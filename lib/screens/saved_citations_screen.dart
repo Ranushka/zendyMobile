@@ -50,9 +50,11 @@ _goToWebPage(readLink, downloadLink) {
 }
 
 Widget _buildlist() {
+  final SavedCitationsController savedCitationsController = Get.find();
+
   return Expanded(
     child: StreamBuilder(
-      stream: Get.find<SavedCitationsController>().getData(),
+      stream: savedCitationsController.getData(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.data.toString() == 'null') {
           return Center(child: CircularProgressIndicator());
@@ -70,21 +72,31 @@ Widget _buildlist() {
           ));
         }
 
-        return ListView.separated(
+        return ListView.builder(
           padding: EdgeInsets.only(top: 10, bottom: 20),
           physics: BouncingScrollPhysics(),
           itemCount: snapshot.data.size,
-          separatorBuilder: (context, index) => dividerX,
           itemBuilder: (context, index) {
             final item = snapshot.data.docs[index];
 
-            return ListTile(
-              onTap: () {
-                _goToWebPage(item['sourceUrl'], item['downloadLink']);
+            var _buildItem = Flex(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              direction: Axis.vertical,
+              children: [
+                SizedBox(height: 8),
+                TextBody(item['title']),
+                TextSmall("Journal - 2020"),
+                SizedBox(height: 8),
+              ],
+            );
+
+            return SwipeDelete(
+              uniqueId: '${item.id}',
+              onTap: () => _goToWebPage(item['readLink'], item['downloadLink']),
+              child: _buildItem,
+              onDismissed: (action) {
+                savedCitationsController.deleteData(item.id);
               },
-              tileColor: Theme.of(Get.context).backgroundColor,
-              title: TextBody(item['title']),
-              subtitle: TextSmall("Journal - 2020"),
             );
           },
         );

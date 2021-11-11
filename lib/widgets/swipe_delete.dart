@@ -6,11 +6,13 @@ class SwipeDelete extends StatelessWidget {
   final String uniqueId;
   final Widget child;
   final Function onDismissed;
+  final Function onTap;
 
   SwipeDelete({
     @required this.child,
     @required this.uniqueId,
     @required this.onDismissed,
+    @required this.onTap,
     Key key,
   }) : super(key: key);
 
@@ -18,6 +20,7 @@ class SwipeDelete extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(uniqueId),
+      behavior: HitTestBehavior.opaque,
       background: Container(
         alignment: Alignment.centerLeft,
         color: Colors.red,
@@ -27,7 +30,14 @@ class SwipeDelete extends StatelessWidget {
       ),
       direction: DismissDirection.startToEnd,
       onDismissed: onDismissed,
-      child: child,
+      child: InkWell(
+        onTap: onTap,
+        child: Flex(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          direction: Axis.vertical,
+          children: [Gutter(child), dividerX],
+        ),
+      ),
     );
   }
 }

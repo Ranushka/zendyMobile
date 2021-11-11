@@ -24,11 +24,7 @@ class SavedCitationsService {
     return data;
   }
 
-  Future<dynamic> delete(dynamic data) async {
-    await FirestoreService()
-        .getCollection('savedCitations')
-        .doc(data.id)
-        .delete();
-    return data;
+  Future<dynamic> delete(String id) async {
+    await FirestoreService().getCollection('savedCitations').doc(id).delete();
   }
 }

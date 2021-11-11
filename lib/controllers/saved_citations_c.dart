@@ -60,9 +60,9 @@ class SavedCitationsController extends GetxController {
     }
   }
 
-  void deleteData({data}) async {
+  void deleteData(id) async {
     try {
-      await _service.delete(data);
+      await _service.delete(id);
     } catch (e) {
       showSnackbar(
         type: MsgType.Error,

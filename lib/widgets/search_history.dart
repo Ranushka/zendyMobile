@@ -36,6 +36,7 @@ class SearchHistory extends StatelessWidget {
 
               return SwipeDelete(
                 uniqueId: _data.id,
+                onTap: () => _searchAction(_searchText),
                 onDismissed: (direction) {
                   searchHistoryController.deleteData(_data.id);
                 },
@@ -52,38 +53,29 @@ class SearchHistory extends StatelessWidget {
 _buildHistoryItem(searchText) {
   final SearchController searchController = Get.find();
 
-  return InkWell(
-    onTap: () => _searchAction(searchText),
-    child: Flex(
-      direction: Axis.vertical,
-      children: [
-        Gutter(Flex(
-          direction: Axis.horizontal,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: Icon(CusIcons.history),
-            ),
-            Expanded(
-              flex: 7,
-              child: TextBody(searchText),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: IconButton(
-                icon: Icon(
-                  CusIcons.history_reuse,
-                ),
-                onPressed: () {
-                  searchController.searchField.text = searchText;
-                },
-              ),
-            ),
-          ],
-        )),
-        dividerX
-      ],
-    ),
+  return Flex(
+    direction: Axis.horizontal,
+    children: [
+      Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+        child: Icon(CusIcons.history),
+      ),
+      Expanded(
+        flex: 7,
+        child: TextBody(searchText),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+        child: IconButton(
+          icon: Icon(
+            CusIcons.history_reuse,
+          ),
+          onPressed: () {
+            searchController.searchField.text = searchText;
+          },
+        ),
+      ),
+    ],
   );
 }
 
