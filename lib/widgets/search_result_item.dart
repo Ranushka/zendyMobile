@@ -76,7 +76,7 @@ class SearchResultItem extends StatelessWidget {
                     splashRadius: 24,
                     icon: Icon(CusIcons.paper_add),
                     onPressed: () {
-                      SavedCitationsController().saveData(
+                      LibraryController().saveData(
                         _title,
                         _item.zendyLink,
                         _item.downloadLink,

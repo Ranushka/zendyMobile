@@ -32,8 +32,8 @@ void main() async {
     permanent: true,
   );
 
-  Get.put<SavedCitationsController>(
-    SavedCitationsController(),
+  Get.put<LibraryController>(
+    LibraryController(),
     permanent: true,
   );
 

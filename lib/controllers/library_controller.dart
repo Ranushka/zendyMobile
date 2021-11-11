@@ -7,7 +7,7 @@ import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/services/services.dart';
 
-class SavedCitationsController extends GetxController {
+class LibraryController extends GetxController {
   RxInt _savedListCount = 0.obs;
 
   final SavedCitationsService _service = SavedCitationsService();

@@ -50,11 +50,11 @@ _goToWebPage(readLink, downloadLink) {
 }
 
 Widget _buildlist() {
-  final SavedCitationsController savedCitationsController = Get.find();
+  final LibraryController libraryController = Get.find();
 
   return Expanded(
     child: StreamBuilder(
-      stream: savedCitationsController.getData(),
+      stream: libraryController.getData(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.data.toString() == 'null') {
           return Center(child: CircularProgressIndicator());
@@ -95,7 +95,7 @@ Widget _buildlist() {
               onTap: () => _goToWebPage(item['readLink'], item['downloadLink']),
               child: _buildItem,
               onDismissed: (action) {
-                savedCitationsController.deleteData(item.id);
+                libraryController.deleteData(item.id);
               },
             );
           },
