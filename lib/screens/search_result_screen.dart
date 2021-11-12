@@ -71,9 +71,15 @@ class SearchResultScreen extends StatelessWidget {
             child: IconButton(
               icon: Obx(() {
                 if (savedSearchersController.isSavedSearch.value)
-                  return Icon(Icons.star_rounded);
+                  return Icon(
+                    FontIcons.saved_search_added,
+                    color: Theme.of(Get.context).primaryColor,
+                  );
                 else
-                  return Icon(Icons.star_border_rounded);
+                  return Icon(
+                    FontIcons.saved_search_add,
+                    color: Theme.of(Get.context).hintColor,
+                  );
               }),
               onPressed: () {
                 SavedSearchersController().saveData(
@@ -147,7 +153,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildBackButton() {
     return IconButton(
       splashRadius: 24,
-      icon: Icon(CusIcons.arrow_back),
+      icon: Icon(FontIcons.arrow_back),
       onPressed: () => Get.back(),
     );
   }
@@ -170,7 +176,7 @@ class SearchResultScreen extends StatelessWidget {
         filtersModel();
       },
       child: Icon(
-        CusIcons.filter,
+        FontIcons.filter,
       ),
     );
   }

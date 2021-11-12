@@ -58,7 +58,7 @@ _buildHistoryItem(searchText) {
     children: [
       Padding(
         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Icon(CusIcons.history),
+        child: Icon(FontIcons.history),
       ),
       Expanded(
         flex: 7,
@@ -68,7 +68,7 @@ _buildHistoryItem(searchText) {
         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
         child: IconButton(
           icon: Icon(
-            CusIcons.history_reuse,
+            FontIcons.history_reuse,
           ),
           onPressed: () {
             searchController.searchField.text = searchText;

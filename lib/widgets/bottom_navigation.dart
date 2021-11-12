@@ -83,7 +83,7 @@ Widget bottomNavigation() {
           children: [
             btnReguler(
               Goto.home,
-              CusIcons.home,
+              FontIcons.home,
               () {
                 _curIn.value = 0;
                 Get.toNamed(Goto.home);
@@ -91,7 +91,7 @@ Widget bottomNavigation() {
             ),
             btnReguler(
               Goto.searches,
-              CusIcons.saved_search,
+              FontIcons.saved_search,
               () {
                 _curIn.value = 2;
                 if (authCtrl.isLoggedIn()) {
@@ -103,7 +103,7 @@ Widget bottomNavigation() {
             ),
             btnSearch(
               Goto.search,
-              CusIcons.search,
+              FontIcons.search,
               () {
                 _curIn.value = 1;
                 Get.toNamed(Goto.search);
@@ -111,7 +111,7 @@ Widget bottomNavigation() {
             ),
             btnReguler(
               Goto.citations,
-              CusIcons.my_library,
+              FontIcons.my_library,
               () {
                 _curIn.value = 3;
                 if (authCtrl.isLoggedIn()) {
@@ -123,7 +123,7 @@ Widget bottomNavigation() {
             ),
             btnReguler(
               Goto.profile,
-              CusIcons.user,
+              FontIcons.user,
               () {
                 _curIn.value = 4;
                 Get.toNamed(Goto.profile);

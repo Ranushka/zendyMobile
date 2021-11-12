@@ -56,8 +56,9 @@ class SearchResultItem extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
+                    iconSize: 20,
                     splashRadius: 24,
-                    icon: Icon(CusIcons.share),
+                    icon: Icon(FontIcons.share),
                     onPressed: () {
                       Share.share(
                         'Zendy Reserch link ${Goto.baseUrl}$_zendyLink',
@@ -66,15 +67,17 @@ class SearchResultItem extends StatelessWidget {
                     },
                   ),
                   IconButton(
+                    iconSize: 20,
                     splashRadius: 24,
-                    icon: Icon(CusIcons.cite),
+                    icon: Icon(FontIcons.cite),
                     onPressed: () {
                       citationPopup();
                     },
                   ),
                   IconButton(
+                    iconSize: 20,
                     splashRadius: 24,
-                    icon: Icon(CusIcons.paper_add),
+                    icon: Icon(FontIcons.paper_add),
                     onPressed: () {
                       LibraryController().saveData(
                         _title,
@@ -109,7 +112,16 @@ class SearchResultItem extends StatelessWidget {
           children: [
             Container(
               height: _isFullDetail.value ? 32 : 16,
-              color: Theme.of(Get.context).backgroundColor.withOpacity(0.6),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(Get.context).backgroundColor.withOpacity(0.6),
+                  Theme.of(Get.context).backgroundColor,
+                ],
+              )),
+              // color: Theme.of(Get.context).backgroundColor.withOpacity(0.6),
               width: double.infinity,
             ),
             Transform.translate(
@@ -118,9 +130,10 @@ class SearchResultItem extends StatelessWidget {
                 height: 16,
                 color: Theme.of(Get.context).backgroundColor,
                 width: 32,
-                child: _isFullDetail.value
-                    ? Icon(Icons.arrow_drop_up_rounded)
-                    : Icon(Icons.arrow_drop_down_rounded),
+                child: Transform.rotate(
+                  angle: _isFullDetail.value ? 3.2 : 0,
+                  child: Icon(FontIcons.curt),
+                ),
               ),
             ),
           ],

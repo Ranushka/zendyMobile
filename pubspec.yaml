@@ -106,6 +106,6 @@ flutter:
     - family: Lora
       fonts:
         - asset: assets/fonts/Lora.ttf
-    - family: CusIcons
+    - family: FontIcons
       fonts:
-        - asset: assets/fonts/CusIcons.ttf
+        - asset: assets/fonts/FontIcons.ttf

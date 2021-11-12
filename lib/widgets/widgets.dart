@@ -5,7 +5,7 @@ export 'check_connection.dart';
 export 'citation_popup.dart';
 export 'citations_export_menu.dart';
 export 'cite_model.dart';
-export 'cus_icons.dart';
+export 'font_icons.dart';
 export 'empty_appBar.dart';
 export 'filters_popup.dart';
 export 'join_zendy.dart';

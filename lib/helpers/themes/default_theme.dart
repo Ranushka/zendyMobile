@@ -56,7 +56,7 @@ final defaultTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      textStyle: TextStyle(fontWeight: FontWeight.w500),
+      textStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.orange),
       primary: Colors.orange.shade800,
     ),
   ),

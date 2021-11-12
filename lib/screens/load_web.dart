@@ -102,7 +102,7 @@ class LoadWebScreen extends StatelessWidget {
           padding: EdgeInsets.only(right: 4),
           child: IconButton(
             splashRadius: 24,
-            icon: Icon(CusIcons.share),
+            icon: Icon(FontIcons.share),
             onPressed: () {},
           ),
         )

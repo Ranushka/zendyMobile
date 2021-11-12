@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
     return IconButton(
       splashRadius: 28,
       color: Theme.of(Get.context).primaryColor,
-      icon: Icon(CusIcons.search),
+      icon: Icon(FontIcons.search),
       onPressed: () => {Get.toNamed(Goto.search)},
     );
   }

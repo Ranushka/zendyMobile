@@ -29,7 +29,7 @@ class LibraryScreen extends StatelessWidget {
       children: [
         PageTitle(
           text: 'Library',
-          icon: CusIcons.logout,
+          icon: FontIcons.logout,
           action: citationsExportMenu(),
         ),
         _buildlist()

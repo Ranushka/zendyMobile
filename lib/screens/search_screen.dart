@@ -33,12 +33,12 @@ class SearchScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton.icon(
-              icon: Icon(CusIcons.search_refine),
+              icon: Icon(FontIcons.search_refine),
               onPressed: () {},
               label: TextBody('Advanced search'),
             ),
             TextButton.icon(
-              icon: Icon(CusIcons.saved_search),
+              icon: Icon(FontIcons.saved_search),
               onPressed: () {
                 Get.toNamed(Goto.searches);
               },
@@ -56,14 +56,14 @@ class SearchScreen extends StatelessWidget {
         return IconButton(
           color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
-          icon: Icon(CusIcons.search),
+          icon: Icon(FontIcons.search),
           onPressed: () => {},
         );
       } else {
         return IconButton(
           color: Theme.of(Get.context).primaryColor,
           splashRadius: 28,
-          icon: Icon(CusIcons.clear),
+          icon: Icon(FontIcons.clear),
           onPressed: () => scCtrl.clear(),
         );
       }

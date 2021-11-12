@@ -100,7 +100,7 @@ class LoginEmailScreen extends StatelessWidget {
           offset: Offset(-16, 0),
           child: IconButton(
             splashRadius: 24,
-            icon: Icon(CusIcons.arrow_back),
+            icon: Icon(FontIcons.arrow_back),
             onPressed: () => Get.back(),
           ),
         ),
