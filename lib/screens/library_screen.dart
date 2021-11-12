@@ -83,10 +83,10 @@ Widget _buildlist() {
               crossAxisAlignment: CrossAxisAlignment.start,
               direction: Axis.vertical,
               children: [
-                SizedBox(height: 8),
+                SizedBox(height: 12),
                 TextBody(item['title']),
                 TextSmall("Journal - 2020"),
-                SizedBox(height: 8),
+                SizedBox(height: 16),
               ],
             );
 

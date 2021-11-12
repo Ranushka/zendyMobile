@@ -89,7 +89,7 @@ Widget _content() {
               ),
               SizedBox(height: 4),
               TextBody("$_sortByText and $_filterByText"),
-              SizedBox(height: 8),
+              SizedBox(height: 16),
             ],
           );
 
