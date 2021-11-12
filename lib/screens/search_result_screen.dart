@@ -57,7 +57,7 @@ class SearchResultScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              SizedBox(height: 8),
+              SizedBox(height: 16),
               TextSmall('Showing $_resultsCountFormated results for'),
               Title2(_keyword.capitalizeFirst),
               SizedBox(height: 8),

@@ -10,7 +10,6 @@ import 'package:zendy_app/controllers/controllers.dart';
 class SavedSearchersController extends GetxController {
   final SavedSearcherService _service = SavedSearcherService();
   final AuthController authCtrl = Get.find();
-  final SearchResultController searchResultController = Get.find();
   var isSavedSearch = false.obs;
 
   void onInit() {

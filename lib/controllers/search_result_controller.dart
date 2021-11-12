@@ -2,11 +2,8 @@ import 'package:get/get.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/models/search_model.dart';
 import 'package:zendy_app/services/services.dart';
-import 'package:zendy_app/helpers/helpers.dart';
 
 class SearchResultController extends GetxController {
-  final SavedSearchersController savedSearchersController = Get.find();
-
   var isLoading = true.obs;
   var searchResults = SearchModel().obs;
   var filters = List.empty().obs;
@@ -42,6 +39,8 @@ class SearchResultController extends GetxController {
   }
 
   void searchResultsGet() async {
+    final SavedSearchersController savedSearchersController = Get.find();
+
     try {
       savedSearchersController.checkIsSaved(searchQry.value);
 

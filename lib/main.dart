@@ -17,6 +17,11 @@ void main() async {
     permanent: true,
   );
 
+  Get.put<SavedSearchersController>(
+    SavedSearchersController(),
+    permanent: true,
+  );
+
   Get.put<SearchController>(
     SearchController(),
     permanent: true,
@@ -34,11 +39,6 @@ void main() async {
 
   Get.put<LibraryController>(
     LibraryController(),
-    permanent: true,
-  );
-
-  Get.put<SavedSearchersController>(
-    SavedSearchersController(),
     permanent: true,
   );
 
