@@ -43,17 +43,27 @@ Future<String> getDirectoryPath() async {
 
 class LoadWebScreen extends StatelessWidget {
   final AuthController authCtrl = Get.put(AuthController());
+  // final LibraryController libraryController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     WebView.platform = SurfaceAndroidWebView();
     Map url = Get.arguments;
+
+    // bool _inLibrary = true;
+
+    // if (_inLibrary) {
+    //   var _libraryData = libraryController.getData();
+    //   print(_libraryData);
+    // }
+
     String _readLink = url['read'];
     String _downloadLink = url['download'];
     print('> url >' + url.toString());
 
-    Widget bodyContent =
-        Center(child: TextBody('Hmmm..., some thing went wrong'));
+    Widget bodyContent = Center(
+      child: TextBody('Hmmm..., some thing went wrong'),
+    );
 
     var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
 
