@@ -85,7 +85,8 @@ Widget _buildlist() {
               children: [
                 SizedBox(height: 12),
                 TextBody(item['title']),
-                TextSmall("Journal - 2020"),
+                TextSmall(
+                    "${item['publicationType']} - ${item['publicationYear']} - ${item['publicationName']}"),
                 SizedBox(height: 16),
               ],
             );

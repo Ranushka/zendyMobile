@@ -79,12 +79,15 @@ class SearchResultItem extends StatelessWidget {
                     splashRadius: 24,
                     icon: Icon(FontIcons.paper_add),
                     onPressed: () {
-                      LibraryController().saveData(
-                        _title,
-                        _item.zendyLink,
-                        _item.downloadLink,
-                        _id,
-                      );
+                      LibraryController().saveData({
+                        'permanentLinkId': _item.permanentLinkId,
+                        'title': _title,
+                        'publicationYear': _item.publicationYear,
+                        'publicationType': _item.publicationType,
+                        'publicationName': _item.publicationName,
+                        'readLink': _item.zendyLink,
+                        'downloadLink': _item.downloadLink,
+                      });
                     },
                   ),
                 ],
@@ -143,6 +146,9 @@ class SearchResultItem extends StatelessWidget {
   }
 
   Widget _buildTitle(String _title, int _year) {
+    var _pubType = _item.publicationType;
+    var _pubTitle = _item.publicationName;
+
     return InkWell(
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -152,7 +158,7 @@ class SearchResultItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          Gutter(TextSmall('Journal - $_year - ${_item.journalTitle}')),
+          Gutter(TextSmall('$_pubType - $_year - $_pubTitle')),
           SizedBox(height: 8),
           Gutter(HtmlH3(_title)),
           SizedBox(height: 8),
@@ -302,14 +308,6 @@ class SearchResultItem extends StatelessWidget {
         SizedBox(height: 16, width: 16),
       ]),
     );
-  }
-
-  String _linkType() {
-    final url = _item.downloadLink;
-    if (RegExp(r'.+\.pdf$').hasMatch(url)) {
-      return 'PDF';
-    }
-    return 'URL';
   }
 
   _goToWebPage() {

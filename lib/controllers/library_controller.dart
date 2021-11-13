@@ -29,25 +29,12 @@ class LibraryController extends GetxController {
     return qSnapStream;
   }
 
-  void saveData(
-    String title,
-    String readLink,
-    String downloadLink,
-    String id,
-  ) async {
+  void saveData(dynamic data) async {
     try {
-      var userId = authCtrl.currentUser.value.id;
-      var _title = title.replaceAll('<mark>', '').replaceAll('</mark>', '');
+      data['title'] =
+          data['title'].replaceAll('<mark>', '').replaceAll('</mark>', '');
 
-      var _data = {
-        'userId': userId,
-        'id': id,
-        'title': _title,
-        'readLink': readLink,
-        'downloadLink': downloadLink,
-      };
-
-      await _service.create(_data);
+      await _service.create(data);
       showSnackbar(
         type: MsgType.Success,
         message: 'Citation saved',
@@ -55,7 +42,7 @@ class LibraryController extends GetxController {
     } catch (e) {
       showSnackbar(
         type: MsgType.Error,
-        message: e?.message ?? 'something went wrong',
+        message: 'something went wrong',
       );
     }
   }
