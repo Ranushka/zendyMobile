@@ -12,6 +12,7 @@ class Goto {
   static const signup = '/signup';
   static const title = '/title/';
   static const webPage = '/web';
+  static const libraryReadScreen = '/library-read';
 }
 
 class Api {

@@ -113,6 +113,11 @@ class MyApp extends StatelessWidget {
           page: () => LoadWebScreen(),
           transition: Transition.noTransition,
         ),
+        GetPage(
+          name: Goto.libraryReadScreen,
+          page: () => LibraryReadScreen(),
+          transition: Transition.noTransition,
+        ),
       ],
     );
   }

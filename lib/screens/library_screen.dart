@@ -39,13 +39,10 @@ class LibraryScreen extends StatelessWidget {
   }
 }
 
-_goToWebPage(readLink, downloadLink) {
+_goToWebPage(index) {
   Get.toNamed(
-    Goto.webPage,
-    arguments: {
-      'read': readLink,
-      'download': downloadLink,
-    },
+    Goto.libraryReadScreen,
+    arguments: index,
   );
 }
 
@@ -93,7 +90,7 @@ Widget _buildlist() {
 
             return SwipeDelete(
               uniqueId: '${item.id}',
-              onTap: () => _goToWebPage(item['readLink'], item['downloadLink']),
+              onTap: () => _goToWebPage(index),
               child: _buildItem,
               onDismissed: (action) {
                 libraryController.deleteData(item.id);

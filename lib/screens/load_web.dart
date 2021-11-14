@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/request_controller.dart';
+
+const _pdfInst = PDF(
+  pageSnap: false,
+  autoSpacing: false,
+  pageFling: false,
+);
 
 void getHttp(url) async {
   final _request = RequestController().requestWithAuth();
@@ -76,7 +82,7 @@ class LoadWebScreen extends StatelessWidget {
     }
 
     if (_downloadLink.isNotEmpty) {
-      bodyContent = const PDF().cachedFromUrl(
+      bodyContent = _pdfInst.cachedFromUrl(
         _downloadLink,
         headers: _headers,
         placeholder: (progress) => _buildProgressIndicator(progress),
