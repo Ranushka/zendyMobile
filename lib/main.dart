@@ -52,8 +52,11 @@ void main() async {
     permanent: true,
   );
 
+  final AuthController authController = Get.find();
+  final isDark = authController.currentUser.value.theme == 'DARK';
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.white,
+    statusBarColor: isDark ? Colors.black : Colors.white,
   ));
 
   runApp(MyApp());

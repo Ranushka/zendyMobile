@@ -1,3 +1,8 @@
+import 'package:get/get.dart';
+
+import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy_app/widgets/widgets.dart';
+
 class Goto {
   static const baseUrl = 'https://zendy-ranushka.vercel.app';
   static const citations = '/user/citation';
@@ -20,4 +25,20 @@ class Api {
   static const fromBlog = '$_blogUrl/v1/zendy_corner_content/oa?cat=en';
   static const featuredContent = '$_blogUrl/v1/featured_content/oa?cat=en';
   static const bySubjectsUrl = '$_blogUrl/v1/by_subjects_content/oa?cat=en';
+}
+
+void goToWebPage(readLink, downloadLink) {
+  final AuthController authCtrl = Get.find();
+
+  if (authCtrl.isLoggedIn()) {
+    Get.toNamed(
+      Goto.webPage,
+      arguments: {
+        'read': readLink,
+        'download': downloadLink,
+      },
+    );
+  } else {
+    loginToProceed();
+  }
 }

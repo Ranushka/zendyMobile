@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:zendy_app/helpers/helpers.dart';
 import 'package:zendy_app/widgets/widgets.dart';
 import 'package:zendy_app/controllers/controllers.dart';
 
@@ -46,32 +47,36 @@ Widget _newsContent(_data) {
 
 Widget _buildLatustNews(_itm) {
   if (_itm['paragraph'] == '') return Container();
+  var _url = _itm['url'];
 
-  return Card(
-    color: Theme.of(Get.context).backgroundColor,
-    elevation: 0,
-    margin: EdgeInsets.only(bottom: 8),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextSmall('Elsevier - Journal'.toUpperCase()),
-                SizedBox(height: 4),
-                Title3(_itm['title']),
-                SizedBox(height: 4),
-                TextBody(
-                  _itm['paragraph'],
-                  ml: 2,
-                ),
-              ],
-            ),
-          )
-        ],
+  return InkWell(
+    onTap: () => goToWebPage("", _url),
+    child: Card(
+      color: Theme.of(Get.context).backgroundColor,
+      elevation: 0,
+      margin: EdgeInsets.only(bottom: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextSmall('Elsevier - Journal'.toUpperCase()),
+                  SizedBox(height: 4),
+                  Title3(_itm['title']),
+                  SizedBox(height: 4),
+                  TextBody(
+                    _itm['paragraph'],
+                    ml: 2,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );

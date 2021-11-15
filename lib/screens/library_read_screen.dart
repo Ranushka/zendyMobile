@@ -67,21 +67,15 @@ class _LibraryReadScreenState extends State<LibraryReadScreen> {
                 final item = snapshot.data.docs[index];
                 String _downloadLink = item['downloadLink'];
 
-// 0:"permanentLinkId" -> "10.22495/cpr19a26"
-// 1:"downloadLink" -> "https://api.staging-oa.zendy.io/search/oa/download?url=https%253A%252F%252Fwww.virtusinterpress.org%252FIMG%252Fpdf%252Fcpr19a26…"
-// 5:"title" -> "The effects of crypto-currencies on financial market and monetary policy"
-// 2:"readLink" -> ""
-// 3:"publicationType" -> "Conference materials"
-// 4:"publicationYear" -> 2019
-// 6:"publicationName" -> "Virtus Interpress"
-
                 return Tab(
-                    child: _pdfInst.cachedFromUrl(
-                  _downloadLink,
-                  headers: _headers,
-                  placeholder: (progress) => _buildProgressIndicator(progress),
-                  errorWidget: (dynamic error) => _buildPdfError(error),
-                ));
+                  child: _pdfInst.cachedFromUrl(
+                    _downloadLink,
+                    headers: _headers,
+                    placeholder: (progress) =>
+                        _buildProgressIndicator(progress),
+                    errorWidget: (dynamic error) => _buildPdfError(error),
+                  ),
+                );
               },
               onPositionChange: (index) {
                 // print('current position: $index');

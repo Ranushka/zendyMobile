@@ -93,7 +93,9 @@ class SearchResultItem extends StatelessWidget {
                 ],
               ),
               TextButton(
-                onPressed: () => _goToWebPage(),
+                onPressed: () {
+                  goToWebPage(_item.zendyLink, _item.downloadLink);
+                },
                 child: const Text('Read full'),
               ),
             ],
@@ -153,7 +155,7 @@ class SearchResultItem extends StatelessWidget {
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      onTap: () => _goToWebPage(),
+      onTap: () => goToWebPage(_item.zendyLink, _item.downloadLink),
       child: Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
@@ -308,21 +310,5 @@ class SearchResultItem extends StatelessWidget {
         SizedBox(height: 16, width: 16),
       ]),
     );
-  }
-
-  _goToWebPage() {
-    final AuthController authCtrl = Get.find();
-
-    if (authCtrl.isLoggedIn()) {
-      Get.toNamed(
-        Goto.webPage,
-        arguments: {
-          'read': _item.zendyLink,
-          'download': _item.downloadLink,
-        },
-      );
-    } else {
-      loginToProceed();
-    }
   }
 }
