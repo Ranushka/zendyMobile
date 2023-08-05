@@ -1,5 +1,5 @@
 class UserModel {
-  String firstName, lastName, email, id, phoneNumber, authToken, theme;
+  String? firstName, lastName, email, id, phoneNumber, authToken, theme;
 
   UserModel({
     this.firstName,

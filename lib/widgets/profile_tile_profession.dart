@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:smart_select/smart_select.dart';
+import 'package:awesome_select/awesome_select.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy/helpers/helpers.dart';
 
 class ProfileTileProfession extends StatelessWidget {
-  final String title;
-  final List initialValue;
-  final List options;
+  final String? title;
+  final List? initialValue;
+  final List? options;
   final IconData icon;
   final Function onChange;
 
   const ProfileTileProfession({
-    Key key,
+    Key? key,
     this.title,
     this.initialValue,
     this.options,
     this.icon = Icons.language_rounded,
-    this.onChange,
+    this.onChange = _defaultOnChange,
   }) : super(key: key);
+
+  static void _defaultOnChange(List<dynamic> value) {}
 
   @override
   Widget build(BuildContext context) {
     return SmartSelect.single(
       title: 'My Role / Profession',
-      value: initialValue,
+      selectedValue: initialValue,
       onChange: (selected) {
         onChange(selected.value);
       },
@@ -33,13 +35,13 @@ class ProfileTileProfession extends StatelessWidget {
         value: (index, item) => item['id'],
         title: (index, item) => item['name'],
       ),
-      modalConfig: S2ModalConfig(
+      modalConfig: const S2ModalConfig(
         type: S2ModalType.bottomSheet,
         useFilter: true,
       ),
       tileBuilder: (context, state) {
         return Container(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: S2Tile.fromState(
             state,
             isTwoLine: true,

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 Widget citationsExportMenu() {
   return PopupMenuButton(
-    icon: Icon(Icons.more_vert),
+    icon: const Icon(Icons.more_vert),
     itemBuilder: (BuildContext bc) => [
-      PopupMenuItem(
-        child: TextBody("Export Selected"),
+      const PopupMenuItem(
         value: "/newchat",
+        child: TextBody("Export Selected"),
       ),
-      PopupMenuItem(
-        child: TextBody("Select all"),
+      const PopupMenuItem(
         value: "/new-group-chat",
+        child: TextBody("Select all"),
       ),
-      PopupMenuItem(
-        child: TextBody("Settings"),
+      const PopupMenuItem(
         value: "/settings",
+        child: TextBody("Settings"),
       ),
     ],
   );

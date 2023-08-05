@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CheckConnection extends StatefulWidget {
+  const CheckConnection({super.key});
+
   @override
   State createState() {
     return _CheckConnection();
@@ -13,7 +13,7 @@ class CheckConnection extends StatefulWidget {
 }
 
 class _CheckConnection extends State {
-  StreamSubscription internetconnection;
+  late StreamSubscription internetconnection;
   bool isoffline = false;
 
   @override
@@ -53,15 +53,15 @@ class _CheckConnection extends State {
   Widget build(BuildContext context) {
     if (isoffline) {
       return Container(
-        padding: EdgeInsets.all(10.00),
-        margin: EdgeInsets.only(bottom: 10.00),
+        padding: const EdgeInsets.all(10.00),
+        margin: const EdgeInsets.only(bottom: 10.00),
         color: Colors.red,
         child: Row(children: [
           Container(
-            margin: EdgeInsets.only(right: 6.00),
-            child: Icon(Icons.info, color: Colors.white),
+            margin: const EdgeInsets.only(right: 6.00),
+            child: const Icon(Icons.info, color: Colors.white),
           ),
-          Text(
+          const Text(
             "No internet",
             style: TextStyle(color: Colors.white),
           ),

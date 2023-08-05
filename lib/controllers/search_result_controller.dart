@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/models/search_model.dart';
-import 'package:zendy_app/services/services.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/models/search_model.dart';
+import 'package:zendy/services/services.dart';
 
 class SearchResultController extends GetxController {
   var isLoading = true.obs;
-  var searchResults = SearchModel().obs;
+  var searchResults = <Map<String, dynamic>>[].obs;
   var filters = List.empty().obs;
   var searchQry = ''.obs;
   var pageNumber = 1.obs;
 
   void clearCtrl() {
-    searchResults.value = SearchModel();
+    searchResults.value = [];
     pageNumber.value = 1;
   }
 
@@ -24,7 +24,7 @@ class SearchResultController extends GetxController {
   void toggleFilterItem(catId, name) {
     var myListFiltered = filters.where((item) => item['facetLabel'] == name);
 
-    if (myListFiltered.length > 0) {
+    if (myListFiltered.isNotEmpty) {
       filters.removeWhere((item) => item['facetLabel'] == name);
     } else {
       filters.add({
@@ -39,38 +39,38 @@ class SearchResultController extends GetxController {
   }
 
   void searchResultsGet() async {
-    final SavedSearchersController savedSearchersController = Get.find();
+    // final SavedSearchersController savedSearchersController = Get.find();
 
     try {
-      savedSearchersController.checkIsSaved(searchQry.value);
+      SearchService searchService = SearchService();
+      // savedSearchersController.checkIsSaved(searchQry.value);
 
       if (pageNumber.value == 1) {
         isLoading(true);
       }
 
-      var _dataSet = await SearchService.getResults(
+      var dataSet = await searchService.getResults(
         filters.value,
         searchQry.value,
         pageNumber.value,
       );
 
       if (pageNumber > 1) {
-        List<SearchModelResultItem> _oldList =
-            searchResults.value.data.searchResults.results;
+        var oldList = searchResults[0]['searchResults']['results'] ?? [];
 
-        List<SearchModelResultItem> _newList =
-            _dataSet.data.searchResults.results;
+        print(dataSet);
+        var newList = dataSet['searchResults']['results'] ?? [];
 
-        _oldList.addAll(_newList);
+        oldList.addAll(newList);
 
-        List<SearchModelResultItem> _fullList = _oldList;
+        print(oldList);
 
-        _dataSet.data.searchResults.results = _fullList;
+        // List<SearchModelResultItem> fullList = oldList;
+
+        dataSet['searchResults']['results'] = oldList;
       }
 
-      if (_dataSet != null) {
-        searchResults(_dataSet);
-      }
+      searchResults.value = [Map<String, dynamic>.from(dataSet)];
     } finally {
       isLoading(false);
     }

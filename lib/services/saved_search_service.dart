@@ -1,36 +1,69 @@
 import 'dart:async';
-import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:zendy/helpers/print_log.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/services/services.dart';
+const colName = 'savedSearchers';
 
-class SavedSearcherService {
-  final AuthController authCtrl = Get.find();
+class SavedCitationsService {
+  static Database? _database;
 
-  findOne(keyword) async {
-    var data = await FirestoreService()
-        .getCollection('savedSearchers')
-        .where('keyword', isEqualTo: keyword)
-        .get();
+  static Future<Database> _openDatabase() async {
+    if (_database != null) {
+      return _database!;
+    }
 
-    return data;
+    String dbPath = join('saved_citations.db');
+
+    _database = await openDatabase(dbPath, version: 1,
+        onCreate: (Database db, int version) async {
+      await db.execute('''
+        CREATE TABLE $colName (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          data TEXT
+        )
+      ''');
+    });
+
+    return _database!;
   }
 
-  Stream<QuerySnapshot> fetch() {
-    return FirestoreService().getCollection('savedSearchers').snapshots();
+  Stream<List<dynamic>> fetchdata(userId) async* {
+    printLog('fetchdata-userId', userId);
+    final db = await _openDatabase();
+    final List<Map<String, dynamic>> maps = await db.query(colName);
+
+    yield maps;
   }
 
   Future<dynamic> create(dynamic data) async {
-    DocumentReference docRef =
-        FirestoreService().getCollection('savedSearchers').doc();
-
-    await docRef.set(data);
-
+    final db = await _openDatabase();
+    var enData = jsonEncode(data);
+    await db.insert(colName, {'data': enData});
     return data;
   }
 
-  Future<dynamic> delete(String id) async {
-    await FirestoreService().getCollection('savedSearchers').doc(id).delete();
+  Future<dynamic> update(dynamic data) async {
+    final db = await _openDatabase();
+    await db.update(
+      colName,
+      {'data': data},
+      where: 'data = ?',
+      whereArgs: [data],
+    );
+    return data;
+  }
+
+  Future<dynamic> delete(dynamic id) async {
+    final db = await _openDatabase();
+
+    int rowsAffected = await db.delete(
+      colName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    return rowsAffected;
   }
 }

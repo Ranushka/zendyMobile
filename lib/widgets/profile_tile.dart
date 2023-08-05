@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zendy_app/widgets/typography.dart';
+import 'package:zendy/widgets/typography.dart';
 
 class ProfileTile extends StatelessWidget {
-  final String title;
-  final String subTitle;
-  final Function action;
+  final String? title, subTitle;
+  final void Function()? action;
 
   const ProfileTile({
-    Key key,
+    Key? key,
     this.title,
     this.subTitle = '',
     this.action,
@@ -19,8 +18,8 @@ class ProfileTile extends StatelessWidget {
     return InkWell(
       onTap: action,
       child: Container(
-        padding: EdgeInsets.all(16),
-        color: Theme.of(Get.context).backgroundColor,
+        padding: const EdgeInsets.all(16),
+        color: Theme.of(Get.context!).colorScheme.background,
         child: Flex(
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,11 +28,11 @@ class ProfileTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               direction: Axis.vertical,
               children: [
-                Title3(title),
-                if (subTitle != '') TextSmall(subTitle),
+                Title3(title!),
+                if (subTitle != '') TextSmall(subTitle!),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Icon(
               Icons.keyboard_arrow_right_rounded,
               color: Colors.grey.shade400,

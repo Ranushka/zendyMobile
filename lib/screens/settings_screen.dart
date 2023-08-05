@@ -1,20 +1,24 @@
+import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
-import 'package:flutter_restart/flutter_restart.dart';
+import 'package:restart_app/restart_app.dart';
+// import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
+// import 'package:flutter_app_restart/flutter_app_restart.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/services/services.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/services/services.dart';
 
 class SettingsScreen extends StatelessWidget {
   final AuthController authController = Get.put(AuthController());
 
+  SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(Get.context).backgroundColor,
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
       appBar: emptyAppbar(),
       body: _buildMainContent(context),
       bottomNavigationBar: bottomNavigation(),
@@ -24,6 +28,7 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildMainContent(context) {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
+      direction: Axis.vertical,
       children: [
         PageTitle(
           text: 'Profile',
@@ -32,13 +37,10 @@ class SettingsScreen extends StatelessWidget {
         ),
         buildSettingsList()
       ],
-      direction: Axis.vertical,
     );
   }
 
   Widget buildSettingsList() {
-    FlutterLibphonenumber().init();
-
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -48,34 +50,43 @@ class SettingsScreen extends StatelessWidget {
               title: 'Application',
               content: Column(
                 children: [
-                  ProfileTileDropdown(
+                  // SmartSelect<String>.single(
+                  //     title: 'Frameworks',
+                  //     value: value,
+                  //     choiceItems: options,
+                  //     onChange: (state) => setState(() => value = state.value)),
+
+                  // ProfileTileDropdown(
+                  //   title: 'Language',
+                  //   // initialValue: languageList[0].title,
+                  //   options: languageList,
+                  //   onChange: (val) {
+                  //     print(val);
+                  //   },
+                  // ),
+                  FrameworkSelect(
                     title: 'Language',
-                    initialValue: 'en',
+                    icon: Icons.language_rounded,
                     options: languageList,
-                    onChange: (val) {
-                      print(val);
-                    },
+                    selectedValue: '${languageList[0].title}',
                   ),
                   dividerX,
-                  ProfileTileDropdown(
-                    icon: Icons.font_download_outlined,
+                  FrameworkSelect(
                     title: 'Font size',
-                    initialValue: 'md',
+                    icon: Icons.font_download_outlined,
                     options: fontSizeList,
-                    onChange: (val) {
-                      print(val);
-                    },
+                    selectedValue: '${fontSizeList[0].title}',
                   ),
                   dividerX,
-                  ProfileTileDropdown(
-                    icon: Icons.image_search_outlined,
+                  FrameworkSelect(
                     title: 'Theme',
-                    initialValue: authController.currentUser.value.theme,
+                    icon: Icons.image_search_outlined,
                     options: themesList,
+                    selectedValue: '${themesList[0].title}',
                     onChange: (val) {
-                      authController
-                          .setTheme(val.value)
-                          .then((value) => {FlutterRestart.restartApp()});
+                      authController.setTheme(val).then((value) => {
+                            Restart.restartApp(webOrigin: '/'),
+                          });
                     },
                   ),
                   dividerX,
@@ -91,7 +102,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             ProfileTileGroup(
-              title: 'Misc',
+              title: 'Miscellaneous',
               content: Column(
                 children: [
                   ProfileTile(
@@ -117,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
+            const Column(
               children: [
                 SizedBox(height: 32),
                 Opacity(opacity: 0.5, child: TextSmall('Version: 1.4.0')),
@@ -134,12 +145,12 @@ class SettingsScreen extends StatelessWidget {
 Widget _buildUserInfo() {
   final AuthController authController = Get.find();
 
-  var rawNumber = authController.currentUser.value.phoneNumber;
-  var _firstName = authController.currentUser.value.firstName;
-  var _lastName = authController.currentUser.value.lastName;
-  var _email = authController.currentUser.value.email;
-  var _phoneNumber = FlutterLibphonenumber().formatNumberSync(rawNumber);
-  var _fullName = '$_firstName $_lastName';
+  // var rawNumber = authController.currentUser.value.phoneNumber;
+  var firstName = authController.currentUser.value.firstName;
+  var lastName = authController.currentUser.value.lastName;
+  var email = authController.currentUser.value.email;
+  // var _phoneNumber = FlutterLibphonenumber().formatNumberSync(rawNumber);
+  var fullName = '$firstName $lastName';
 
   return Obx(() {
     if (!authController.isLoggedIn()) {
@@ -156,37 +167,31 @@ Widget _buildUserInfo() {
           children: [
             ProfileTileInput(
               title: 'Name',
-              initialValue: _fullName,
+              initialValue: fullName,
               icon: Icons.portrait_rounded,
               options: languageList,
-              onChange: (val) {
-                print(val);
-              },
             ),
-            dividerX,
-            ProfileTileInput(
-              title: 'Phone',
-              initialValue: _phoneNumber,
-              icon: Icons.phone_iphone,
-              options: languageList,
-              onChange: (val) {
-                print(val);
-              },
-            ),
+            // dividerX,
+            // ProfileTileInput(
+            //   title: 'Phone',
+            //   initialValue: _phoneNumber,
+            //   icon: Icons.phone_iphone,
+            //   options: languageList,
+            //   onChange: (val) {
+            //     print(val);
+            //   },
+            // ),
             dividerX,
             ProfileTileInput(
               title: 'E-mail',
-              initialValue: _email,
+              initialValue: email,
               icon: Icons.email_outlined,
               options: languageList,
-              onChange: (val) {
-                print(val);
-              },
             ),
             dividerX,
             ProfileTileInterests(),
             dividerX,
-            ProfileTileProfession()
+            const ProfileTileProfession()
           ],
         ),
       ),
@@ -206,7 +211,7 @@ Widget _buildUserLogoutBtn(context) {
   }
 
   return IconButton(
-    icon: Icon(Icons.logout),
+    icon: const Icon(Icons.logout),
     onPressed: () {
       deleteUserTokenData();
       authController.logOut();

@@ -1,41 +1,29 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zendy_app/services/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchHistoryService {
-  Stream<QuerySnapshot> fetchdata() {
-    return FirestoreService()
-        .getCollection('searchHistory')
-        .orderBy('createdAt', descending: true)
-        .snapshots();
+  Future<List<String>> fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? historyList = prefs.getStringList('searchHistory');
+    return historyList ?? [];
   }
 
-  Future<dynamic> create(dynamic data) async {
-    CollectionReference collection =
-        FirestoreService().getCollection('searchHistory');
+  Future<void> create(String data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? historyList = prefs.getStringList('searchHistory');
+    historyList ??= [];
 
-    var queryData =
-        await collection.where('query', isEqualTo: data).limit(1).get();
-
-    if (queryData.size == 0) {
-      await collection.add({
-        'query': data,
-        'createdAt': Timestamp.now(),
-      });
+    if (!historyList.contains(data)) {
+      historyList.insert(0, data);
+      await prefs.setStringList('searchHistory', historyList);
     }
-
-    return data;
   }
 
-  Future<dynamic> update(dynamic data) async {
-    DocumentReference docRef =
-        FirestoreService().getCollection('searchHistory').doc(data.id);
+  Future<void> delete(String data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? historyList = prefs.getStringList('searchHistory');
+    historyList ??= [];
 
-    await docRef.update({"query": data.query});
-    return data;
-  }
-
-  Future<dynamic> delete(id) async {
-    await FirestoreService().getCollection('searchHistory').doc(id).delete();
+    historyList.remove(data);
+    await prefs.setStringList('searchHistory', historyList);
   }
 }

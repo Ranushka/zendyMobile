@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/helpers/themes/dark_theme.dart';
-import 'package:zendy_app/helpers/themes/default_theme.dart';
-import 'package:zendy_app/helpers/themes/paper_theme.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/helpers/themes/dark_theme.dart';
+import 'package:zendy/helpers/themes/default_theme.dart';
+import 'package:zendy/helpers/themes/paper_theme.dart';
 
 final customTheme = {
   "DEFAULT": defaultTheme,
@@ -27,9 +27,8 @@ Widget getLogoImg(width) {
   final AuthController authController = Get.find();
 
   final isDark = authController.currentUser.value.theme == 'DARK';
-  final logoPath = isDark
-      ? 'assets/images/zendy_logo_dark.png'
-      : 'assets/images/zendy_logo.png';
+  final logoPath =
+      isDark ? 'assets/images/logo_light.png' : 'assets/images/logo_dark.png';
 
   return InkWell(
     onTap: () => Get.toNamed(Goto.home),

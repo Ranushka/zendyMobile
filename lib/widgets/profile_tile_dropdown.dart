@@ -1,53 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:awesome_select/awesome_select.dart';
 import 'package:get/get.dart';
-import 'package:smart_select/smart_select.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/helpers/print_log.dart';
+import 'package:zendy/widgets/widgets.dart';
 
-class ProfileTileDropdown extends StatelessWidget {
-  final String title;
-  final String initialValue;
-  final List options;
+class FrameworkSelect extends StatefulWidget {
   final IconData icon;
-  final Function onChange;
+  final List<S2Choice<String>> options;
+  final String selectedValue;
+  final String title;
+  final void Function(String)? onChange;
 
-  const ProfileTileDropdown({
-    Key key,
-    this.title,
-    this.initialValue,
-    this.options,
+  FrameworkSelect({
+    this.title = '',
+    this.selectedValue = '',
     this.icon = Icons.language_rounded,
+    required this.options,
     this.onChange,
-  }) : super(key: key);
+  });
+
+  @override
+  _FrameworkSelectState createState() => _FrameworkSelectState();
+}
+
+class _FrameworkSelectState extends State<FrameworkSelect> {
+  String selectedFramework = '';
+
+  @override
+  void initState() {
+    super.initState();
+    selectedFramework = widget.selectedValue;
+  }
 
   @override
   Widget build(BuildContext context) {
+    printLog('options', widget.options);
+
     return SmartSelect<String>.single(
-      title: title,
-      value: initialValue,
-      choiceItems: options,
+      title: widget.title,
+      selectedValue: selectedFramework,
       modalType: S2ModalType.bottomSheet,
-      onChange: (selected) {
-        onChange(selected);
+      choiceItems: widget.options,
+      onChange: (state) {
+        setState(() {
+          selectedFramework = state.title.toString();
+        });
+        widget.onChange!(state.value);
       },
       tileBuilder: (context, state) {
         return InkWell(
           onTap: state.showModal,
           child: Container(
-            padding: EdgeInsets.all(16),
-            color: Theme.of(Get.context).backgroundColor,
+            padding: const EdgeInsets.all(16),
+            color: Theme.of(Get.context!).colorScheme.background,
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(
-                  icon,
+                  widget.icon,
                   color: Colors.grey.shade500,
                 ),
-                SizedBox(width: 16),
-                Title3(state.title),
-                Spacer(),
-                TextBody(state.valueTitle.toString()),
-                SizedBox(width: 8),
+                const SizedBox(width: 16),
+                Title3(state.title!),
+                const Spacer(),
+                TextBody(state.selected.value),
+                const SizedBox(width: 8),
                 Icon(
                   Icons.keyboard_arrow_right_rounded,
                   color: Colors.grey.shade400,

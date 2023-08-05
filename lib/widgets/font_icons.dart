@@ -19,49 +19,28 @@ import 'package:flutter/widgets.dart';
 class FontIcons {
   FontIcons._();
 
-  static const _kFontFam = 'FontIcons';
-  static const String _kFontPkg = null;
+  static const _f = 'icomoon';
+  // static const String _p = '';
 
-  static const IconData my_library =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData notifications =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData paper_add =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData saved_search =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData search_refine =
-      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData search =
-      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData share =
-      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData user =
-      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData arrow_back =
-      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData clear =
-      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData cite =
-      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData history =
-      IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData filter =
-      IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData history_reuse =
-      IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData home =
-      IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData logout =
-      IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData curt =
-      IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData down =
-      IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData up =
-      IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData saved_search_added =
-      IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData saved_search_add =
-      IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData my_library = IconData(0xe800, fontFamily: _f);
+  static const IconData notifications = IconData(0xe801, fontFamily: _f);
+  static const IconData paper_add = IconData(0xe802, fontFamily: _f);
+  static const IconData saved_search = IconData(0xe803, fontFamily: _f);
+  static const IconData search_refine = IconData(0xe804, fontFamily: _f);
+  static const IconData search = IconData(0xe805, fontFamily: _f);
+  static const IconData share = IconData(0xe806, fontFamily: _f);
+  static const IconData user = IconData(0xe807, fontFamily: _f);
+  static const IconData arrow_back = IconData(0xe808, fontFamily: _f);
+  static const IconData clear = IconData(0xe809, fontFamily: _f);
+  static const IconData cite = IconData(0xe80a, fontFamily: _f);
+  static const IconData history = IconData(0xe80b, fontFamily: _f);
+  static const IconData filter = IconData(0xe80c, fontFamily: _f);
+  static const IconData history_reuse = IconData(0xe80d, fontFamily: _f);
+  static const IconData home = IconData(0xe80e, fontFamily: _f);
+  static const IconData logout = IconData(0xe80f, fontFamily: _f);
+  static const IconData curt = IconData(0xe810, fontFamily: _f);
+  static const IconData down = IconData(0xe811, fontFamily: _f);
+  static const IconData up = IconData(0xe813, fontFamily: _f);
+  static const IconData saved_search_added = IconData(0xe814, fontFamily: _f);
+  static const IconData saved_search_add = IconData(0xe815, fontFamily: _f);
 }

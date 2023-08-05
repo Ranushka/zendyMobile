@@ -2,21 +2,21 @@ import "package:intl/intl.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 Future filtersModel() {
   return showModalBottomSheet(
     isScrollControlled: true,
-    context: Get.context,
-    shape: RoundedRectangleBorder(
+    context: Get.context!,
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(20),
       ),
     ),
     clipBehavior: Clip.antiAliasWithSaveLayer,
     builder: (context) {
-      return SafeArea(
+      return const SafeArea(
         child: FractionallySizedBox(
           heightFactor: 0.9,
           child: CheckBoxInListView(),
@@ -35,37 +35,50 @@ var titleMap = {
 };
 
 class CheckBoxInListView extends StatefulWidget {
-  CheckBoxInListView();
+  const CheckBoxInListView({super.key});
 
   @override
   _CheckBoxInListViewState createState() => _CheckBoxInListViewState();
 }
 
 class _CheckBoxInListViewState extends State<CheckBoxInListView> {
+  final SearchResultController searchResultCtrl = Get.find();
+
   @override
   Widget build(BuildContext context) {
     Widget _buildBackButton() {
       return IconButton(
         splashRadius: 28,
-        icon: Icon(Icons.arrow_drop_down_circle_outlined),
+        icon: const Icon(Icons.arrow_drop_down_circle_outlined),
         onPressed: () => Get.back(),
       );
     }
 
     Widget _buildBottomSheet() {
-      final SearchResultController searchResultCtrl = Get.find();
+      var resultData = searchResultCtrl.searchResults[0];
 
-      var totalResults = NumberFormat.compact().format(
-        searchResultCtrl.searchResults.value.data.searchResults.totalResults,
+      var totalResults = resultData['searchResults']['totalResults'];
+
+      var trCount = NumberFormat.compact().format(
+        totalResults,
       );
 
       return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(Get.context!).colorScheme.background,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
         child: Gutter(Flex(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           direction: Axis.horizontal,
           children: [
             TextButton(
-              child: TextBody('Clear filters'),
+              child: const TextBody('Clear filters'),
               onPressed: () {
                 searchResultCtrl.clearFiltrs();
                 Get.back();
@@ -73,30 +86,21 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
             ),
             OutlinedButton(
               onPressed: () => Get.back(),
-              child: TextBody('Show reselts - ' + totalResults),
+              child: TextBody('Show reselts - $trCount'),
             ),
           ],
         )),
-        decoration: BoxDecoration(
-          color: Theme.of(Get.context).backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              offset: Offset(0, 2), // Shadow position
-            ),
-          ],
-        ),
       );
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(Get.context).backgroundColor,
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
       bottomSheet: Obx(() => _buildBottomSheet()),
       appBar: AppBar(
         leadingWidth: 8,
         leading: Container(),
         actions: [_buildBackButton()],
-        title: Title2('Filters'),
+        title: const Title2('Filters'),
       ),
       body: FiltersList(),
     );
@@ -106,18 +110,19 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
 checkBoxRow(name, count, bool checked, catId) {
   final SearchResultController searchResultCtrl = Get.find();
 
-  RxBool _isChecked = checked.obs;
+  RxBool isChecked = checked.obs;
   return Obx(() {
     return CheckboxListTile(
-      activeColor: Theme.of(Get.context).primaryColor,
+      activeColor: Theme.of(Get.context!).primaryColor,
       title: Wrap(
         direction: Axis.horizontal,
-        children: [TextBody(name + ' - $count')],
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [Title3(name), TextBody(' - $count')],
       ),
-      value: _isChecked.value,
-      onChanged: (bool val) {
+      value: isChecked.value,
+      onChanged: (val) {
         searchResultCtrl.toggleFilterItem(catId, name);
-        _isChecked.value = val;
+        isChecked.value = val ?? false;
       },
     );
   });
@@ -126,51 +131,56 @@ checkBoxRow(name, count, bool checked, catId) {
 class FiltersList extends StatelessWidget {
   final SearchResultController searchResultCtrl = Get.find();
 
+  FiltersList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var availableFacets = searchResultCtrl
-          .searchResults.value.data.searchResults.availableFacets;
-      var appliedFacets = searchResultCtrl
-          .searchResults.value.data.searchRequestCriteria.appliedFacets;
+      final searchResults = searchResultCtrl.searchResults[0];
+      final availableFacets =
+          searchResults['searchResults']?['availableFacets'];
+      final appliedFacets =
+          searchResults['searchRequestCriteria']['appliedFacets'];
 
-      if (availableFacets.length == 0) {
+      if (availableFacets!.isEmpty) {
         return Container();
       }
 
       final finalList = <Widget>[];
 
-      for (var availableFacetGroup in availableFacets) {
-        var catId = availableFacetGroup.categoryId;
+      for (var availableFacetGroup in availableFacets!) {
+        var catId = availableFacetGroup;
 
         finalList.add(Gutter(
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 32, 0, 8),
-                child: Title4(titleMap[catId]),
+                padding: const EdgeInsets.fromLTRB(0, 32, 0, 8),
+                child: Title4(catId['categoryLabel']),
               ),
               dividerX
             ],
           ),
         ));
 
-        int _indexC = 0;
+        int indexC = 0;
 
-        for (var availableFacetItem in availableFacetGroup.facets) {
-          _indexC++;
+        for (var availableFacetItem in availableFacetGroup['facets']!) {
+          indexC++;
 
-          if (_indexC >= 10) break;
+          if (indexC >= 10) break;
 
-          var count = availableFacetItem.count.toString();
-          var name = availableFacetItem.facetLabel.toString();
-          var checked = appliedFacets
-                  .where((c) =>
-                      c['categoryId'] == catId &&
-                      c['facetLabel'] == availableFacetItem.facetLabel)
-                  .toList()
-                  .length !=
-              0;
+          var count = NumberFormat.compact().format(
+            availableFacetItem['count'],
+          );
+
+          var name = availableFacetItem['facetLabel'];
+          var checked = appliedFacets!
+              .where((c) =>
+                  c['categoryId'] == catId &&
+                  c['facetLabel'] == availableFacetItem.facetLabel)
+              .toList()
+              .isNotEmpty;
 
           finalList.add(checkBoxRow(name, count, checked, catId));
         }

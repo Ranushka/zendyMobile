@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class LoginEmailScreen extends StatelessWidget {
   final AuthController authCtrl = Get.find();
 
-  final TextEditingController _emailController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final String _email = "";
-  final String _password = "";
+
+  LoginEmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 360),
-          padding: EdgeInsets.all(16.0),
+          constraints: const BoxConstraints(maxWidth: 360),
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 getLogoImg(140),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
                 _buildEmailForm(),
               ],
             ),
@@ -38,30 +39,30 @@ class LoginEmailScreen extends StatelessWidget {
   }
 
   Widget _buildEmailForm() {
-    Color _btnColor = Theme.of(Get.context).primaryColor;
+    Color btnColor = Theme.of(Get.context!).primaryColor;
 
     return Obx(() {
-      return Container(
+      return SizedBox(
         width: 400,
         child: Column(
           children: [
             _buildBackButton(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // LinearProgressIndicator(),
-            if (authCtrl.isLoading.value) LinearProgressIndicator(),
+            if (authCtrl.isLoading.value) const LinearProgressIndicator(),
             Container(
               child: TextField(
-                style: Theme.of(Get.context).textTheme.bodyText2,
+                style: Theme.of(Get.context!).textTheme.bodyMedium,
                 autofocus: true,
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
             ),
             Container(
               child: TextField(
-                style: Theme.of(Get.context).textTheme.bodyText2,
+                style: Theme.of(Get.context!).textTheme.bodyMedium,
                 controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
@@ -69,22 +70,22 @@ class LoginEmailScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffixIcon: TextButton(
-                    child: TextBody('Forgot?'),
                     onPressed: _passwordReset,
+                    child: const TextBody('Forgot?'),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildBtn(
-              _btnColor,
+              btnColor,
               "Login with Email",
               _loginWithEmailPressed,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextButton(
-              child: TextBody('Dont have an account?'),
               onPressed: _createAccountPressed,
+              child: const TextBody('Dont have an account?'),
             ),
           ],
         ),
@@ -97,26 +98,26 @@ class LoginEmailScreen extends StatelessWidget {
       // direction: Axis.horizontal,
       children: [
         Transform.translate(
-          offset: Offset(-16, 0),
+          offset: const Offset(-16, 0),
           child: IconButton(
             splashRadius: 24,
-            icon: Icon(FontIcons.arrow_back),
+            icon: const Icon(FontIcons.arrow_back),
             onPressed: () => Get.back(),
           ),
         ),
         Container(
-          child: Title1('Join with Email'),
+          child: const Title1('Join with Email'),
         )
       ],
     );
   }
 
   void _loginWithEmailPressed() {
-    var _em = _emailController.text;
-    var _pw = _passwordController.text;
+    var em = _emailController.text;
+    var pw = _passwordController.text;
 
-    print('The user wants to login with $_em and $_pw');
-    authCtrl.signIn(_em, _pw);
+    print('The user wants to login with $em and $pw');
+    authCtrl.signIn(em, pw);
   }
 
   void _createAccountPressed() {
@@ -128,10 +129,10 @@ class LoginEmailScreen extends StatelessWidget {
   }
 }
 
-Widget _buildBtn(Color _color, String _text, Function _onPress) {
-  Color btnColor = _color;
+Widget _buildBtn(Color color, String text, void Function() onPress) {
+  Color btnColor = color;
 
-  return Container(
+  return SizedBox(
     width: double.infinity,
     child: Column(
       children: [
@@ -143,8 +144,8 @@ Widget _buildBtn(Color _color, String _text, Function _onPress) {
           splashColor: darken(btnColor, 0.15),
           highlightColor: darken(btnColor, 0.1),
           textColor: Colors.white,
-          child: BtnText(_text),
-          onPressed: _onPress,
+          onPressed: onPress,
+          child: BtnText(text),
         )
       ],
     ),

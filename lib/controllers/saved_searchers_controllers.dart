@@ -1,50 +1,49 @@
 // import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zendy/services/local_data_service.dart';
 
-import 'package:zendy_app/services/services.dart';
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class SavedSearchersController extends GetxController {
-  final SavedSearcherService _service = SavedSearcherService();
+  final _service = LocalDataService('saved_searchers');
+
   final AuthController authCtrl = Get.find();
   var isSavedSearch = false.obs;
 
-  void onInit() {
-    super.onInit();
-  }
+  Stream getData() {
+    Stream<List<dynamic>> dataStream = _service.fetchData('userId');
 
-  Stream<QuerySnapshot> getData() {
-    Stream<QuerySnapshot> qSnapStream = _service.fetch();
-
-    return qSnapStream;
+    return dataStream;
   }
 
   Future checkIsSaved(keyword) async {
-    var data = await _service.findOne(keyword);
-    isSavedSearch.value = data.size >= 1;
+    // var data = await savedSearchersService.findOne(keyword);
+    // isSavedSearch.value = data.size >= 1;
   }
 
   void saveData({
-    String keyword,
-    num count,
-    String sort,
-    String filters,
+    String? keyword,
+    num? count,
+    String? sort,
+    String? filters,
   }) async {
     try {
-      var _data = {
+      var data = {
         'keyword': keyword,
         'sort': sort,
         'count': count,
         'filters': filters,
       };
 
-      await _service.create(_data);
+      await _service.create(data);
       showSnackbar(type: MsgType.Success, message: 'Keyword saved');
     } catch (e) {
-      showSnackbar(type: MsgType.Error, message: e?.message ?? 'Not saved');
+      print('SavedSearchersControllersaveData---');
+      print(e);
+      print('SavedSearchersControllersaveData---');
+      showSnackbar(type: MsgType.Error, message: 'Not saved');
     }
   }
 
@@ -56,9 +55,12 @@ class SavedSearchersController extends GetxController {
         message: 'Saved search removed',
       );
     } catch (e) {
+      print('SavedSearchersControllerdeleteData---');
+      print(e);
+      print('SavedSearchersControllerdeleteData---');
       showSnackbar(
         type: MsgType.Error,
-        message: e?.message ?? 'something went wrong',
+        message: 'something went wrong',
       );
     }
   }

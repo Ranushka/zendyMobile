@@ -1,10 +1,9 @@
-import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/models/models.dart';
-import 'package:zendy_app/services/auth_service.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/models/user_model.dart';
+import 'package:zendy/services/auth_service.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
@@ -28,9 +27,9 @@ class AuthController extends GetxController {
       }
     });
 
-    getUserData().then((_userData) {
-      if (_userData != null) {
-        _setUserData(_userData);
+    getUserData().then((userData) {
+      if (userData != null) {
+        _setUserData(userData);
       } else {
         // Assign temp Id to the user to manage the guest user
         getTempUserId().then((tempId) => currentUser.value.id = tempId);
@@ -68,12 +67,12 @@ class AuthController extends GetxController {
   void signIn(email, password) async {
     try {
       isLoading(true);
-      await AuthServices.signIn(email, password).then((_isLoggedIn) async {
-        await getUserData().then((_userData) {
-          _setUserData(_userData);
+      await AuthServices.signIn(email, password).then((isLoggedIn) async {
+        await getUserData().then((userData) {
+          _setUserData(userData);
         });
 
-        if (_isLoggedIn) {
+        if (isLoggedIn) {
           Get.toNamed(Goto.home);
         }
       });
@@ -91,17 +90,17 @@ class AuthController extends GetxController {
     currentUser.value.phoneNumber = '';
   }
 
-  void _setUserData(_userData) {
-    if (_userData != null) {
-      var _data = _userData['user'];
-      var _dataAuthToken = _userData['authToken'];
+  void _setUserData(userData) {
+    if (userData != null) {
+      var data = userData['user'];
+      var dataAuthToken = userData['authToken'];
 
-      currentUser.value.authToken = _dataAuthToken;
-      currentUser.value.email = _data['email'];
-      currentUser.value.firstName = _data['firstName'];
-      currentUser.value.id = _data['id'];
-      currentUser.value.lastName = _data['lastName'];
-      currentUser.value.phoneNumber = _data['phoneNumber'];
+      currentUser.value.authToken = dataAuthToken;
+      currentUser.value.email = data['email'];
+      currentUser.value.firstName = data['firstName'];
+      currentUser.value.id = data['id'];
+      currentUser.value.lastName = data['lastName'];
+      currentUser.value.phoneNumber = data['phoneNumber'];
     }
   }
 }

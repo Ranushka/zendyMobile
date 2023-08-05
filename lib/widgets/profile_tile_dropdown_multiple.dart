@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:smart_select/smart_select.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:awesome_select/awesome_select.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class ProfileTileDropdownMultiple extends StatelessWidget {
-  final String title;
-  final List initialValue;
-  final List options;
-  final IconData icon;
-  final Function onChange;
+  final String? title;
+  final List<Object?>? initialValue;
+  final List<S2Choice<Object?>>? options;
+  final IconData? icon;
+  final void Function(S2MultiSelected?)? onChange;
 
   const ProfileTileDropdownMultiple({
-    Key key,
+    Key? key,
     this.title,
     this.initialValue,
     this.options,
@@ -22,17 +22,17 @@ class ProfileTileDropdownMultiple extends StatelessWidget {
   Widget build(BuildContext context) {
     return SmartSelect.multiple(
       title: title,
-      value: initialValue,
+      selectedValue: initialValue!,
       choiceItems: options,
       modalType: S2ModalType.bottomSheet,
       onChange: (selected) {
-        onChange(selected);
+        onChange!(selected);
       },
       tileBuilder: (context, state) {
         return InkWell(
           onTap: state.showModal,
           child: Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             color: Colors.white,
             child: Flex(
               direction: Axis.horizontal,
@@ -42,11 +42,11 @@ class ProfileTileDropdownMultiple extends StatelessWidget {
                   icon,
                   color: Colors.grey.shade500,
                 ),
-                SizedBox(width: 16),
-                Title3(state.title),
-                Spacer(),
-                TextSmall(state.valueTitle.toString()),
-                SizedBox(width: 8),
+                const SizedBox(width: 16),
+                Title3(state.title!),
+                const Spacer(),
+                TextSmall(state.toString()),
+                const SizedBox(width: 8),
                 Icon(
                   Icons.keyboard_arrow_right_rounded,
                   color: Colors.grey.shade400,

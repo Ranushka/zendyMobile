@@ -1,4 +1,4 @@
-import 'package:smart_select/smart_select.dart' show S2Choice;
+import 'package:awesome_select/awesome_select.dart' show S2Choice;
 
 List<S2Choice<String>> languageList = [
   S2Choice<String>(value: 'en', title: 'English'),
@@ -13,12 +13,6 @@ List<S2Choice<String>> fontSizeList = [
 ];
 
 List<S2Choice<String>> themesList = [
-  S2Choice<String>(value: 'DEFAULT', title: 'Default'),
-  S2Choice<String>(value: 'DARK', title: 'Dark'),
-  S2Choice<String>(value: 'PAPER', title: 'Paper'),
-];
-
-List<S2Choice<String>> nnotificationList = [
   S2Choice<String>(value: 'DEFAULT', title: 'Default'),
   S2Choice<String>(value: 'DARK', title: 'Dark'),
   S2Choice<String>(value: 'PAPER', title: 'Paper'),

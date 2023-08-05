@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 citationPopup() {
   Get.defaultDialog(
-    backgroundColor: Theme.of(Get.context).primaryColorLight,
-    middleTextStyle: Theme.of(Get.context).textTheme.bodyText1,
-    titleStyle: Theme.of(Get.context).textTheme.headline2,
-    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+    backgroundColor: Theme.of(Get.context!).primaryColorLight,
+    middleTextStyle: Theme.of(Get.context!).textTheme.bodyLarge,
+    titleStyle: Theme.of(Get.context!).textTheme.displayMedium,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
     radius: 8,
     title: 'Citation',
     middleText:

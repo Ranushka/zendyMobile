@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class LoginScreen extends StatelessWidget {
   final AuthController authCtrl = Get.find();
 
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 360),
-          padding: EdgeInsets.all(16.0),
+          constraints: const BoxConstraints(maxWidth: 360),
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 getLogoImg(140),
-                SizedBox(height: 32),
-                Title1('Sign in'),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
+                const Title1('Sign in'),
+                const SizedBox(height: 32),
                 _buildUseEmail(),
-                SizedBox(height: 16),
-                Title4('Join with Social logins'),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
+                const Title4('Join with Social logins'),
+                const SizedBox(height: 16),
                 _buildFacebook(),
                 _buildGoogle(),
               ],
@@ -41,47 +43,47 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildUseEmail() {
-    Color _btnColor = Theme.of(Get.context).primaryColor;
+    Color btnColor = Theme.of(Get.context!).primaryColor;
 
     return _buildBtn(
-      _btnColor,
+      btnColor,
       "Continue with Email",
       () => Get.toNamed(Goto.loginEmail),
     );
   }
 
   Widget _buildFacebook() {
-    Color _btnColor = Color(int.parse('0xFF4267B2'));
+    Color btnColor = Color(int.parse('0xFF4267B2'));
 
     return _buildBtn(
-      _btnColor,
+      btnColor,
       "Login with facebook",
       _loginWithFacebookPressed,
     );
   }
 
   Widget _buildGoogle() {
-    Color _btnColor = Color(int.parse('0xFFde5246'));
+    Color btnColor = Color(int.parse('0xFFde5246'));
 
     return _buildBtn(
-      _btnColor,
+      btnColor,
       "Login with Google",
       _loginWithFacebookPressed,
     );
   }
 
   void _loginWithFacebookPressed() {
-    WebView(
-      initialUrl: 'https://api.staging-oa.zendy.io/auth/facebook/auth',
-      javascriptMode: JavascriptMode.unrestricted,
-    );
+    // WebView(
+    //   initialUrl: 'https://api.staging-oa.zendy.io/auth/facebook/auth',
+    //   javascriptMode: JavascriptMode.unrestricted,
+    // );
   }
 }
 
-Widget _buildBtn(Color _color, String _text, Function _onPress) {
-  Color btnColor = _color;
+Widget _buildBtn(Color color, String text, void Function() onPress) {
+  Color btnColor = color;
 
-  return Container(
+  return SizedBox(
     width: double.infinity,
     child: Column(
       children: [
@@ -93,8 +95,8 @@ Widget _buildBtn(Color _color, String _text, Function _onPress) {
           splashColor: darken(btnColor, 0.15),
           highlightColor: darken(btnColor, 0.1),
           textColor: Colors.white,
-          child: BtnText(_text),
-          onPressed: _onPress,
+          onPressed: onPress,
+          child: BtnText(text),
         )
       ],
     ),

@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/request_controller.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/helpers/print_log.dart';
+import 'package:zendy/screens/web_view_exp.dart';
+import 'package:zendy/widgets/widgets.dart';
+// import 'package:zendy/controllers/request_controller.dart';
 
-const _pdfInst = PDF(
-  pageSnap: false,
-  autoSpacing: false,
-  pageFling: false,
-);
+// const _pdfInst = PDF(
+//   pageSnap: false,
+//   autoSpacing: false,
+//   pageFling: false,
+// );
 
 void getHttp(url) async {
-  final _request = RequestController().requestWithAuth();
+  final request = RequestController().requestWithAuth();
 
   try {
     var status = await Permission.storage.status;
@@ -27,7 +29,7 @@ void getHttp(url) async {
 
     String path = await getDirectoryPath();
 
-    dynamic response = await _request.download(url, '$path/pdf/xx.html');
+    dynamic response = await request.download(url, '$path/pdf/xx.html');
 
     print('---->>>>');
     print(response);
@@ -40,8 +42,8 @@ void getHttp(url) async {
 Future<String> getDirectoryPath() async {
   Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
-  Directory directory = await new Directory(
-    appDocDirectory.path + '/' + 'dir',
+  Directory directory = await Directory(
+    '${appDocDirectory.path}/dir',
   ).create(recursive: true);
 
   return directory.path;
@@ -49,57 +51,43 @@ Future<String> getDirectoryPath() async {
 
 class LoadWebScreen extends StatelessWidget {
   final AuthController authCtrl = Get.put(AuthController());
-  // final LibraryController libraryController = Get.find();
+
+  LoadWebScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    WebView.platform = SurfaceAndroidWebView();
     Map url = Get.arguments;
 
-    // bool _inLibrary = true;
+    String readLink = url['read'] ?? '';
+    String downloadLink = url['download'] ?? '';
+    print('> url >$url');
 
-    // if (_inLibrary) {
-    //   var _libraryData = libraryController.getData();
-    //   print(_libraryData);
-    // }
-
-    String _readLink = url['read'];
-    String _downloadLink = url['download'];
-    print('> url >' + url.toString());
-
-    Widget bodyContent = Center(
+    Widget bodyContent = const Center(
       child: TextBody('Hmmm..., some thing went wrong'),
     );
 
-    var _headers = {"Cookie": authCtrl.currentUser.value.authToken};
+    var headers = {"Cookie": authCtrl.currentUser.value.authToken};
+    final headersCast = headers.cast<String, String>();
 
     if (!authCtrl.isLoggedIn()) {
       loginToProceed();
       return Scaffold(
         appBar: _buildAppBar(),
-        body: TextBody('User Not loggedIn'),
+        body: const TextBody('User Not loggedIn'),
       );
     }
 
-    if (_downloadLink.isNotEmpty) {
-      bodyContent = _pdfInst.cachedFromUrl(
-        _downloadLink,
-        headers: _headers,
-        placeholder: (progress) => _buildProgressIndicator(progress),
-        errorWidget: (dynamic error) => _buildPdfError(error),
+    if (downloadLink.isNotEmpty) {
+      printLog('downloadLink--', downloadLink);
+      bodyContent = PDF().cachedFromUrl(
+        downloadLink,
+        placeholder: (progress) => Center(child: Text('$progress %')),
+        errorWidget: (error) => Center(child: Text(error.toString())),
       );
-    } else if (_readLink.isNotEmpty) {
-      bodyContent = WebView(
-        onWebViewCreated: (controller) {
-          controller.loadUrl(
-            _readLink,
-            headers: _headers,
-          );
-        },
-        onProgress: (progress) => _buildProgressIndicator(progress),
-      );
+    } else if (readLink.isNotEmpty) {
+      bodyContent = WebViewExp(url: readLink);
     } else {
-      bodyContent = Center(child: TextBody('Hmmm..., No link'));
+      bodyContent = const Center(child: TextBody('Hmmm..., No link'));
     }
 
     return Scaffold(
@@ -108,17 +96,17 @@ class LoadWebScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      iconTheme: IconThemeData(color: Theme.of(Get.context).primaryColor),
-      backgroundColor: Theme.of(Get.context).backgroundColor,
-      leading: BackBtn(),
+      iconTheme: IconThemeData(color: Theme.of(Get.context!).primaryColor),
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
+      leading: const BackBtn(),
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: 4),
+          padding: const EdgeInsets.only(right: 4),
           child: IconButton(
             splashRadius: 24,
-            icon: Icon(FontIcons.share),
+            icon: const Icon(FontIcons.share),
             onPressed: () {},
           ),
         )
@@ -135,7 +123,7 @@ class LoadWebScreen extends StatelessWidget {
             scale: 1.5,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Theme.of(Get.context).primaryColor,
+              color: Theme.of(Get.context!).primaryColor,
             ),
           ),
           TextBody('$progress %'),
@@ -146,9 +134,9 @@ class LoadWebScreen extends StatelessWidget {
 
   dynamic _buildPdfError(dynamic error) {
     print('object--------?');
-    if (error.statusCode == 401) {
-      loginToProceed();
-    }
-    return Center(child: TextBody(error.toString()));
+    // if (error.statusCode == 401) {
+    // loginToProceed();
+    // }
+    return Center(child: TextBody('PDD loading error'));
   }
 }

@@ -1,31 +1,20 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
 
 class LibraryScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: emptyAppbar(),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        children: [
-          Expanded(
-            child: _buildMainContent(),
-          ),
-        ],
-      ),
-      bottomNavigationBar: bottomNavigation(),
-    );
-  }
+  const LibraryScreen({super.key});
 
   Widget _buildMainContent() {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
+      direction: Axis.vertical,
       children: [
         PageTitle(
           text: 'Library',
@@ -34,7 +23,22 @@ class LibraryScreen extends StatelessWidget {
         ),
         _buildlist()
       ],
-      direction: Axis.vertical,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: emptyAppbar(),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Column(
+        children: [
+          Expanded(
+            child: _buildMainContent(),
+          ),
+        ],
+      ),
+      bottomNavigationBar: bottomNavigation(),
     );
   }
 }
@@ -52,17 +56,17 @@ Widget _buildlist() {
   return Expanded(
     child: StreamBuilder(
       stream: libraryController.getData(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.data.toString() == 'null') {
-          return Center(child: CircularProgressIndicator());
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.data == null) {
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (snapshot.hasError) {
-          return Center(child: TextBody('Something went wrong'));
+          return const Center(child: TextBody('Something went wrong'));
         }
 
-        if (snapshot.data.docs.length < 1) {
-          return Gutter(Center(
+        if (snapshot.data.isEmpty) {
+          return const Gutter(Center(
             child: TextBody(
               'Add Search results to your library will help you to read or export later',
             ),
@@ -70,30 +74,33 @@ Widget _buildlist() {
         }
 
         return ListView.builder(
-          padding: EdgeInsets.only(top: 10, bottom: 20),
-          physics: BouncingScrollPhysics(),
-          itemCount: snapshot.data.size,
+          padding: const EdgeInsets.only(top: 10, bottom: 20),
+          physics: const BouncingScrollPhysics(),
+          itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
-            final item = snapshot.data.docs[index];
+            var providedDataString = snapshot.data[index];
+            var _rowId = snapshot.data[index]['id'];
+            Map<String, dynamic> _item =
+                json.decode(providedDataString['data']);
 
-            var _buildItem = Flex(
+            var buildItem = Flex(
               crossAxisAlignment: CrossAxisAlignment.start,
               direction: Axis.vertical,
               children: [
-                SizedBox(height: 12),
-                TextBody(item['title']),
+                const SizedBox(height: 12),
+                TextBody(_item['title']),
                 TextSmall(
-                    "${item['publicationType']} - ${item['publicationYear']} - ${item['publicationName']}"),
-                SizedBox(height: 16),
+                    "${_item['publicationType']} - ${_item['publicationYear']} - ${_item['publicationName']}"),
+                const SizedBox(height: 16),
               ],
             );
 
             return SwipeDelete(
-              uniqueId: '${item.id}',
+              uniqueId: _item['permanentLinkId'],
               onTap: () => _goToWebPage(index),
-              child: _buildItem,
+              child: buildItem,
               onDismissed: (action) {
-                libraryController.deleteData(item.id);
+                libraryController.deleteData(_rowId);
               },
             );
           },

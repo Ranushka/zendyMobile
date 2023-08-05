@@ -1,17 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
-class SearchController extends GetxController {
+class CustomSearchController extends GetxController {
   final TextEditingController searchField = TextEditingController();
   final RxString searchQuery = ''.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void change(value) {
     searchQuery.value = value;

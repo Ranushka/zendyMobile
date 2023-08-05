@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class FromBlogController extends GetxController {
   var isLoading = true.obs;
@@ -17,10 +17,10 @@ class FromBlogController extends GetxController {
   void fetchFeaturedContent() async {
     try {
       isLoading(true);
-      var _response = await _request(Api.fromBlog);
+      var response = await _request(Api.fromBlog);
 
-      if (_response.statusCode == 200) {
-        data.value = _response.data;
+      if (response.statusCode == 200) {
+        data.value = response.data;
       }
     } finally {
       isLoading(false);

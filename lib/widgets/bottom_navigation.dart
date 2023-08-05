@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 Widget bottomNavigation() {
-  final RxInt _curIn = 0.obs;
+  final RxInt curIn = 0.obs;
   final AuthController authCtrl = Get.find();
 
   Widget btnReguler(String name, IconData icon, onClick) {
     final isActive = Get.currentRoute == name;
-    final pc = Theme.of(Get.context).primaryColor;
-    final sc = Theme.of(Get.context).hintColor;
+    final pc = Theme.of(Get.context!).primaryColor;
+    final sc = Theme.of(Get.context!).hintColor;
 
     return Expanded(
       flex: 1,
       child: Material(
-        color: Theme.of(Get.context).backgroundColor,
+        color: Theme.of(Get.context!).colorScheme.background,
         child: IconButton(
-          highlightColor: Theme.of(Get.context).primaryColorLight,
+          highlightColor: Theme.of(Get.context!).primaryColorLight,
           color: isActive ? pc : sc,
           iconSize: 24,
           icon: Icon(icon),
@@ -35,16 +35,16 @@ Widget bottomNavigation() {
       child: Transform.translate(
         offset: const Offset(0, -16),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+                color: Theme.of(Get.context!).primaryColor.withOpacity(0.4),
                 spreadRadius: 2,
                 blurRadius: 3,
               ),
             ],
-            color: Theme.of(Get.context).primaryColor,
+            color: Theme.of(Get.context!).primaryColor,
             borderRadius: BorderRadius.circular(200),
           ),
           child: Material(
@@ -66,10 +66,10 @@ Widget bottomNavigation() {
 
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(Get.context).backgroundColor,
+      color: Theme.of(Get.context!).colorScheme.background,
       boxShadow: [
         BoxShadow(
-          color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+          color: Theme.of(Get.context!).primaryColor.withOpacity(0.4),
           spreadRadius: 2,
           blurRadius: 3,
         ),
@@ -85,7 +85,7 @@ Widget bottomNavigation() {
               Goto.home,
               FontIcons.home,
               () {
-                _curIn.value = 0;
+                curIn.value = 0;
                 Get.toNamed(Goto.home);
               },
             ),
@@ -93,7 +93,7 @@ Widget bottomNavigation() {
               Goto.searches,
               FontIcons.saved_search,
               () {
-                _curIn.value = 2;
+                curIn.value = 2;
                 if (authCtrl.isLoggedIn()) {
                   Get.toNamed(Goto.searches);
                 } else {
@@ -105,7 +105,7 @@ Widget bottomNavigation() {
               Goto.search,
               FontIcons.search,
               () {
-                _curIn.value = 1;
+                curIn.value = 1;
                 Get.toNamed(Goto.search);
               },
             ),
@@ -113,7 +113,7 @@ Widget bottomNavigation() {
               Goto.citations,
               FontIcons.my_library,
               () {
-                _curIn.value = 3;
+                curIn.value = 3;
                 if (authCtrl.isLoggedIn()) {
                   Get.toNamed(Goto.citations);
                 } else {
@@ -125,7 +125,7 @@ Widget bottomNavigation() {
               Goto.profile,
               FontIcons.user,
               () {
-                _curIn.value = 4;
+                curIn.value = 4;
                 Get.toNamed(Goto.profile);
               },
             ),

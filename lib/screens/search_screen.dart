@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class SearchScreen extends StatelessWidget {
   final SearchHistoryController shCtrl = Get.put(SearchHistoryController());
   final SearchResultController srCtrl = Get.put(SearchResultController());
-  final SearchController scCtrl = Get.put(SearchController());
+  final CustomSearchController scCtrl = Get.put(CustomSearchController());
+
+  SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(Get.context).backgroundColor,
-      appBar: _buildAppBar() as PreferredSizeWidget,
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
+      appBar: _buildAppBar(),
       body: Flex(
         direction: Axis.vertical,
         children: [
@@ -27,22 +29,22 @@ class SearchScreen extends StatelessWidget {
 
   Widget _buildActionBar() {
     return Container(
-      color: Theme.of(Get.context).primaryColor.withOpacity(0.2),
+      color: Theme.of(Get.context!).primaryColor.withOpacity(0.2),
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton.icon(
-              icon: Icon(FontIcons.search_refine),
+              icon: const Icon(FontIcons.search_refine),
               onPressed: () {},
-              label: TextBody('Advanced search'),
+              label: const TextBody('Advanced search'),
             ),
             TextButton.icon(
-              icon: Icon(FontIcons.saved_search),
+              icon: const Icon(FontIcons.saved_search),
               onPressed: () {
                 Get.toNamed(Goto.searches);
               },
-              label: TextBody('Saved searchers'),
+              label: const TextBody('Saved searchers'),
             ),
           ],
         ),
@@ -54,16 +56,16 @@ class SearchScreen extends StatelessWidget {
     return Obx(() {
       if (scCtrl.searchQuery.value == '') {
         return IconButton(
-          color: Theme.of(Get.context).primaryColor,
+          color: Theme.of(Get.context!).primaryColor,
           splashRadius: 28,
-          icon: Icon(FontIcons.search),
+          icon: const Icon(FontIcons.search),
           onPressed: () => {},
         );
       } else {
         return IconButton(
-          color: Theme.of(Get.context).primaryColor,
+          color: Theme.of(Get.context!).primaryColor,
           splashRadius: 28,
-          icon: Icon(FontIcons.clear),
+          icon: const Icon(FontIcons.clear),
           onPressed: () => scCtrl.clear(),
         );
       }
@@ -71,48 +73,49 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget _buildSearchInput() {
-    final SearchController searchController = Get.find();
+    final CustomSearchController searchController = Get.find();
 
     return Material(
       elevation: 0,
-      shadowColor: Theme.of(Get.context).primaryColor,
+      shadowColor: Theme.of(Get.context!).primaryColor,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
-        style: Theme.of(Get.context).textTheme.bodyText1,
+        style: Theme.of(Get.context!).textTheme.bodyLarge,
         autofocus: true,
         textInputAction: TextInputAction.search,
         controller: scCtrl.searchField,
         onFieldSubmitted: (value) => searchController.searchAction(value),
         onChanged: (value) => scCtrl.change(value),
         decoration: InputDecoration(
-          fillColor: Theme.of(Get.context).backgroundColor,
+          fillColor: Theme.of(Get.context!).colorScheme.background,
           filled: true,
-          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: Theme.of(Get.context).primaryColor,
+              color: Theme.of(Get.context!).primaryColor,
               width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: Theme.of(Get.context).primaryColor,
+              color: Theme.of(Get.context!).primaryColor,
               width: 1.5,
             ),
           ),
           suffixIcon: _buildSearchIcon(),
-          prefixIcon: BackBtn(),
+          prefixIcon: const BackBtn(),
           hintText: 'Search for title, subject, author ...',
         ),
       ),
     );
   }
 
-  Widget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      backgroundColor: Theme.of(Get.context).backgroundColor,
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: _buildSearchInput(),

@@ -1,17 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/helpers/print_log.dart';
+import 'package:zendy/screens/web_view_exp.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
 
-final _pdfInst = PDF(
+const _pdfInst = PDF(
   pageSnap: false,
   autoSpacing: false,
   pageFling: false,
 );
 
 class LibraryReadScreen extends StatefulWidget {
+  const LibraryReadScreen({super.key});
+
   @override
   _LibraryReadScreenState createState() => _LibraryReadScreenState();
 }
@@ -25,35 +32,41 @@ class _LibraryReadScreenState extends State<LibraryReadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _headers = {"Cookie": authController.currentUser.value.authToken};
+    var headers0 = {"Cookie": authController.currentUser.value.authToken};
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: StreamBuilder(
           stream: libraryController.getData(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data.toString() == 'null') {
-              return Center(child: CircularProgressIndicator());
+          builder: (BuildContext context, snapshot) {
+            //  final data0 = searchResults?['searchResults']?['results']![index];
+
+            if (snapshot.data == null) {
+              return const Center(child: CircularProgressIndicator());
             }
+
+            print('-----------====');
+            print(snapshot);
+            print('-----------====');
 
             if (snapshot.hasError) {
-              return Center(child: TextBody('Something went wrong'));
+              return const Center(child: TextBody('Something went wrong'));
             }
 
-            if (snapshot.data.docs.length < 1) {
-              return Gutter(Center(
-                child: TextBody(
-                  'Add Search results to your library will help you to read or export later',
-                ),
-              ));
-            }
+            // if (snapshot.data.length < 1) {
+            //   return const Gutter(Center(
+            //     child: TextBody(
+            //       'Add Search results to your library will help you to read or export later',
+            //     ),
+            //   ));
+            // }
 
             return CustomTabView(
               initPosition: initPosition,
-              itemCount: snapshot.data.size,
+              itemCount: snapshot.data.length,
               tabBuilder: (context, index) {
-                return SizedBox(
+                return const SizedBox(
                   width: 0,
                   child: Tab(
                     icon: Icon(
@@ -64,17 +77,28 @@ class _LibraryReadScreenState extends State<LibraryReadScreen> {
                 );
               },
               pageBuilder: (context, index) {
-                final item = snapshot.data.docs[index];
-                String _downloadLink = item['downloadLink'];
+                var providedDataString = snapshot.data[index];
+                Map<String, dynamic> _item = json.decode(
+                  providedDataString['data'],
+                );
+
+                printLog('CustomTabView readLink', _item['readLink']);
+                // printLog('CustomTabView downloadLink', _item['downloadLink']);
+
+                Map<String, String> headers = headers0.map(
+                  (key, value) => MapEntry(key, value.toString()),
+                );
 
                 return Tab(
-                  child: _pdfInst.cachedFromUrl(
-                    _downloadLink,
-                    headers: _headers,
-                    placeholder: (progress) =>
-                        _buildProgressIndicator(progress),
-                    errorWidget: (dynamic error) => _buildPdfError(error),
-                  ),
+                  child: _item['readLink'] == null
+                      ? _pdfInst.cachedFromUrl(
+                          _item['downloadLink'],
+                          headers: headers,
+                          placeholder: (progress) =>
+                              _buildProgressIndicator(progress),
+                          errorWidget: (dynamic error) => _buildPdfError(error),
+                        )
+                      : WebViewExp(url: _item['readLink']),
                 );
               },
               onPositionChange: (index) {
@@ -101,7 +125,7 @@ Widget _buildProgressIndicator(progress) {
           scale: 1.5,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: Theme.of(Get.context).primaryColor,
+            color: Theme.of(Get.context!).primaryColor,
           ),
         ),
         TextBody('$progress %'),

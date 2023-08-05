@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zendy_app/widgets/typography.dart';
+import 'package:zendy/widgets/typography.dart';
 // import 'package:get/instance_manager.dart';
 
-// import 'package:zendy_app/controllers/auth_controller.dart';
-// import 'package:zendy_app/widgets/product_tile.dart';
+// import 'package:zendy/controllers/auth_controller.dart';
+// import 'package:zendy/widgets/product_tile.dart';
 
 class SignUpScreen extends StatelessWidget {
   // final LoginController productController = Get.put(LoginController());
 
-  final TextEditingController _emailController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final String _email = "";
   final String _password = "";
+
+  SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class SignUpScreen extends StatelessWidget {
         children: [
           _buildSkipButton(),
           Container(
-            constraints: BoxConstraints(maxWidth: 360),
-            padding: EdgeInsets.all(16.0),
+            constraints: const BoxConstraints(maxWidth: 360),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -39,25 +41,25 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Container(
+    return const SizedBox(
       width: double.infinity,
       child: TextBody('Create account'),
     );
   }
 
   Widget _buildTextFields() {
-    return Container(
+    return SizedBox(
       width: 400,
       child: Column(
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Container(
             child: TextField(
               autofocus: true,
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
           ),
           Container(
@@ -66,7 +68,7 @@ class SignUpScreen extends StatelessWidget {
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
             ),
           ),
           Container(
@@ -75,17 +77,17 @@ class SignUpScreen extends StatelessWidget {
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Confirm password'),
+              decoration: const InputDecoration(labelText: 'Confirm password'),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
         ],
       ),
     );
   }
 
   Widget _buildButtons(context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
@@ -93,8 +95,8 @@ class SignUpScreen extends StatelessWidget {
             minWidth: double.infinity,
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            child: TextBody("Crate account"),
             onPressed: _loginPressed,
+            child: const TextBody("Crate account"),
           ),
         ],
       ),
@@ -102,19 +104,19 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildSkipButton() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
           Container(
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
-              label: TextBody('Skip'),
-              icon: Icon(Icons.navigate_before_sharp),
+              label: const TextBody('Skip'),
+              icon: const Icon(Icons.navigate_before_sharp),
               onPressed: _skipCreateAccountPressed,
             ),
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
         ],
       ),
     );

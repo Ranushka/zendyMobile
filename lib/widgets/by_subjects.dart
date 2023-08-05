@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class BySubjects extends StatelessWidget {
   final BySubjectsController bySubjectsController = Get.find();
 
+  BySubjects({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (bySubjectsController.isLoading.value)
+      if (bySubjectsController.isLoading.value) {
         return _skeleton;
-      else
+      } else {
         return _buildContent(bySubjectsController.data);
+      }
     });
   }
 }
 
-final _skeleton = Gutter(
+const _skeleton = Gutter(
   Column(
     children: [
       Skeleton(),
@@ -31,20 +34,20 @@ final _skeleton = Gutter(
   ),
 );
 
-Widget _buildContent(_data) {
+Widget _buildContent(data) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      SizedBox(height: 8),
+      const SizedBox(height: 8),
       Gutter(WidgetTitleAction('By subjects', () {})),
       SingleChildScrollView(
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            SizedBox(width: 16),
-            for (var item in _data.value) _buildItem(item),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
+            for (var item in data.value) _buildItem(item),
+            const SizedBox(width: 16),
           ],
         ),
       )
@@ -52,10 +55,10 @@ Widget _buildContent(_data) {
   );
 }
 
-Widget _buildItem(_itm) {
-  if (_itm['paragraph'] == '') return Container();
+Widget _buildItem(itm) {
+  if (itm['paragraph'] == '') return Container();
 
-  return Container(
+  return SizedBox(
     width: Get.width * 0.6,
     child: Card(
       clipBehavior: Clip.antiAlias,
@@ -63,21 +66,21 @@ Widget _buildItem(_itm) {
       child: Stack(
         alignment: AlignmentDirectional.bottomStart,
         children: <Widget>[
-          if (_itm['image'] != false)
+          if (itm['image'] != false)
             Container(
               height: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(_itm['image']),
+                  image: NetworkImage(itm['image']),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             color: Colors.orange.withOpacity(0.8),
             child: Center(
-              child: Title3(_itm['title'], ml: 3),
+              child: Title3(itm['title'], ml: 3),
             ),
           ),
         ],

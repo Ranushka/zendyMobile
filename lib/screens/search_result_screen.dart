@@ -3,52 +3,30 @@ import "package:intl/intl.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// import 'package:zendy_app/helpers/routs.dart';
-import 'package:zendy_app/widgets/typography.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/models/search_model.dart';
-import 'package:zendy_app/widgets/search_result_item.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class SearchResultScreen extends StatelessWidget {
-  // final SearchResultController srCrtl = Get.put(SearchResultController());
+  SearchResultScreen({super.key});
+
   final SearchResultController ctrls = Get.find();
+
   final SavedSearchersController savedSearchersController = Get.find();
 
   final ScrollController _scrollController = ScrollController();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(Get.context).backgroundColor,
-      appBar: _buildAppBar(),
-      body: Obx(() {
-        var _resultData = ctrls.searchResults.value.data;
+  Widget _buildHead(dynamic data) {
+    var searchResults = data?.value?.isNotEmpty ?? false ? data!.value![0] : [];
 
-        if (_resultData != null) {
-          return _buildMainContent(ctrls.searchResults.value);
-        }
-
-        if (ctrls.isLoading.value) {
-          return Center(child: _buildSearchResultLoading());
-        }
-
-        return Center(child: TextBody('No results...'));
-      }),
-      bottomNavigationBar: bottomNavigation(),
-    );
-  }
-
-  Widget _buildHead(SearchModel data) {
-    // final _keyword = data.data
-    var _keyword = data.data.searchRequestCriteria.searchQuery[0].term;
-    var _resultsCount = data.data.searchResults.totalResults;
-    var _resultsCountFormated = NumberFormat.compact().format(
-      _resultsCount,
+    String keyword =
+        searchResults?['searchRequestCriteria']?['searchQuery'][0]['Term'];
+    var resultsCount = searchResults?['searchResults']?['totalResults'];
+    var resultsCountFormated = NumberFormat.compact().format(
+      resultsCount,
     );
 
     return Container(
-      color: Theme.of(Get.context).backgroundColor,
+      color: Theme.of(Get.context!).colorScheme.background,
       child: Gutter(Flex(
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.horizontal,
@@ -57,34 +35,35 @@ class SearchResultScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              SizedBox(height: 16),
-              TextSmall('Showing $_resultsCountFormated results for'),
-              Title2(_keyword.capitalizeFirst),
-              SizedBox(height: 8),
+              const SizedBox(height: 16),
+              TextSmall('Showing $resultsCountFormated results for'),
+              Title2(capitalizeFirst(keyword)),
+              const SizedBox(height: 8),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Material(
             color: Colors.transparent,
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.circular(100),
             child: IconButton(
               icon: Obx(() {
-                if (savedSearchersController.isSavedSearch.value)
+                if (savedSearchersController.isSavedSearch.value) {
                   return Icon(
                     FontIcons.saved_search_added,
-                    color: Theme.of(Get.context).primaryColor,
+                    color: Theme.of(Get.context!).primaryColor,
                   );
-                else
+                } else {
                   return Icon(
                     FontIcons.saved_search_add,
-                    color: Theme.of(Get.context).hintColor,
+                    color: Theme.of(Get.context!).hintColor,
                   );
+                }
               }),
               onPressed: () {
                 SavedSearchersController().saveData(
-                  keyword: _keyword,
-                  count: _resultsCount,
+                  keyword: keyword,
+                  count: resultsCount,
                   filters: 'BIO Web of Conferences, Agronomy, English',
                   sort: 'relevence',
                 );
@@ -96,21 +75,22 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContent(SearchModel data) {
-    var _searchResults = data.data.searchResults;
-    if (_searchResults.results.length == 0) {
-      return Center(
+  Widget _buildMainContent(dynamic data) {
+    var searchResults = data?.value?.isNotEmpty ?? false ? data!.value![0] : [];
+
+    if (searchResults.isEmpty) {
+      return const Center(
         child: TextBody('No results found'),
       );
     }
 
-    var _itemCount = _searchResults.results.length;
+    var itemCount = searchResults?['searchResults']?['results'].length;
 
     _scrollController.addListener(() {
-      var _scrolPos = _scrollController.position;
-      var _loadingStart = _scrolPos.maxScrollExtent;
+      var scrolPos = _scrollController.position;
+      var loadingStart = scrolPos.maxScrollExtent;
 
-      if (_scrolPos.pixels == _loadingStart) {
+      if (scrolPos.pixels == loadingStart) {
         ctrls.pageNumber.value = ctrls.pageNumber.value + 1;
         ctrls.searchResultsGet();
       }
@@ -119,33 +99,39 @@ class SearchResultScreen extends StatelessWidget {
     return ListView.separated(
       controller: _scrollController,
       shrinkWrap: true,
-      itemCount: _itemCount,
+      itemCount: itemCount,
       separatorBuilder: (context, index) {
         return Gutter(dividerX);
       },
       itemBuilder: (context, index) {
-        final _data = _searchResults.results[index];
-        if (_data.isBlank) return TextBody('Empty data');
+        final data0 = searchResults?['searchResults']?['results']![index];
+        print(data0['resultId']);
+        print('--');
+        var resultId = data0['resultId'].toString();
+
+        if (resultId == 'null') {
+          return const Text('Empty data --');
+        }
 
         if (index == 0) {
           return Column(
             children: <Widget>[
               _buildHead(data),
-              SearchResultItem(_data.resultId.toString(), _data),
+              SearchResultItem(resultId, data0),
             ],
           );
         }
 
-        if (index == _itemCount - 1) {
+        if (index == itemCount - 1) {
           return Column(
             children: <Widget>[
-              SearchResultItem(_data.resultId.toString(), _data),
+              SearchResultItem(resultId, data0),
               _buildSearchResultLoading(paginating: true),
             ],
           );
         }
 
-        return SearchResultItem(_data.resultId.toString(), _data);
+        return SearchResultItem(resultId, data0);
       },
     );
   }
@@ -153,7 +139,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildBackButton() {
     return IconButton(
       splashRadius: 24,
-      icon: Icon(FontIcons.arrow_back),
+      icon: const Icon(FontIcons.arrow_back),
       onPressed: () => Get.back(),
     );
   }
@@ -164,7 +150,7 @@ class SearchResultScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         sortByMenu(),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         _buildFilterBtn(),
       ],
     );
@@ -175,25 +161,28 @@ class SearchResultScreen extends StatelessWidget {
       onPressed: () {
         filtersModel();
       },
-      child: Icon(
+      child: const Icon(
         FontIcons.filter,
       ),
     );
   }
 
-  Widget _buildAppBar() {
-    return AppBar(
-      iconTheme: IconThemeData(color: Theme.of(Get.context).primaryColor),
-      centerTitle: true,
-      elevation: 0,
-      leading: _buildBackButton(),
-      title: _buildSearchBox(),
+  PreferredSizeWidget _buildAppBar() {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(kToolbarHeight),
+      child: AppBar(
+        iconTheme: IconThemeData(color: Theme.of(Get.context!).primaryColor),
+        centerTitle: true,
+        elevation: 0,
+        leading: _buildBackButton(),
+        title: _buildSearchBox(),
+      ),
     );
   }
 
-  Widget _buildSearchResultLoading({bool paginating: false}) {
+  Widget _buildSearchResultLoading({bool paginating = false}) {
     if (paginating) {
-      return Center(
+      return const Center(
         child: SingleChildScrollView(
           child: Gutter(
             Column(
@@ -208,7 +197,7 @@ class SearchResultScreen extends StatelessWidget {
       );
     }
 
-    return Center(
+    return const Center(
       child: SingleChildScrollView(
         child: Gutter(
           Column(
@@ -226,6 +215,28 @@ class SearchResultScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
+      appBar: _buildAppBar(),
+      body: Obx(() {
+        var resultData = ctrls.searchResults.value;
+
+        if (ctrls.isLoading.value) {
+          return Center(child: _buildSearchResultLoading());
+        }
+
+        if (resultData != null) {
+          return _buildMainContent(ctrls.searchResults);
+        }
+
+        return const Center(child: TextBody('No results...'));
+      }),
+      bottomNavigationBar: bottomNavigation(),
     );
   }
 }

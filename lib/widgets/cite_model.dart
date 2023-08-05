@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/helpers/helpers.dart';
 
-Future citeModel(_id, title) {
+Future citeModel(id, title) {
   return showModalBottomSheet(
-    context: Get.context,
+    context: Get.context!,
     builder: (context) {
       return SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            citeItem(title, _id),
-            citeItem(title, _id),
-            citeItem(title, _id),
+            citeItem(title, id),
+            citeItem(title, id),
+            citeItem(title, id),
           ],
         ),
       );
@@ -22,7 +22,7 @@ Future citeModel(_id, title) {
   );
 }
 
-Widget citeItem(title, _id) {
+Widget citeItem(title, id) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
     child: Card(
@@ -37,7 +37,7 @@ Widget citeItem(title, _id) {
             child: TextBody(title.trim(), link: true),
           ),
           onTap: () {
-            Get.toNamed(Goto.title, arguments: _id);
+            Get.toNamed(Goto.title, arguments: id);
           },
         ),
       ),

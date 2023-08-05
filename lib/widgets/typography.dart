@@ -4,25 +4,35 @@ import 'package:skeleton_text/skeleton_text.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1)}";
-  }
+// extension StringExtension on String {
+//   String capitalize() {
+//     return "${this[0].toUpperCase()}${substring(1)}";
+//   }
 
-  String titleCase() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
-  }
+//   String titleCase() {
+//     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+//   }
+// }
+
+String capitalizeFirst(String text) {
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
+}
+
+String titleCase(String text) {
+  if (text.isEmpty) return text;
+  return "${text[0].toUpperCase()}${text.substring(1).toLowerCase()}";
 }
 
 class HtmlH3 extends StatelessWidget {
   final String _text;
-  const HtmlH3(this._text);
+  const HtmlH3(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return HtmlWidget(
-      '<div>${_text.titleCase()}</div>',
-      textStyle: Theme.of(context).textTheme.headline3,
+      '<div>${titleCase(_text)}</div>',
+      textStyle: Theme.of(context).textTheme.displaySmall,
     );
   }
 }
@@ -34,37 +44,37 @@ class HtmlP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _mHeight = _isShort ? "max-height:84px" : "";
+    var mHeight = _isShort ? "max-height:84px" : "";
 
     return HtmlWidget(
-      '<div style=" $_mHeight">$_text</div>',
-      textStyle: Theme.of(context).textTheme.bodyText1,
+      '<div style=" $mHeight">$_text</div>',
+      textStyle: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }
 
 class Title1 extends StatelessWidget {
   final String _text;
-  const Title1(this._text);
+  const Title1(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.headline1,
+      style: Theme.of(context).textTheme.displayLarge,
     );
   }
 }
 
 class Title2 extends StatelessWidget {
   final String _text;
-  const Title2(this._text);
+  const Title2(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(context).textTheme.displayMedium,
     );
   }
 }
@@ -72,13 +82,13 @@ class Title2 extends StatelessWidget {
 class Title3 extends StatelessWidget {
   final String _text;
   final int ml;
-  const Title3(this._text, {this.ml = 6});
+  const Title3(this._text, {super.key, this.ml = 6});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.headline3,
+      style: Theme.of(context).textTheme.displaySmall,
       maxLines: ml,
       overflow: TextOverflow.ellipsis,
     );
@@ -87,13 +97,13 @@ class Title3 extends StatelessWidget {
 
 class Title4 extends StatelessWidget {
   final String _text;
-  const Title4(this._text);
+  const Title4(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.headline4,
+      style: Theme.of(context).textTheme.headlineMedium,
     );
   }
 }
@@ -104,8 +114,9 @@ class TextBody extends StatelessWidget {
   final bool link;
   final bool nigateColor;
 
-  TextBody(
+  const TextBody(
     this._text, {
+    super.key,
     this.ml = 1000,
     this.link = false,
     this.nigateColor = false,
@@ -113,42 +124,42 @@ class TextBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle themeStyle = Theme.of(context).textTheme.bodyText1;
-    Color _textColor = themeStyle.color;
+    TextStyle? themeStyle = Theme.of(context).textTheme.bodyLarge;
+    Color? textColor = themeStyle?.color;
 
     if (link) {
-      _textColor = Colors.blue;
+      textColor = Colors.blue;
     }
 
     if (nigateColor) {
-      _textColor = Theme.of(context).backgroundColor;
+      textColor = Theme.of(context).colorScheme.background;
     }
 
     return Text(
       _text,
       maxLines: ml,
       overflow: TextOverflow.ellipsis,
-      style: themeStyle.copyWith(color: _textColor),
+      style: themeStyle?.copyWith(color: textColor),
     );
   }
 }
 
 class TextSmall extends StatelessWidget {
   final String _text;
-  const TextSmall(this._text);
+  const TextSmall(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _text,
-      style: Theme.of(context).textTheme.subtitle1.copyWith(),
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(),
     );
   }
 }
 
 class BtnText extends StatelessWidget {
   final String _text;
-  const BtnText(this._text);
+  const BtnText(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -164,12 +175,12 @@ class BtnText extends StatelessWidget {
 
 class Gutter extends StatelessWidget {
   final Widget _content;
-  const Gutter(this._content);
+  const Gutter(this._content, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: _content,
     );
   }
@@ -177,14 +188,14 @@ class Gutter extends StatelessWidget {
 
 Widget dividerX = Gutter(Divider(
   height: 1,
-  color: Theme.of(Get.context).primaryColor.withOpacity(0.4),
+  color: Theme.of(Get.context!).primaryColor.withOpacity(0.4),
 ));
 
 class Skeleton extends StatelessWidget {
   final double height;
 
   const Skeleton({
-    Key key,
+    Key? key,
     this.height = 104,
   }) : super(key: key);
 

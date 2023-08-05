@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zendy_app/widgets/typography.dart';
+import 'package:zendy/widgets/typography.dart';
 
 class WidgetTitleAction extends StatelessWidget {
   final String _text;
   final Function _action;
-  const WidgetTitleAction(this._text, this._action);
+  const WidgetTitleAction(this._text, this._action, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class WidgetTitleAction extends StatelessWidget {
         Title4(_text),
         TextButton(
           onPressed: _action as void Function(),
-          child: Text('Read more'),
+          child: const Text('Read more'),
         )
       ],
     );

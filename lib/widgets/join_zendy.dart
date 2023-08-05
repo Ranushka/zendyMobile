@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class JoinZendy extends StatelessWidget {
   final AuthController authController = Get.find();
+
+  JoinZendy({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,32 +20,32 @@ class JoinZendy extends StatelessWidget {
       return Gutter(Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Theme.of(Get.context).primaryColorLight,
+          color: Theme.of(Get.context!).primaryColorLight,
         ),
         child: Gutter(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16),
-            Title2('Join Zendy'),
-            SizedBox(height: 8),
-            TextBody(
+            const SizedBox(height: 16),
+            const Title2('Join Zendy'),
+            const SizedBox(height: 8),
+            const TextBody(
                 'Create free account and enjoy Zendy plus and the feacthers comes with it.'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  child: TextBody('Learn more'),
+                  child: const TextBody('Learn more'),
                   onPressed: () {},
                 ),
                 ElevatedButton(
-                  child: Text('Create account / Login'),
+                  child: const Text('Create account / Login'),
                   onPressed: () {
                     Get.toNamed(Goto.login);
                   },
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
         )),
       ));

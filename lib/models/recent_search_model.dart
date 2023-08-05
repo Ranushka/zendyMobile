@@ -19,9 +19,8 @@ class RecentSearchModel {
     this.title,
   });
 
-  String type;
-  int id;
-  String title;
+  String? title, type;
+  int? id;
 
   factory RecentSearchModel.fromJson(Map<String, dynamic> json) =>
       RecentSearchModel(

@@ -4,58 +4,56 @@ final _textColorPrimary = Colors.grey.shade200;
 final _textColorSecondary = Colors.grey.shade400;
 final _hintColor = Colors.orange.shade600;
 final _hintColorLight = Colors.grey.shade400;
-final _primaryColor = Colors.orange;
+const _primaryColor = Colors.orange;
 final _primaryColorLight = Colors.orange.shade50;
-final _primaryBg = Colors.black;
+const _primaryBg = Colors.black;
 final _btnColor = Colors.orange.shade800;
 
 var darkTheme = ThemeData(
-  accentColor: _hintColor,
   focusColor: _hintColor,
   highlightColor: _hintColor,
   splashColor: _hintColor,
   primaryColor: _primaryColor,
   primaryColorLight: _primaryColorLight,
   hintColor: _hintColorLight,
-  backgroundColor: _primaryBg,
-  iconTheme: new IconThemeData(
+  iconTheme: const IconThemeData(
     color: _primaryColor,
   ),
   textTheme: TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
       fontSize: 28,
       color: _textColorPrimary,
       fontFamily: 'Lora',
     ),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
       fontSize: 20,
       letterSpacing: 0.2,
       fontWeight: FontWeight.w400,
       color: _textColorPrimary,
       fontFamily: 'Lora',
     ),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
       fontSize: 16,
       letterSpacing: 0.2,
       fontWeight: FontWeight.w400,
       color: _textColorPrimary,
       fontFamily: 'Lora',
     ),
-    headline4: TextStyle(
+    headlineMedium: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
       color: Colors.grey.shade600,
       fontFamily: 'Lora',
     ),
-    bodyText1: TextStyle(
+    bodyLarge: TextStyle(
       fontSize: 14,
       color: _textColorSecondary,
     ),
-    bodyText2: TextStyle(
+    bodyMedium: TextStyle(
       fontSize: 18,
       color: _textColorSecondary,
     ),
-    subtitle1: TextStyle(
+    titleMedium: TextStyle(
       fontSize: 12,
       color: _textColorSecondary,
       fontFamily: 'SourceSansPro',
@@ -64,24 +62,24 @@ var darkTheme = ThemeData(
   fontFamily: 'SourceSansPro',
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      primary: _primaryColor,
+      backgroundColor: _primaryColor,
     ),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      textStyle: TextStyle(fontWeight: FontWeight.w500),
-      primary: _btnColor,
+      foregroundColor: _btnColor,
+      textStyle: const TextStyle(fontWeight: FontWeight.w500),
     ),
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      primary: _btnColor,
-      side: BorderSide(
+      foregroundColor: _btnColor,
+      side: const BorderSide(
         color: _primaryColor,
       ),
     ),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
         color: _primaryColor,
@@ -93,5 +91,8 @@ var darkTheme = ThemeData(
     iconTheme: IconThemeData(
       color: Colors.blueGrey[800],
     ),
+  ),
+  colorScheme: const ColorScheme.dark(
+    secondary: Colors.orange,
   ),
 );

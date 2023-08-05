@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class ProfileTileRadio extends StatefulWidget {
-  ProfileTileRadio({
-    Key key,
+  const ProfileTileRadio({
+    Key? key,
     this.title,
     this.initialValue,
     this.icon = Icons.language_rounded,
     this.onChange,
   }) : super(key: key);
 
-  final String title;
-  final bool initialValue;
+  final String? title;
+  final bool? initialValue;
   final IconData icon;
-  final Function onChange;
+  final Function? onChange;
 
   @override
   _ProfileTileRadioState createState() => _ProfileTileRadioState();
@@ -25,7 +25,7 @@ class _ProfileTileRadioState extends State<ProfileTileRadio> {
 
   @override
   void initState() {
-    _initialValue = widget.initialValue;
+    _initialValue = widget.initialValue ?? false;
 
     super.initState();
   }
@@ -34,8 +34,8 @@ class _ProfileTileRadioState extends State<ProfileTileRadio> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: EdgeInsets.all(16),
-        color: Theme.of(Get.context).backgroundColor,
+        padding: const EdgeInsets.all(16),
+        color: Theme.of(Get.context!).colorScheme.background,
         child: Flex(
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,9 +44,9 @@ class _ProfileTileRadioState extends State<ProfileTileRadio> {
               widget.icon,
               color: Colors.grey.shade500,
             ),
-            SizedBox(width: 16),
-            Title3(widget.title),
-            Spacer(),
+            const SizedBox(width: 16),
+            Title3(widget.title ?? ''),
+            const Spacer(),
             Switch(
               value: _initialValue,
               onChanged: (value) {

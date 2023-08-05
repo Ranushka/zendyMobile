@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 Widget sortByMenu() {
   final selected = "By relevence".obs;
@@ -12,11 +12,11 @@ Widget sortByMenu() {
 
   return Obx(() {
     return DropdownButton(
-      icon: Icon(FontIcons.curt),
+      icon: const Icon(FontIcons.curt),
       underline: Container(),
       value: selected.value,
       itemHeight: 50.0,
-      items: [
+      items: const [
         DropdownMenuItem(
           value: 'By relevence',
           child: TextBody('By relevence'),
@@ -34,7 +34,7 @@ Widget sortByMenu() {
           child: TextBody('Most citations'),
         ),
       ],
-      onChanged: (value) => setSelected(value),
+      onChanged: (value) => setSelected(value.toString()),
     );
   });
 }

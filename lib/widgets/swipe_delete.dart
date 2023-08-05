@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class SwipeDelete extends StatelessWidget {
   final String uniqueId;
   final Widget child;
-  final Function onDismissed;
-  final Function onTap;
+  final void Function(dynamic action)? onDismissed;
+  final Function()? onTap;
 
-  SwipeDelete({
-    @required this.child,
-    @required this.uniqueId,
-    @required this.onDismissed,
-    @required this.onTap,
-    Key key,
+  const SwipeDelete({
+    required this.child,
+    required this.uniqueId,
+    required this.onDismissed,
+    required this.onTap,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class SwipeDelete extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerLeft,
         color: Colors.red,
-        child: Gutter(
+        child: const Gutter(
           TextBody('Delete', nigateColor: true),
         ),
       ),

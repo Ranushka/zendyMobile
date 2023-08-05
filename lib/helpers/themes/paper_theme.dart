@@ -1,47 +1,46 @@
 import 'package:flutter/material.dart';
 
 final paperTheme = ThemeData(
-  accentColor: Colors.orange[100],
+  // accentColor: Colors.orange[100],
   focusColor: Colors.orange[100],
   highlightColor: Colors.orange[100],
   splashColor: Colors.orange[100],
   primaryColor: Colors.orange,
   primaryColorLight: Colors.orange[50],
   hintColor: Colors.grey.shade400,
-  backgroundColor: Colors.amber[50],
-  iconTheme: new IconThemeData(color: Colors.orange),
+  iconTheme: const IconThemeData(color: Colors.orange),
   textTheme: TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
       fontSize: 28,
       color: Colors.grey.shade900,
       fontFamily: 'Lora',
     ),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
       fontSize: 20,
       letterSpacing: 0.2,
       fontWeight: FontWeight.w400,
       color: Colors.grey.shade900,
       fontFamily: 'Lora',
     ),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
       fontSize: 16,
       letterSpacing: 0.2,
       fontWeight: FontWeight.w400,
       color: Colors.grey.shade900,
       fontFamily: 'Lora',
     ),
-    headline4: TextStyle(
+    headlineMedium: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
       color: Colors.grey.shade600,
       fontFamily: 'Lora',
     ),
-    bodyText1: TextStyle(
+    bodyLarge: TextStyle(
       fontSize: 14,
       color: Colors.grey.shade800,
       fontFamily: 'SourceSansPro',
     ),
-    subtitle1: TextStyle(
+    titleMedium: TextStyle(
       fontSize: 12,
       color: Colors.grey.shade800,
       fontFamily: 'SourceSansPro',
@@ -49,21 +48,21 @@ final paperTheme = ThemeData(
   ),
   fontFamily: 'SourceSansPro',
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(primary: Colors.orange),
+    style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      textStyle: TextStyle(fontWeight: FontWeight.w500),
-      primary: Colors.orange.shade800,
+      foregroundColor: Colors.orange.shade800,
+      textStyle: const TextStyle(fontWeight: FontWeight.w500),
     ),
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      primary: Colors.orange[800],
-      side: BorderSide(color: Colors.orange),
+      foregroundColor: Colors.orange[800],
+      side: const BorderSide(color: Colors.orange),
     ),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.orange),
     ),
@@ -72,4 +71,5 @@ final paperTheme = ThemeData(
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.blueGrey[900]),
   ),
+  colorScheme: const ColorScheme.light(primary: Color(0xff6200ee)),
 );

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 Widget buildUserSubscrionInfo() {
-  final _isExpanded = false.obs;
-  final _getIcon = (active) {
-    if (active) return Icon(Icons.keyboard_arrow_up);
-    return Icon(Icons.keyboard_arrow_down);
-  };
+  final isExpanded = false.obs;
+  getIcon(active) {
+    if (active) return const Icon(Icons.keyboard_arrow_up);
+    return const Icon(Icons.keyboard_arrow_down);
+  }
 
   return Container(
     child: Obx(
@@ -17,11 +17,11 @@ Widget buildUserSubscrionInfo() {
           children: [
             InkWell(
               onTap: () {
-                _isExpanded(!_isExpanded.value);
+                isExpanded(!isExpanded.value);
               },
               child: Container(
-                padding: EdgeInsets.all(16),
-                color: Theme.of(Get.context).backgroundColor,
+                padding: const EdgeInsets.all(16),
+                color: Theme.of(Get.context!).colorScheme.background,
                 child: Flex(
                   direction: Axis.horizontal,
                   children: [
@@ -29,28 +29,28 @@ Widget buildUserSubscrionInfo() {
                       Icons.payment_outlined,
                       color: Colors.grey.shade500,
                     ),
-                    SizedBox(width: 16),
-                    Title3('Your Subscription is'),
-                    SizedBox(width: 16),
-                    TextSmall('Active'),
-                    Spacer(),
-                    _getIcon(_isExpanded.value)
+                    const SizedBox(width: 16),
+                    const Title3('Your Subscription is'),
+                    const SizedBox(width: 16),
+                    const TextSmall('Active'),
+                    const Spacer(),
+                    getIcon(isExpanded.value)
                   ],
                 ),
               ),
             ),
-            if (_isExpanded.value)
+            if (isExpanded.value)
               Container(
-                color: Theme.of(Get.context).backgroundColor,
+                color: Theme.of(Get.context!).colorScheme.background,
                 child: Column(
                   children: [
                     dividerX,
-                    ProfileTilePlan(),
+                    const ProfileTilePlan(),
                     dividerX,
-                    ProfileTilePayment(),
+                    const ProfileTilePayment(),
                     dividerX,
-                    ProfileTilePaymentHistory(),
-                    SizedBox(height: 16),
+                    const ProfileTilePaymentHistory(),
+                    const SizedBox(height: 16),
                   ],
                 ),
               )

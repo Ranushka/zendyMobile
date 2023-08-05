@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:smart_select/smart_select.dart';
+import 'package:awesome_select/awesome_select.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
+import 'package:zendy/helpers/helpers.dart';
 
 class ProfileTileInterests extends StatelessWidget {
-  final String title;
-  final List initialValue;
-  final List options;
+  final String? title;
+  final List<String> initialValue = [];
+  final List? options;
   final IconData icon;
-  final Function onChange;
+  final void Function(S2MultiSelected?)? onChange;
 
-  const ProfileTileInterests({
-    Key key,
+  ProfileTileInterests({
+    Key? key,
     this.title,
-    this.initialValue,
+    // this.initialValue,
     this.options,
     this.icon = Icons.language_rounded,
     this.onChange,
@@ -23,9 +23,9 @@ class ProfileTileInterests extends StatelessWidget {
   Widget build(BuildContext context) {
     return SmartSelect.multiple(
       title: 'My interests',
-      value: initialValue,
+      selectedValue: initialValue,
       onChange: (selected) {
-        onChange(selected.value);
+        // onChange!(selected.value!);
       },
       choiceType: S2ChoiceType.chips,
       choiceItems: S2Choice.listFrom<String, Map>(
@@ -33,13 +33,13 @@ class ProfileTileInterests extends StatelessWidget {
         value: (index, item) => item['id'],
         title: (index, item) => item['name'],
       ),
-      modalConfig: S2ModalConfig(
+      modalConfig: const S2ModalConfig(
         type: S2ModalType.bottomSheet,
         useFilter: true,
       ),
       tileBuilder: (context, state) {
         return Container(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: S2Tile.fromState(
             state,
             isTwoLine: true,

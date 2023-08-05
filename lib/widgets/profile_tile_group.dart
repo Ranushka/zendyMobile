@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:zendy_app/widgets/typography.dart';
+import 'package:zendy/widgets/typography.dart';
 
 class ProfileTileGroup extends StatelessWidget {
-  final String title;
-  final Widget content;
+  final String? title;
+  final Widget? content;
 
   const ProfileTileGroup({
-    Key key,
+    Key? key,
     this.title,
     this.content,
   }) : super(key: key);
@@ -17,10 +17,10 @@ class ProfileTileGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       direction: Axis.vertical,
       children: [
-        SizedBox(height: 32),
-        Gutter(TextSmall(title)),
-        SizedBox(height: 8),
-        content,
+        const SizedBox(height: 32),
+        if (title != null) Gutter(TextSmall(title!)),
+        if (title != null) const SizedBox(height: 8),
+        if (content != null) content!,
       ],
     );
   }

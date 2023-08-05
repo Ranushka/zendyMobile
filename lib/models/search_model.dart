@@ -4,8 +4,9 @@
 
 import 'dart:convert';
 
-SearchModel searchModelFromJson(String str) =>
-    SearchModel.fromJson(json.decode(str));
+SearchModel searchModelFromJson(String str) => SearchModel.fromJson(
+      json.decode(str),
+    );
 
 String searchModelToJson(SearchModel data) => json.encode(data.toJson());
 
@@ -15,8 +16,8 @@ class SearchModel {
     this.searchCounter,
   });
 
-  Data data;
-  int searchCounter;
+  Data? data;
+  int? searchCounter;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
         data: Data.fromJson(json["data"]),
@@ -24,7 +25,7 @@ class SearchModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
+        "data": data?.toJson(),
         "searchCounter": searchCounter,
       };
 }
@@ -35,18 +36,19 @@ class Data {
     this.searchResults,
   });
 
-  SearchRequestCriteria searchRequestCriteria;
-  SearchResults searchResults;
+  SearchRequestCriteria? searchRequestCriteria;
+  SearchResults? searchResults;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        searchRequestCriteria:
-            SearchRequestCriteria.fromJson(json["searchRequestCriteria"]),
+        searchRequestCriteria: SearchRequestCriteria.fromJson(
+          json["searchRequestCriteria"],
+        ),
         searchResults: SearchResults.fromJson(json["searchResults"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "searchRequestCriteria": searchRequestCriteria.toJson(),
-        "searchResults": searchResults.toJson(),
+        "searchRequestCriteria": searchRequestCriteria?.toJson(),
+        "searchResults": searchResults?.toJson(),
       };
 }
 
@@ -56,8 +58,8 @@ class SearchRequestCriteria {
     this.appliedFacets,
   });
 
-  List<SearchQuery> searchQuery;
-  List<dynamic> appliedFacets;
+  List<SearchQuery>? searchQuery;
+  List<dynamic>? appliedFacets;
 
   factory SearchRequestCriteria.fromJson(Map<String, dynamic> json) =>
       SearchRequestCriteria(
@@ -67,8 +69,8 @@ class SearchRequestCriteria {
       );
 
   Map<String, dynamic> toJson() => {
-        "searchQuery": List<dynamic>.from(searchQuery.map((x) => x.toJson())),
-        "appliedFacets": List<dynamic>.from(appliedFacets.map((x) => x)),
+        "searchQuery": List<dynamic>.from(searchQuery!.map((x) => x.toJson())),
+        "appliedFacets": List<dynamic>.from(appliedFacets!.map((x) => x)),
       };
 }
 
@@ -77,7 +79,7 @@ class SearchQuery {
     this.term,
   });
 
-  String term;
+  String? term;
 
   factory SearchQuery.fromJson(Map<String, dynamic> json) => SearchQuery(
         term: json["term"],
@@ -96,10 +98,10 @@ class SearchResults {
     this.availableFacets,
   });
 
-  int totalResults;
-  double maximumScore;
-  List<SearchModelResultItem> results;
-  List<AvailableFacet> availableFacets;
+  int? totalResults;
+  double? maximumScore;
+  List<SearchModelResultItem>? results;
+  List<AvailableFacet>? availableFacets;
 
   factory SearchResults.fromJson(Map<String, dynamic> json) => SearchResults(
         totalResults: json["totalResults"],
@@ -113,9 +115,9 @@ class SearchResults {
   Map<String, dynamic> toJson() => {
         "totalResults": totalResults,
         "maximumScore": maximumScore,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
+        "results": List<dynamic>.from(results!.map((x) => x.toJson())),
         "availableFacets":
-            List<dynamic>.from(availableFacets.map((x) => x.toJson())),
+            List<dynamic>.from(availableFacets!.map((x) => x.toJson())),
       };
 }
 
@@ -126,9 +128,8 @@ class AvailableFacet {
     this.facets,
   });
 
-  String categoryId;
-  String categoryLabel;
-  List<Facet> facets;
+  String? categoryId, categoryLabel;
+  List<Facet>? facets;
 
   factory AvailableFacet.fromJson(Map<String, dynamic> json) => AvailableFacet(
         categoryId: json["categoryId"],
@@ -139,7 +140,7 @@ class AvailableFacet {
   Map<String, dynamic> toJson() => {
         "categoryId": categoryId,
         "categoryLabel": categoryLabel,
-        "facets": List<dynamic>.from(facets.map((x) => x.toJson())),
+        "facets": List<dynamic>.from(facets!.map((x) => x.toJson())),
       };
 }
 
@@ -150,9 +151,9 @@ class Facet {
     this.active,
   });
 
-  String facetLabel;
-  int count;
-  bool active;
+  String? facetLabel;
+  int? count;
+  bool? active;
 
   factory Facet.fromJson(Map<String, dynamic> json) => Facet(
         facetLabel: json["facetLabel"],
@@ -200,35 +201,15 @@ class SearchModelResultItem {
     this.resultScore,
   });
 
-  int resultId;
-  Header header;
-  String title;
-  String resultAbstract;
-  String publicationName;
+  int? resultId;
+  Header? header;
+  String? title, resultAbstract, publicationName, publicationType;
+  String? publicationDate, language, authors, keywords, subjects;
+  String? licenseType, snip, snipYear, hIndex, doi, pIssn, eIssn, issn, isbn;
+  String? issue, volume, journalTitle, zendyLink, downloadLink, permanentLinkId;
   dynamic publicationYear;
-  String publicationType;
-  String publicationDate;
-  String language;
-  String authors;
-  String keywords;
-  String subjects;
-  bool isOpenAccess;
-  String licenseType;
-  String snip;
-  String snipYear;
-  String hIndex;
-  String doi;
-  String pIssn;
-  String eIssn;
-  String issn;
-  String isbn;
-  String issue;
-  String volume;
-  String journalTitle;
-  String zendyLink;
-  String downloadLink;
-  String permanentLinkId;
-  double resultScore;
+  bool? isOpenAccess;
+  double? resultScore;
 
   factory SearchModelResultItem.fromJson(Map<String, dynamic> json) =>
       SearchModelResultItem(
@@ -237,7 +218,7 @@ class SearchModelResultItem {
         title: json["title"],
         resultAbstract: json["abstract"],
         publicationName:
-            json["publicationName"] == null ? null : json["publicationName"],
+            json["publicationName"],
         publicationYear: json["publicationYear"],
         publicationType: json["publicationType"],
         publicationDate: json["publicationDate"],
@@ -266,17 +247,17 @@ class SearchModelResultItem {
 
   Map<String, dynamic> toJson() => {
         "resultId": resultId,
-        "header": header.toJson(),
+        "header": header?.toJson(),
         "title": title,
         "abstract": resultAbstract,
-        "publicationName": publicationName == null ? null : publicationName,
+        "publicationName": publicationName,
         "publicationYear": publicationYear,
         "publicationType": publicationType,
         "publicationDate": publicationDate,
         "language": language,
         "authors": authors,
         "keywords": keywords,
-        "subjects": subjects == null ? null : subjects,
+        "subjects": subjects,
         "isOpenAccess": isOpenAccess,
         "licenseType": licenseType,
         "snip": snip,
@@ -305,16 +286,16 @@ class Header {
   Map<String, dynamic> toJson() => {};
 }
 
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+// class EnumValues<T> {
+//   Map<String, T> map;
+//   Map<T, String> reverseMap;
 
-  EnumValues(this.map);
+//   EnumValues(this.map);
 
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
-}
+//   Map<T, String> get reverse {
+//     if (reverseMap == null) {
+//       reverseMap = map.map((k, v) => new MapEntry(v, k));
+//     }
+//     return reverseMap;
+//   }
+// }

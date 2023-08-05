@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/screens/screens.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/screens/notification_screen.dart';
+import 'package:zendy/screens/screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp();
 
   Get.put<AuthController>(
     AuthController(),
@@ -22,8 +21,8 @@ void main() async {
     permanent: true,
   );
 
-  Get.put<SearchController>(
-    SearchController(),
+  Get.put<CustomSearchController>(
+    CustomSearchController(),
     permanent: true,
   );
 
@@ -32,10 +31,10 @@ void main() async {
     permanent: true,
   );
 
-  Get.put<SearchHistoryController>(
-    SearchHistoryController(),
-    permanent: true,
-  );
+  // Get.put<SearchHistoryController>(
+  //   SearchHistoryController(),
+  //   permanent: true,
+  // );
 
   Get.put<LibraryController>(
     LibraryController(),
@@ -65,6 +64,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   final AuthController authController = Get.find();
 
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(name: Goto.settings, page: () => SettingsScreen()),
         GetPage(name: Goto.login, page: () => LoginScreen()),
+        GetPage(name: Goto.notification, page: () => NotificationScreen()),
         GetPage(
           name: Goto.loginEmail,
           transition: Transition.upToDown,
@@ -88,12 +90,12 @@ class MyApp extends StatelessWidget {
         // GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
         GetPage(
           name: Goto.citations,
-          page: () => LibraryScreen(),
+          page: () => const LibraryScreen(),
           transition: Transition.noTransition,
         ),
         GetPage(
           name: Goto.searches,
-          page: () => SavedSearchersScreen(),
+          page: () => const SavedSearchersScreen(),
           transition: Transition.noTransition,
         ),
         GetPage(
@@ -118,7 +120,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: Goto.libraryReadScreen,
-          page: () => LibraryReadScreen(),
+          page: () => const LibraryReadScreen(),
           transition: Transition.noTransition,
         ),
       ],

@@ -1,106 +1,164 @@
 import 'dart:convert';
-import 'dart:async';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:zendy/helpers/helpers.dart';
 
-import 'package:zendy_app/helpers/helpers.dart';
+Map<String, dynamic> createDummyResponse() {
+  return {
+    "status": true,
+    "error": "",
+    "user": {
+      "id": "cadcf946-fd8e-429a-aeaa-ddde1f555900",
+      "role": 1,
+      "email": "user2@zendy.io",
+      "isEmailVerified": true,
+      "firstName": "John",
+      "lastName": "Doe",
+      "searchCounter": 21,
+      "trialExtension": 0,
+      "metaData": {
+        "metaDataUserRole": "app.metadata.roles.academic_researcher"
+      },
+      "regionName": "AE",
+      "languageCode": "en-gb",
+      "intercomIdentified": false
+    }
+  };
+}
 
 class AuthServices {
-  static var client = http.Client();
+  static final Dio _dio =
+      Dio(BaseOptions(baseUrl: "https://api.staging-oa.zendy.io"));
 
   static Future signUp(String email, String password) async {
-    final url = Uri.https("api.staging-oa.zendy.io", "/auth/auth");
+    final url = "/auth/auth";
+    final body = json.encode({'email': email, 'password': password});
 
-    final body = json.encode(
-      {'email': email, 'password': password},
-    );
-
-    var response = await client.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: body,
-    );
-
-    var resBody = json.decode(response.body);
-
-    print(resBody);
-
-    if (response.statusCode == 200) {
-      await saveUserTokenData(response);
-      showSnackbar(
-        type: MsgType.Success,
-        message: 'Login success',
+    try {
+      var response = await _dio.post(
+        url,
+        options: Options(headers: {"Content-Type": "application/json"}),
+        data: body,
       );
-      return true;
-    } else {
+
+      var resBody = response.data;
+
+      print(resBody);
+
+      if (response.statusCode == 200) {
+        await saveUserTokenData(response);
+        showSnackbar(
+          type: MsgType.Success,
+          message: 'Login success',
+        );
+        return true;
+      } else {
+        showSnackbar(
+          type: MsgType.Error,
+          message: response.toString(),
+        );
+        return null;
+      }
+    } catch (e) {
+      print('signUp---$e');
       showSnackbar(
         type: MsgType.Error,
-        message: response.toString(),
+        message: 'something went wrong',
       );
       return null;
     }
   }
 
   static Future signIn(String email, String password) async {
-    final url = Uri.https("api.staging-oa.zendy.io", "/auth/auth");
-    final body = json.encode({'email': email, 'password': password});
+    // final url = "/auth/auth";
+    // final body = json.encode({'email': email, 'password': password});
 
-    var response = await client.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: body,
-    );
+    try {
+      if (email == "user1@zendy.io" && password == "Password1") {
+        // Simulate saving user data to shared preferences
+        final res = createDummyResponse();
+        await saveUserTokenData(res);
 
-    var resBody = jsonDecode(response.body);
+        showSnackbar(
+          type: MsgType.Success,
+          message: 'Login success',
+        );
 
-    print('signIn--->' + resBody.toString());
+        return true;
+      } else {
+        showSnackbar(
+          type: MsgType.Error,
+          message: 'Invalid email or password',
+        );
 
-    if (resBody['status'] == false) {
+        return false;
+      }
+
+      // var response = await _dio.post(
+      //   url,
+      //   options: Options(headers: {"Content-Type": "application/json"}),
+      //   data: body,
+      // );
+
+      // var resBody = response.data;
+
+      // print('signIn--->$resBody');
+
+      // if (resBody['status'] == false) {
+      //   showSnackbar(
+      //     type: MsgType.Error,
+      //     message: resBody['error'] ?? 'something went wrong',
+      //   );
+
+      //   return false;
+      // }
+
+      // if (response.statusCode == 200) {
+      //   await saveUserTokenData(response);
+      //   showSnackbar(
+      //     type: MsgType.Success,
+      //     message: 'Login success',
+      //   );
+      //   return true;
+      // } else {
+      //   showSnackbar(
+      //     type: MsgType.Error,
+      //     message: response.toString(),
+      //   );
+
+      //   return false;
+      // }
+    } catch (e) {
+      print('signIn---$e');
       showSnackbar(
         type: MsgType.Error,
-        message: resBody['error'] ?? 'something went wrong',
+        message: 'something went wrong',
       );
-
-      return false;
-    }
-
-    if (response.statusCode == 200) {
-      await saveUserTokenData(response);
-      showSnackbar(
-        type: MsgType.Success,
-        message: 'Login success',
-      );
-      return true;
-    } else {
-      showSnackbar(
-        type: MsgType.Error,
-        message: response.toString(),
-      );
-
       return false;
     }
   }
 }
 
 String getSidValue(response) {
-  var _value = response.headers['set-cookie'];
+  var value = response.headers['set-cookie'];
 
-  return _value;
+  return value;
 }
 
 Future saveUserTokenData(response) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  String _authToken = getSidValue(response);
-  var _allData = jsonDecode(response.body);
-  _allData['authToken'] = _authToken;
+  // String authToken = getSidValue(response);
+  // String authToken = getSidValue(response);
+  // var allData = jsonDecode(response.data);
+  // allData['authToken'] = authToken;
 
-  String _userData = jsonEncode(_allData);
+  // String userData = jsonEncode(allData);
+  String userData = jsonEncode(response);
 
-  await localStorage.setString('user', _userData);
-  await localStorage.setString('token', _authToken);
+  await localStorage.setString('user', userData);
+  await localStorage.setString('token', response['user']['id']);
 }
 
 Future deleteUserTokenData() async {
@@ -112,65 +170,67 @@ Future deleteUserTokenData() async {
 Future getTempUserId() async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  var _tempUserId = localStorage.getString('tempUserId');
+  var tempUserId = localStorage.getString('tempUserId');
 
-  if (_tempUserId == null) {
-    var tempId = 'temp-' + Uuid().v4();
+  if (tempUserId == null) {
+    var tempId = 'temp-${const Uuid().v4()}';
     return tempId;
   }
 
-  return _tempUserId;
+  return tempUserId;
 }
 
 Future getUserData() async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  var _userData = localStorage.getString('user');
+  var userData = localStorage.getString('user');
 
-  if (_userData != null) {
-    return jsonDecode(_userData);
+  if (userData != null) {
+    return jsonDecode(userData);
   }
   return null;
 }
 
-final requestClient = http.Client();
+final requestClient = Dio();
 
 Future getAuthindicatedResponse(String path, dynamic body) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  final _url = Uri.https("api.staging-oa.zendy.io", path);
-  final _body = json.encode(body);
-  var _tokenData = localStorage.getString('token');
+  final url = "/$path";
+  final body0 = json.encode(body);
+  var tokenData = localStorage.getString('token').toString();
 
-  print('_tokenData--->' + _tokenData);
+  print('_tokenData--->$tokenData');
 
-  var _response = await requestClient.post(
-    _url,
-    headers: {"Content-Type": "application/json", "cookie": _tokenData},
-    body: _body,
-  );
+  try {
+    var response = await requestClient.post(
+      url,
+      options: Options(
+          headers: {"Content-Type": "application/json", "cookie": tokenData}),
+      data: body0,
+    );
 
-  if (_response != null) {
-    return _response;
+    return response;
+  } catch (e) {
+    print('getAuthindicatedResponse---$e');
+    return null;
   }
-
-  return null;
 }
 
 Future getResponse(String path, dynamic body) async {
-  final _url = Uri.https("api.staging-oa.zendy.io", path);
-  final _body = json.encode(body);
+  final body0 = json.encode(body);
 
-  var _response = await requestClient.post(
-    _url,
-    headers: {"Content-Type": "application/json"},
-    body: _body,
-  );
+  try {
+    var response = await requestClient.post(
+      path,
+      options: Options(headers: {"Content-Type": "application/json"}),
+      data: body0,
+    );
 
-  if (_response != null) {
-    return _response;
+    return response;
+  } catch (e) {
+    print('getResponse---$e');
+    return null;
   }
-
-  return null;
 }
 
 Future getAokenData() async {

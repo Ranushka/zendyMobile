@@ -12,12 +12,12 @@ void showSnackbar({
 
   if (type == MsgType.Error) {
     title = 'Opps...';
-    backgroundColor = Colors.red[200];
+    backgroundColor = Colors.green;
   }
 
   if (type == MsgType.Success) {
     title = 'Success';
-    backgroundColor = Colors.green[200];
+    backgroundColor = Colors.green;
   }
 
   Get.snackbar(
@@ -26,6 +26,6 @@ void showSnackbar({
     colorText: Colors.black.withOpacity(0.6),
     backgroundColor: backgroundColor,
     snackPosition: SnackPosition.BOTTOM,
-    margin: EdgeInsets.all(8),
+    margin: const EdgeInsets.all(8),
   );
 }

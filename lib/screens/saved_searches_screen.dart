@@ -1,16 +1,20 @@
+import 'dart:convert';
+import "package:intl/intl.dart";
+
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import 'package:zendy_app/widgets/widgets.dart';
-import 'package:zendy_app/controllers/controllers.dart';
+import 'package:zendy/widgets/widgets.dart';
+import 'package:zendy/controllers/controllers.dart';
 
 class SavedSearchersScreen extends StatelessWidget {
+  const SavedSearchersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: emptyAppbar(),
-      backgroundColor: Theme.of(Get.context).backgroundColor,
+      backgroundColor: Theme.of(Get.context!).colorScheme.background,
       body: Column(
         children: [
           Expanded(
@@ -25,6 +29,7 @@ class SavedSearchersScreen extends StatelessWidget {
   Widget _buildMainContent() {
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
+      direction: Axis.vertical,
       children: [
         PageTitle(
           text: 'Searchers',
@@ -33,7 +38,6 @@ class SavedSearchersScreen extends StatelessWidget {
         ),
         _buildlist()
       ],
-      direction: Axis.vertical,
     );
   }
 
@@ -45,62 +49,67 @@ class SavedSearchersScreen extends StatelessWidget {
 }
 
 Widget _content() {
-  final SearchController searchController = Get.find();
+  final CustomSearchController searchController = Get.find();
 
   return StreamBuilder(
     stream: SavedSearchersController().getData(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      if (snapshot.data.toString() == 'null') {
-        return Center(child: CircularProgressIndicator());
+    builder: (BuildContext context, snapshot) {
+      if (snapshot.data == null) {
+        return const Center(child: CircularProgressIndicator());
       }
 
       if (snapshot.hasError) {
-        return Center(child: TextBody('Something went wrong'));
+        return const Center(child: TextBody('Something went wrong'));
       }
 
-      if (snapshot.data.docs.length < 1) {
-        return Gutter(Center(
+      if (snapshot.data.isEmpty) {
+        return const Gutter(Center(
           child: TextBody(
-            'Save your search use it later and you you can get updates relate to it',
+            'Add Search results to your library will help you to read or export later',
           ),
         ));
       }
 
       return ListView.builder(
-        padding: EdgeInsets.only(top: 10, bottom: 20),
-        physics: BouncingScrollPhysics(),
-        itemCount: snapshot.data.size,
+        padding: const EdgeInsets.only(top: 10, bottom: 20),
+        physics: const BouncingScrollPhysics(),
+        itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
-          var item = snapshot.data.docs[index];
-          var _sortByText = 'Sort by - ${item['sort']}';
-          var _filterByText = 'filterd by ${item['filters']}';
+          var _row = snapshot.data[index];
+          var _rowId = _row['id'].toString();
+          Map<String, dynamic> _item = json.decode(_row['data']);
 
-          var _buildItem = Flex(
+          var sortByText = 'Sort by - ${_item['sort']}';
+          var filterByText = 'filterd by ${_item['filters']}';
+          var _keyword = _item['keyword'];
+          var _resultsCountFormated = NumberFormat.compact().format(
+            _item['count'],
+          );
+          var _count = " - ${_resultsCountFormated} results";
+
+          var buildItem = Flex(
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Title3(item['keyword']),
-                  TextSmall(" - ${item['count']} results")
-                ],
+                children: [Title2(_keyword), TextSmall(_count)],
               ),
-              SizedBox(height: 4),
-              TextBody("$_sortByText and $_filterByText"),
-              SizedBox(height: 16),
+              const SizedBox(height: 4),
+              TextBody("$sortByText and $filterByText"),
+              const SizedBox(height: 16),
             ],
           );
 
           return SwipeDelete(
-            uniqueId: '${item.id}',
+            uniqueId: _rowId,
             onTap: () {
-              searchController.searchAction(item['keyword']);
+              searchController.searchAction(_item['keyword']);
             },
-            child: _buildItem,
+            child: buildItem,
             onDismissed: (action) {
-              SavedSearchersController().deleteData(item.id);
+              SavedSearchersController().deleteData(_rowId);
             },
           );
         },
@@ -111,7 +120,7 @@ Widget _content() {
 
 Widget buildListTile(item) {
   print(item['keyword']);
-  return ListTile(
+  return const ListTile(
     title: Title3('item.keyword'),
     subtitle: Title3('item.filters'),
   );

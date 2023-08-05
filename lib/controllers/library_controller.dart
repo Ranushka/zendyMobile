@@ -3,30 +3,22 @@
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:zendy_app/controllers/controllers.dart';
-import 'package:zendy_app/helpers/helpers.dart';
-import 'package:zendy_app/services/services.dart';
+import 'package:zendy/controllers/controllers.dart';
+import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/services/services.dart';
 
 class LibraryController extends GetxController {
-  RxInt _savedListCount = 0.obs;
+  final RxInt _savedListCount = 0.obs;
 
   final SavedCitationsService _service = SavedCitationsService();
   final AuthController authCtrl = Get.find();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  Stream getData() {
+    var userId = authCtrl.currentUser.value.id.toString();
 
-  Stream<QuerySnapshot> getData() {
-    var userId = authCtrl.currentUser.value.id;
-    Stream<QuerySnapshot> qSnapStream = _service.fetchdata(userId);
+    Stream<List<dynamic>> dataStream = _service.fetchdata(userId);
 
-    qSnapStream.forEach((QuerySnapshot qSnapItem) {
-      _savedListCount.value = qSnapItem.size;
-    });
-
-    return qSnapStream;
+    return dataStream;
   }
 
   void saveData(dynamic data) async {
@@ -51,9 +43,13 @@ class LibraryController extends GetxController {
     try {
       await _service.delete(id);
     } catch (e) {
+      print('deleteData---');
+      print(e);
+      print('deleteData---');
+
       showSnackbar(
         type: MsgType.Error,
-        message: e?.message ?? 'something went wrong',
+        message: 'something went wrong',
       );
     }
   }
