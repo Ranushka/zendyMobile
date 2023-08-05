@@ -72,7 +72,7 @@ flutter_native_splash:
   # platform.
   #android: false
   #ios: false
-  #web: false
+  web: false
 
   # Platform specific images can be specified with the following parameters, which will override
   # the respective parameter.  You may specify all, selected, or none of these parameters:
@@ -84,7 +84,7 @@ flutter_native_splash:
   #color_dark_web: "#042a49"
   #image_android: assets/splash-android.png
   #image_dark_android: assets/splash-invert-android.png
-  #image_ios: assets/splash-ios.png
+  image_ios: assets/images/splash_screen_ios.png
   #image_dark_ios: assets/splash-invert-ios.png
   #image_web: assets/splash-web.gif
   #image_dark_web: assets/splash-invert-web.gif

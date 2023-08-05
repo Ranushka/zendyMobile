@@ -43,9 +43,13 @@ dev_dependencies:
   flutter_native_splash: ^2.3.1
 
 flutter_launcher_icons:
-  image_path: "assets/images/zendy_launcher.png"
-  android: true
-  ios: true
+  image_path: "assets/images/zendy_launcher_ios.png"
+  android:
+    generate: true
+    image_path: "assets/images/zendy_launcher.png"
+  ios:
+    generate: true
+    image_path: "assets/images/zendy_launcher_ios.png"
 
 # flutter_native_splash:
 #   image: assets/images/splash_logo.png
