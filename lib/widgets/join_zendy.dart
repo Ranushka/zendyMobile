@@ -17,10 +17,14 @@ class JoinZendy extends StatelessWidget {
         return Container();
       }
 
+      final isDark = authController.currentUser.value.theme == 'DARK';
+
       return Gutter(Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Theme.of(Get.context!).primaryColorLight,
+          color: !isDark
+              ? Theme.of(Get.context!).primaryColorLight
+              : Theme.of(Get.context!).primaryColorDark,
         ),
         child: Gutter(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,16 +33,16 @@ class JoinZendy extends StatelessWidget {
             const Title2('Join Zendy'),
             const SizedBox(height: 8),
             const TextBody(
-                'Create free account and enjoy Zendy plus and the feacthers comes with it.'),
+                'Sign up for a free account to experience personalized and curated content exclusively tailored to your preferences, with expert insights into your selected areas.'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  child: const TextBody('Learn more'),
-                  onPressed: () {},
-                ),
+                Expanded(child: SizedBox()),
                 ElevatedButton(
-                  child: const Text('Create account / Login'),
+                  child: const Text(
+                    'Create account / Login',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   onPressed: () {
                     Get.toNamed(Goto.login);
                   },

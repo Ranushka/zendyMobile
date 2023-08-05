@@ -107,7 +107,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
   }
 }
 
-checkBoxRow(name, count, bool checked, catId) {
+checkBoxRow(facetLabel, count, bool checked, categoryId, categoryLabel) {
   final SearchResultController searchResultCtrl = Get.find();
 
   RxBool isChecked = checked.obs;
@@ -117,11 +117,15 @@ checkBoxRow(name, count, bool checked, catId) {
       title: Wrap(
         direction: Axis.horizontal,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: [Title3(name), TextBody(' - $count')],
+        children: [Title3(facetLabel), TextBody(' - $count')],
       ),
       value: isChecked.value,
       onChanged: (val) {
-        searchResultCtrl.toggleFilterItem(catId, name);
+        searchResultCtrl.toggleFilterItem(
+          facetLabel,
+          categoryId,
+          categoryLabel,
+        );
         isChecked.value = val ?? false;
       },
     );
@@ -174,15 +178,30 @@ class FiltersList extends StatelessWidget {
             availableFacetItem['count'],
           );
 
-          var name = availableFacetItem['facetLabel'];
-          var checked = appliedFacets!
+          var facetLabel = availableFacetItem['facetLabel'];
+          var categoryId = availableFacetGroup['categoryId'];
+          var categoryLabel = availableFacetItem['facetLabel'];
+          var checked = appliedFacets
               .where((c) =>
-                  c['categoryId'] == catId &&
-                  c['facetLabel'] == availableFacetItem.facetLabel)
+                  c['categoryId'] == categoryId &&
+                  c['facetLabel'] == availableFacetItem['facetLabel'])
               .toList()
               .isNotEmpty;
 
-          finalList.add(checkBoxRow(name, count, checked, catId));
+          //    var checked = appliedFacets!
+          // .where((c) =>
+          //     c['categoryId'] == catId &&
+          //     c['facetLabel'] == availableFacetItem.facetLabel)
+          // .toList()
+          // .isNotEmpty;
+
+          finalList.add(checkBoxRow(
+            facetLabel,
+            count,
+            checked,
+            categoryId,
+            categoryLabel,
+          ));
         }
       }
 

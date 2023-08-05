@@ -20,14 +20,28 @@ class SearchHistoryController extends GetxController {
 
   void createData(String query) async {
     try {
+      List<dynamic> existingData = await _service.fetchData('userId').first;
+
+      if (checkIfExists(existingData, 'data', query)) {
+        return;
+      }
       await _service.create(query);
     } catch (e) {
       printLog('SearchHistoryController--createData', e);
       showSnackbar(
         type: MsgType.Error,
-        message: 'something went wrong',
+        message: 'Something went wrong.',
       );
     }
+  }
+
+  bool checkIfExists(List<dynamic> dataList, String field, dynamic value) {
+    for (var item in dataList) {
+      if (item[field].replaceAll('"', '') == value) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void deleteData(String data) async {

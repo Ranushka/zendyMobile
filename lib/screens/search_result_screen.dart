@@ -105,8 +105,6 @@ class SearchResultScreen extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         final data0 = searchResults?['searchResults']?['results']![index];
-        print(data0['resultId']);
-        print('--');
         var resultId = data0['resultId'].toString();
 
         if (resultId == 'null') {

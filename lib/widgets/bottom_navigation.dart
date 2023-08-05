@@ -6,7 +6,7 @@ import 'package:zendy/helpers/helpers.dart';
 import 'package:zendy/controllers/controllers.dart';
 
 Widget bottomNavigation() {
-  final RxInt curIn = 0.obs;
+  // final RxInt curIn = 0.obs;
   final AuthController authCtrl = Get.find();
 
   Widget btnReguler(String name, IconData icon, onClick) {
@@ -85,7 +85,7 @@ Widget bottomNavigation() {
               Goto.home,
               FontIcons.home,
               () {
-                curIn.value = 0;
+                // curIn.value = 0;
                 Get.toNamed(Goto.home);
               },
             ),
@@ -93,7 +93,7 @@ Widget bottomNavigation() {
               Goto.searches,
               FontIcons.saved_search,
               () {
-                curIn.value = 2;
+                // curIn.value = 2;
                 if (authCtrl.isLoggedIn()) {
                   Get.toNamed(Goto.searches);
                 } else {
@@ -105,7 +105,7 @@ Widget bottomNavigation() {
               Goto.search,
               FontIcons.search,
               () {
-                curIn.value = 1;
+                // curIn.value = 1;
                 Get.toNamed(Goto.search);
               },
             ),
@@ -113,7 +113,7 @@ Widget bottomNavigation() {
               Goto.citations,
               FontIcons.my_library,
               () {
-                curIn.value = 3;
+                // curIn.value = 3;
                 if (authCtrl.isLoggedIn()) {
                   Get.toNamed(Goto.citations);
                 } else {
@@ -125,7 +125,7 @@ Widget bottomNavigation() {
               Goto.profile,
               FontIcons.user,
               () {
-                curIn.value = 4;
+                // curIn.value = 4;
                 Get.toNamed(Goto.profile);
               },
             ),

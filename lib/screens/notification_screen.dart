@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zendy/helpers/helpers.dart';
+import 'package:zendy/widgets/app_bar_logo.dart';
+import 'package:zendy/widgets/widgets.dart';
 
 class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Column(
+          children: [
+            const SizedBox(height: 50),
+            AppBarLogo(showBackBtn: true),
+          ],
+        ),
+        // ,
       ),
-      body: _buildBody(),
+      body: Column(
+        children: [
+          const SizedBox(height: 32),
+          Title1('Notifications'),
+          const SizedBox(height: 32),
+          _buildBody(),
+        ],
+      ),
     );
   }
 

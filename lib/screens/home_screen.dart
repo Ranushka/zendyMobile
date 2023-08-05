@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:zendy/widgets/app_bar_logo.dart';
 import 'package:zendy/widgets/from_blog.dart';
 
 import 'package:zendy/widgets/widgets.dart';
@@ -35,10 +37,11 @@ class HomeScreen extends StatelessWidget {
         _buildHeroCall(),
         _buildDumySearchInput(),
         const SizedBox(height: 8),
+        JoinZendy(),
+        const SizedBox(height: 16),
         LatestNewsList(),
         BySubjects(),
         SizedBox(height: 32),
-        JoinZendy(),
         FromBlog(),
         const SizedBox(height: 32),
       ],
@@ -53,40 +56,10 @@ class HomeScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 32),
           const SizedBox(height: 16),
-          _buildUserGreating(),
+          AppBarLogo(),
           const SizedBox(height: 16),
           const Gutter(Title1('Research is creating new knowledge.')),
           const SizedBox(height: 16),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUserGreating() {
-    final String? firstName = authController.currentUser.value.firstName;
-
-    final Widget greetingWidget = firstName != null
-        ? TextBody('G, day $firstName')
-        : TextButton(
-            onPressed: () => Get.toNamed(Goto.notification),
-            child: const Text('Join Zendy'),
-          );
-
-    return Gutter(
-      Flex(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          getLogoImg(120),
-          Row(
-            children: [
-              greetingWidget,
-              IconButton(
-                onPressed: () => Get.toNamed(Goto.notification),
-                icon: Icon(Icons.notifications),
-              ),
-            ],
-          ),
         ],
       ),
     );

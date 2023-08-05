@@ -7,6 +7,7 @@ final defaultTheme = ThemeData(
   splashColor: Colors.orange[100],
   primaryColor: Colors.orange,
   primaryColorLight: Colors.orange[50],
+  primaryColorDark: Colors.orange[50],
   hintColor: Colors.grey.shade400,
   iconTheme: const IconThemeData(color: Colors.orange),
   textTheme: TextTheme(

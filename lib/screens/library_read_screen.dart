@@ -8,7 +8,6 @@ import 'package:zendy/controllers/controllers.dart';
 import 'package:zendy/helpers/print_log.dart';
 import 'package:zendy/screens/web_view_exp.dart';
 import 'package:zendy/widgets/widgets.dart';
-import 'package:zendy/helpers/helpers.dart';
 
 const _pdfInst = PDF(
   pageSnap: false,

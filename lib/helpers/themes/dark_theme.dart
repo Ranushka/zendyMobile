@@ -6,6 +6,7 @@ final _hintColor = Colors.orange.shade600;
 final _hintColorLight = Colors.grey.shade400;
 const _primaryColor = Colors.orange;
 final _primaryColorLight = Colors.orange.shade50;
+final _primaryColorDark = Color.fromARGB(255, 190, 142, 37);
 const _primaryBg = Colors.black;
 final _btnColor = Colors.orange.shade800;
 
@@ -15,6 +16,7 @@ var darkTheme = ThemeData(
   splashColor: _hintColor,
   primaryColor: _primaryColor,
   primaryColorLight: _primaryColorLight,
+  primaryColorDark: _primaryColorDark,
   hintColor: _hintColorLight,
   iconTheme: const IconThemeData(
     color: _primaryColor,

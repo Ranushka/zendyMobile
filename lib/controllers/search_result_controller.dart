@@ -21,17 +21,18 @@ class SearchResultController extends GetxController {
     searchResultsGet();
   }
 
-  void toggleFilterItem(catId, name) {
-    var myListFiltered = filters.where((item) => item['facetLabel'] == name);
+  void toggleFilterItem(facetLabel, categoryId, categoryLabel) {
+    var myListFiltered =
+        filters.where((item) => item['facetLabel'] == facetLabel);
 
     if (myListFiltered.isNotEmpty) {
-      filters.removeWhere((item) => item['facetLabel'] == name);
+      filters.removeWhere((item) => item['facetLabel'] == facetLabel);
     } else {
       filters.add({
         'active': true,
-        'categoryId': catId,
-        'categoryLabel': catId,
-        'facetLabel': name,
+        'categoryId': categoryId,
+        'categoryLabel': categoryLabel,
+        'facetLabel': facetLabel,
       });
     }
 
@@ -70,7 +71,9 @@ class SearchResultController extends GetxController {
         dataSet['searchResults']['results'] = oldList;
       }
 
-      searchResults.value = [Map<String, dynamic>.from(dataSet)];
+      if (dataSet != null) {
+        searchResults.value = [Map<String, dynamic>.from(dataSet)];
+      }
     } finally {
       isLoading(false);
     }

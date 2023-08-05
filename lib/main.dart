@@ -51,12 +51,13 @@ void main() async {
     permanent: true,
   );
 
-  final AuthController authController = Get.find();
-  final isDark = authController.currentUser.value.theme == 'DARK';
+  // final AuthController authController = Get.find();
+  // final isDark = authController.currentUser.value.theme == 'DARK';
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: isDark ? Colors.black : Colors.white,
-  ));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: Colors.blue,
+  //   statusBarBrightness: Brightness.dark,
+  // ));
 
   runApp(MyApp());
 }
@@ -80,12 +81,12 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(name: Goto.settings, page: () => SettingsScreen()),
         GetPage(name: Goto.login, page: () => LoginScreen()),
-        GetPage(name: Goto.notification, page: () => NotificationScreen()),
         GetPage(
-          name: Goto.loginEmail,
-          transition: Transition.upToDown,
-          page: () => LoginEmailScreen(),
+          name: Goto.notification,
+          transition: Transition.noTransition,
+          page: () => NotificationScreen(),
         ),
+        GetPage(name: Goto.loginEmail, page: () => LoginEmailScreen()),
         GetPage(name: Goto.signup, page: () => SignUpScreen()),
         // GetPage(name: Goto.title + ':titleId', page: () => DetailScreen()),
         GetPage(

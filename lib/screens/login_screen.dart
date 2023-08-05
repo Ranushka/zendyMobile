@@ -16,6 +16,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leading: BackBtn(),
+      ),
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 360),
