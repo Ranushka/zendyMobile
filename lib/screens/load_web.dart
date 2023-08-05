@@ -2,42 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 import 'package:zendy/controllers/controllers.dart';
 import 'package:zendy/helpers/print_log.dart';
 import 'package:zendy/screens/web_view_exp.dart';
 import 'package:zendy/widgets/widgets.dart';
-// import 'package:zendy/controllers/request_controller.dart';
-
-// const _pdfInst = PDF(
-//   pageSnap: false,
-//   autoSpacing: false,
-//   pageFling: false,
-// );
-
-void getHttp(url) async {
-  final request = RequestController().requestWithAuth();
-
-  try {
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      await Permission.storage.request();
-    }
-
-    String path = await getDirectoryPath();
-
-    dynamic response = await request.download(url, '$path/pdf/xx.html');
-
-    print('---->>>>');
-    print(response);
-    print('---->>>');
-  } catch (e) {
-    print(e);
-  }
-}
 
 Future<String> getDirectoryPath() async {
   Directory appDocDirectory = await getApplicationDocumentsDirectory();
@@ -68,6 +38,7 @@ class LoadWebScreen extends StatelessWidget {
 
     var headers = {"Cookie": authCtrl.currentUser.value.authToken};
     final headersCast = headers.cast<String, String>();
+    printLog('headersCast', headersCast);
 
     if (!authCtrl.isLoggedIn()) {
       loginToProceed();
@@ -112,31 +83,5 @@ class LoadWebScreen extends StatelessWidget {
         )
       ],
     );
-  }
-
-  Widget _buildProgressIndicator(progress) {
-    return Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Transform.scale(
-            scale: 1.5,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: Theme.of(Get.context!).primaryColor,
-            ),
-          ),
-          TextBody('$progress %'),
-        ],
-      ),
-    );
-  }
-
-  dynamic _buildPdfError(dynamic error) {
-    print('object--------?');
-    // if (error.statusCode == 401) {
-    // loginToProceed();
-    // }
-    return Center(child: TextBody('PDD loading error'));
   }
 }

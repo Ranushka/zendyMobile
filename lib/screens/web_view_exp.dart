@@ -42,7 +42,7 @@ class _WebViewExpState extends State<WebViewExp> {
       appBar: widget.showAppbar ? _buildAppBar() : null,
       body: Stack(
         children: [
-          WebViewWidget(controller: controller),
+          if (!isLoading) WebViewWidget(controller: controller),
           if (isLoading) _buildProgressIndicator(),
         ],
       ),
