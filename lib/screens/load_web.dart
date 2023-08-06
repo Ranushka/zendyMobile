@@ -36,9 +36,9 @@ class LoadWebScreen extends StatelessWidget {
       child: TextBody('Hmmm..., some thing went wrong'),
     );
 
-    var headers = {"Cookie": authCtrl.currentUser.value.authToken};
-    final headersCast = headers.cast<String, String>();
-    printLog('headersCast', headersCast);
+    // var headers = {"Cookie": authCtrl.currentUser.value.authToken};
+    // final headersCast = headers.cast<String, String>();
+    // printLog('headersCast', headersCast);
 
     if (!authCtrl.isLoggedIn()) {
       loginToProceed();

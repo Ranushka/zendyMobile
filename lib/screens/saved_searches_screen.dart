@@ -77,7 +77,7 @@ Widget _content() {
         itemBuilder: (context, index) {
           var _row = snapshot.data[index];
           var _rowId = _row['id'].toString();
-          Map<String, dynamic> _item = json.decode(_row['data']);
+          var _item = json.decode(_row['data']);
 
           var sortByText = 'Sort by - ${_item['sort']}';
           var filterByText = 'filterd by ${_item['filters']}';

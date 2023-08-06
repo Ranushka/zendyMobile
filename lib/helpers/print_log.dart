@@ -1,5 +1,5 @@
-void printLog(String text, dynamic variable) {
+void printLog(String? text, dynamic variable) {
   print('${text}----');
-  print(variable);
+  print(variable.toString());
   print('${text}----');
 }

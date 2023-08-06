@@ -1,7 +1,6 @@
 // import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:zendy/controllers/controllers.dart';
 import 'package:zendy/helpers/helpers.dart';

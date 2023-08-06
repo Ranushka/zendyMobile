@@ -18,7 +18,7 @@ dependencies:
   reactive_forms: ^16.0.2
   cupertino_icons: ^1.0.2
   skeleton_text: ^3.0.0
-  cloud_firestore: ^4.8.3
+  # cloud_firestore: ^4.8.3
   flutter_libphonenumber: ^2.1.5
   flutter_widget_from_html: ^0.10.3
   webview_flutter: ^4.2.2
@@ -31,7 +31,7 @@ dependencies:
   connectivity: ^3.0.6
   uuid: ^3.0.5
   awesome_select: ^6.0.0
-  firebase_core: ^2.15.0
+  # firebase_core: ^2.15.0
   restart_app: ^1.2.1
   
 

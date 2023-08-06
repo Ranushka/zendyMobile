@@ -97,6 +97,7 @@ class _CheckBoxInListViewState extends State<CheckBoxInListView> {
       backgroundColor: Theme.of(Get.context!).colorScheme.background,
       bottomSheet: Obx(() => _buildBottomSheet()),
       appBar: AppBar(
+        elevation: 0.2,
         leadingWidth: 8,
         leading: Container(),
         actions: [_buildBackButton()],
@@ -188,13 +189,6 @@ class FiltersList extends StatelessWidget {
               .toList()
               .isNotEmpty;
 
-          //    var checked = appliedFacets!
-          // .where((c) =>
-          //     c['categoryId'] == catId &&
-          //     c['facetLabel'] == availableFacetItem.facetLabel)
-          // .toList()
-          // .isNotEmpty;
-
           finalList.add(checkBoxRow(
             facetLabel,
             count,
@@ -205,17 +199,20 @@ class FiltersList extends StatelessWidget {
         }
       }
 
-      return ListView(
-        padding: const EdgeInsets.all(8),
-        children: finalList,
+      return Stack(
+        children: [
+          ListView(
+            padding: const EdgeInsets.all(8),
+            children: finalList,
+          ),
+          if (searchResultCtrl.isLoading.value) ...[
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Center(child: CircularProgressIndicator()),
+            )
+          ],
+        ],
       );
     });
   }
-}
-
-class SimpleModel {
-  String title;
-  bool isChecked;
-
-  SimpleModel(this.title, this.isChecked);
 }

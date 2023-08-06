@@ -22,11 +22,18 @@ class LocalDataService {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute('''
-          CREATE TABLE $tableName (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            data TEXT
-          )
-        ''');
+      CREATE TABLE search_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        data TEXT
+      )
+    ''');
+
+        await db.execute('''
+      CREATE TABLE saved_searchers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        data TEXT
+      )
+    ''');
       },
     );
 

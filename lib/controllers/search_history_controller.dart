@@ -10,7 +10,7 @@ import 'package:zendy/services/local_data_service.dart';
 class SearchHistoryController extends GetxController {
   final AuthController authCtrl = Get.find();
 
-  final _service = LocalDataService('saved_searchers');
+  final _service = LocalDataService('search_history');
 
   Stream getData() {
     Stream<List<dynamic>> dataStream = _service.fetchData('userId');
